@@ -1,0 +1,234 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap");
+
+@layer base {
+  :root {
+    --bg-main: #F2F2F7;
+    --bg-header: rgba(255, 255, 255, 0.85);
+    --bg-card: #FFFFFF;
+    --bg-card-selected: #007AFF;
+    --text-main: #000000;
+    --text-sub: #8E8E93;
+    --text-selected: #FFFFFF;
+    --border-card: rgba(0, 0, 0, 0.05);
+    --accent-blue: #007AFF;
+
+    /* Identita di marchio: il blu resta il colore funzionale di sistema
+       (bottoni secondari, chrome della UI) — il corallo e l'oro sono
+       gli UNICI due punti dove il marchio si fa notare: il momento
+       della rivelazione del regalo e la card raccomandata, non ovunque.
+       Corallo scelto per l'associazione calda/dono/affetto, distinto
+       dal mare di app blu-tech che affollano i social; oro tenue solo
+       per il badge "Top Qualita", mai come colore dominante. */
+    --brand-coral: #FF4D6D;
+    --brand-coral-dark: #E63354;
+    --brand-gold: #C9A15C;
+
+    --text-primary: var(--text-main);
+    --text-secondary: var(--text-sub);
+    --accent: var(--accent-blue);
+
+    /* Font display: solo per i momenti di marchio (splash, titolo del
+       risultato) — tutta la UI funzionale resta sul font di sistema,
+       zero costo di caricamento, massima familiarita/velocita. */
+    --font-display: "Fraunces", ui-serif, Georgia, serif;
+
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+    color-scheme: light;
+  }
+
+  html, body, #root, #app-root {
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    background-color: #F2F2F7;
+    color: #000000;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+    overscroll-behavior: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Anti-cloning image protection */
+  img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  /* Allow text inputs and textareas to be selectable and editable */
+  input, textarea, [contenteditable="true"] {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+  }
+  
+  /* Smooth native-like scrolling for overflow containers */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  .overflow-y-auto::-webkit-scrollbar {
+    display: none; /* Safari / Chrome */
+  }
+}
+
+@layer utilities {
+  /* Warm Linen / Paper Background Texture */
+  .bg-tactile-linen {
+    background-color: #FAF7F2;
+    background-image: radial-gradient(#E8E2D8 0.75px, transparent 0.75px), radial-gradient(#E8E2D8 0.75px, #FAF7F2 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+  }
+
+  /* Tactile Slate Blue Soft-Touch Button */
+  .bg-slate-blue {
+    background: linear-gradient(145deg, #2C4E6F, #1C354E);
+  }
+
+  /* Ultra-smooth, elegant tactile blue primary button without ugly/harsh dark shadows */
+  .btn-tactile-blue {
+    background: linear-gradient(145deg, #325B84, #1C354E);
+    border: 1px solid rgba(223, 185, 96, 0.45);
+    box-shadow: 0 4px 12px -2px rgba(28, 53, 78, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-tactile-blue:hover {
+    background: linear-gradient(145deg, #3A6693, #224160);
+    border-color: rgba(223, 185, 96, 0.75);
+    box-shadow: 0 6px 16px -2px rgba(28, 53, 78, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-tactile-blue:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px -1px rgba(28, 53, 78, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Secondary Tactile Soft Button */
+  .btn-tactile-secondary {
+    background: linear-gradient(145deg, #FFFFFF, #FAF7F2);
+    border: 1px solid #E0D9CC;
+    box-shadow: 0 2px 6px -1px rgba(60, 50, 30, 0.05);
+    transition: all 0.2s ease;
+  }
+
+  .btn-tactile-secondary:hover {
+    background: #EFECE6;
+    border-color: #C5A059;
+    box-shadow: 0 4px 10px -2px rgba(60, 50, 30, 0.08);
+  }
+
+  /* Soft Physical Card Shadow */
+  .card-tactile {
+    background-color: #FFFFFF;
+    border: 1px solid #EBE6DC;
+    box-shadow: 0 4px 14px -3px rgba(60, 50, 30, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-tactile-selected {
+    background: linear-gradient(145deg, #2C4E6F, #1C354E);
+    border: 1px solid #DFB960;
+    box-shadow: 0 6px 16px -3px rgba(28, 53, 78, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+  }
+
+  /* Pale Gold Accent Text & Border */
+  .text-pale-gold {
+    color: #C5A059;
+  }
+
+  .border-pale-gold {
+    border-color: #DFB960;
+  }
+
+  /* Tactile Engraved/Embossed Icon Container */
+  .icon-engraved {
+    background: linear-gradient(145deg, #EFECE6, #FFFFFF);
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.05), inset -1px -1px 2px rgba(255, 255, 255, 0.8);
+  }
+
+  /* GPU Layer Acceleration & Zero Layout Thrashing Utilities */
+  .gpu-layer,
+  .gpu-accelerated {
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    will-change: transform, opacity;
+  }
+
+  /* Force hardware acceleration on cards, drawers, modals, buttons */
+  .card-tactile,
+  .card-tactile-selected,
+  button,
+  [role="button"],
+  .fixed,
+  .absolute {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Safe Area Inset Helpers */
+  .safe-pt {
+    padding-top: max(12px, env(safe-area-inset-top, 0px));
+  }
+  .safe-pb {
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  }
+  .safe-px {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+
+  /* Responsive Fluid Scaling clamp() Utilities */
+  .text-clamp-title {
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    line-height: 1.25;
+  }
+  .card-clamp-pad {
+    padding: clamp(10px, 3vw, 20px);
+  }
+
+  /* Tumbler Date Picker Reel Overlay */
+  .wheel-fade-overlay {
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0) 65%, #FFFFFF 100%);
+  }
+}
+
+/* In-App Browser & Short Screen Adaptation (<660px screen height) */
+@media (max-height: 660px) {
+  .compact-short-screen {
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    gap: 0.375rem !important;
+  }
+  .compact-card {
+    padding: 0.5rem !important;
+  }
+  .compact-title {
+    font-size: 1.1rem !important;
+  }
+  .compact-icon {
+    width: 1.1rem !important;
+    height: 1.1rem !important;
+  }
+}

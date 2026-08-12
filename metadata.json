@@ -1,0 +1,6 @@
+{
+  "name": "Kado AI",
+  "description": "Trova i 3 regali perfetti su Amazon con Intelligenza Artificiale",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
