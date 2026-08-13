@@ -55,6 +55,45 @@ setInterval(() => {
   }
 }, 5 * 60 * 1000);
 
+// Tetto di spesa giornaliero globale sulle chiamate a Gemini. Il
+// rate-limiter per IP protegge da UN singolo utente aggressivo, ma non
+// da un picco di traffico virale reale (esattamente lo scenario che
+// questa app punta a raggiungere sui social) — senza un tetto
+// complessivo, un giorno fortunato di traffico può tradursi in una
+// bolletta a sorpresa prima che qualcuno se ne accorga. Oltre il
+// tetto, l'endpoint degrada ai regali di fallback (locali, gratuiti,
+// sempre presentabili) invece di continuare a chiamare l'API.
+const DAILY_GEMINI_CALL_CAP = 2000;
+let dailyCallCount = 0;
+let dailyCallResetAt = (() => {
+  const d = new Date();
+  d.setHours(24, 0, 0, 0);
+  return d.getTime();
+})();
+
+function canCallGeminiToday(): boolean {
+  const now = Date.now();
+  if (now > dailyCallResetAt) {
+    dailyCallCount = 0;
+    const d = new Date();
+    d.setHours(24, 0, 0, 0);
+    dailyCallResetAt = d.getTime();
+  }
+  if (dailyCallCount >= DAILY_GEMINI_CALL_CAP) return false;
+  dailyCallCount += 1;
+  return true;
+}
+
+// Sanifica ogni campo testuale in arrivo dal client prima di infilarlo
+// nel prompt: un payload anomalo (lunghissimo, o con caratteri
+// pensati per "rompere" le istruzioni del prompt) non deve ne gonfiare
+// il costo della chiamata ne poter deviare il comportamento dell'AI
+// dalle regole fissate sopra.
+function sanitizeText(value: unknown, maxLen = 200): string {
+  if (typeof value !== "string") return "";
+  return value.replace(/[\r\n]+/g, " ").trim().slice(0, maxLen);
+}
+
 // In-Memory Recommendations Cache (30 Minutes TTL)
 interface CacheEntry {
   data: any;
@@ -132,7 +171,23 @@ function getRandomImage(category: string, index: number): string {
 // API endpoint for Gift Recommendations
 app.post("/api/recommend-gifts", async (req, res) => {
   try {
-    const {
+    const rawBody = req.body || {};
+    const recipient = sanitizeText(rawBody.recipient, 40);
+    const occasion = sanitizeText(rawBody.occasion, 40);
+    const budget = sanitizeText(rawBody.budget, 20);
+    const vibe = sanitizeText(rawBody.vibe, 40);
+    const formatPill = sanitizeText(rawBody.formatPill, 20);
+    const hasAlreadyEverything = !!rawBody.hasAlreadyEverything;
+    const extraDetails = sanitizeText(rawBody.extraDetails, 300);
+    const fastTrackIdea = sanitizeText(rawBody.fastTrackIdea, 300);
+    const excludeTitles = Array.isArray(rawBody.excludeTitles)
+      ? rawBody.excludeTitles.map((t: unknown) => sanitizeText(t, 80)).slice(0, 20)
+      : [];
+    const countryCode = sanitizeText(rawBody.countryCode, 5);
+    const currencySymbol = sanitizeText(rawBody.currencySymbol, 5) || "€";
+
+    // Check In-Memory Cache (skip cache if excludeTitles is populated)
+    const cacheKey = getCacheKey({
       recipient,
       occasion,
       budget,
@@ -141,13 +196,9 @@ app.post("/api/recommend-gifts", async (req, res) => {
       hasAlreadyEverything,
       extraDetails,
       fastTrackIdea,
-      excludeTitles = [],
+      currencySymbol,
       countryCode,
-      currencySymbol = "€",
-    } = req.body;
-
-    // Check In-Memory Cache (skip cache if excludeTitles is populated)
-    const cacheKey = getCacheKey(req.body);
+    });
     if (excludeTitles.length === 0) {
       const cached = recommendationsCache.get(cacheKey);
       if (cached && Date.now() < cached.expiresAt) {
@@ -202,6 +253,11 @@ STRICT AMAZON QUALITY FILTERS:
       });
     }
 
+    if (!canCallGeminiToday()) {
+      console.warn(`Daily Gemini call cap (${DAILY_GEMINI_CALL_CAP}) reached — degrading to fallback gifts.`);
+      return res.json({ success: false, source: "fallback", message: "Daily cap reached" });
+    }
+
     // 10s Timeout Guard for Gemini Call
     const timeoutPromise = new Promise<never>((_, reject) =>
       setTimeout(() => reject(new Error("Gemini API timeout (>10s)")), 10000)
@@ -211,6 +267,14 @@ STRICT AMAZON QUALITY FILTERS:
       model: "gemini-3.6-flash",
       contents: prompt,
       config: {
+        // Temperatura bassa apposta: questa è la chiamata che deve
+        // essere "sempre precisa", non creativa — vogliamo che segua
+        // le regole rigide del prompt (fascia di prezzo, pertinenza
+        // al topic, filtri qualità) con la minima variazione casuale
+        // possibile. Troppo in alto e le stesse regole vengono seguite
+        // in modo incostante da una chiamata all'altra.
+        temperature: 0.5,
+        topP: 0.9,
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.ARRAY,
@@ -341,12 +405,32 @@ STRICT AMAZON QUALITY FILTERS:
 // API endpoint for AI Gift Chatbot
 app.post("/api/chat", async (req, res) => {
   try {
-    const { messages, language = "en", quizState } = req.body;
+    const rawMessages = Array.isArray(req.body?.messages) ? req.body.messages : [];
+    // Stessa disciplina di /api/recommend-gifts: un payload enorme (una
+    // conversazione lunghissima, o un singolo messaggio smisurato) non
+    // deve poter gonfiare il costo di una chiamata ne destabilizzare
+    // il comportamento dell'assistente.
+    const messages = rawMessages.slice(-20).map((m: any) => ({
+      role: m?.role === "user" ? "user" : "model",
+      content: sanitizeText(m?.content, 800),
+    }));
+    const language = sanitizeText(req.body?.language, 5) || "en";
+    const quizState = req.body?.quizState || {};
 
     if (!process.env.GEMINI_API_KEY) {
       return res.json({
         success: false,
         response: "I am ready to help you find the perfect gift!",
+      });
+    }
+
+    if (!canCallGeminiToday()) {
+      return res.json({
+        success: false,
+        response:
+          language === "it"
+            ? "Siamo molto richiesti in questo momento — riprova tra poco."
+            : "We're very busy right now — please try again shortly.",
       });
     }
 
@@ -434,10 +518,21 @@ Context from current selection: Recipient: ${quizState?.recipient || "Not specif
 // API endpoint for Text-To-Speech (Gemini TTS)
 app.post("/api/tts", async (req, res) => {
   try {
-    const { text, voice = "Kore" } = req.body;
+    const text = sanitizeText(req.body?.text, 500);
+    // Il frontend non manda mai un valore diverso da quello di
+    // default oggi — questo e' solo un guard contro una chiamata
+    // diretta all'API con un valore anomalo, non una lista di voci
+    // reali verificata (evito di inventare nomi che potrebbero non
+    // esistere davvero lato Gemini).
+    const requestedVoice = sanitizeText(req.body?.voice, 20);
+    const voice = /^[A-Za-z]{2,20}$/.test(requestedVoice) ? requestedVoice : "Kore";
 
     if (!process.env.GEMINI_API_KEY || !text) {
       return res.status(400).json({ success: false, error: "Missing API key or text" });
+    }
+
+    if (!canCallGeminiToday()) {
+      return res.json({ success: false, fallback: true, reason: "daily_cap_reached" });
     }
 
     const ttsResponse = await ai.models.generateContent({

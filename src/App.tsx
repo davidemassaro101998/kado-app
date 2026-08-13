@@ -70,14 +70,6 @@ export default function App() {
   const [showSettingsDrawer, setShowSettingsDrawer] = useState(false);
   const [legalModalType, setLegalModalType] = useState<LegalDocType | null>(null);
 
-  const [cookieAccepted, setCookieAccepted] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem("kado_cookie_accepted") === "true";
-    } catch (e) {
-      return false;
-    }
-  });
-
   // Theme is strictly light mode
   useEffect(() => {
     try {
@@ -109,15 +101,6 @@ export default function App() {
       } catch (e) {
         // ignore
       }
-    }
-  }, []);
-
-  const handleAcceptCookie = useCallback(() => {
-    setCookieAccepted(true);
-    try {
-      localStorage.setItem("kado_cookie_accepted", "true");
-    } catch (e) {
-      // ignore
     }
   }, []);
 
@@ -406,20 +389,18 @@ export default function App() {
       {/* Legal & Compliance Modal */}
       {legalModalType && (
         <LegalModal
+          isOpen={true}
           type={legalModalType}
           language={language}
           onClose={handleCloseLegalModal}
         />
       )}
 
-      {/* GDPR Cookie Consent Banner */}
-      {!cookieAccepted && (
-        <CookieBanner
-          language={language}
-          onAccept={handleAcceptCookie}
-          onOpenPrivacy={handleOpenPrivacy}
-        />
-      )}
+      {/* GDPR Cookie Consent Banner (CookieBanner gestisce il proprio stato di accettazione internamente via localStorage) */}
+      <CookieBanner
+        language={language}
+        onOpenPrivacy={handleOpenPrivacy}
+      />
     </div>
   );
 }

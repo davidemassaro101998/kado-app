@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, Variants } from "motion/react";
 import {
   Mic,
   Sparkles,
@@ -159,7 +159,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
   const budgetOptions = ["< 25€", "25 - 50€", "50 - 100€", "100€+"];
 
   // Framer Motion Spring Variants for Wizard Steps
-  const stepVariants = {
+  const stepVariants: Variants = {
     initial: (direction: number) => ({
       x: direction > 0 ? 120 : -120,
       opacity: 0,
@@ -170,7 +170,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
       opacity: 1,
       scale: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 320,
         damping: 30,
       },
