@@ -198,21 +198,20 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
                 )}
               </button>
 
-              {/* Dynamic Waveform Bars in Apple Blue #007AFF */}
+              {/* Dynamic Waveform Bars in Apple Blue #007AFF.
+                  Fixed-height bars animated via scaleY (compositor-only
+                  transform) instead of animating `height` directly — the
+                  latter forces a layout+paint on every frame across all 7
+                  bars simultaneously, which is what was dropping frames
+                  below 60fps while listening. */}
               <div className="flex items-center justify-center gap-1.5 h-8">
                 {[0.4, 0.9, 0.6, 1.0, 0.7, 0.8, 0.5].map((heightScale, idx) => (
                   <motion.div
                     key={idx}
                     animate={
                       isListening
-                        ? {
-                            height: [
-                              `${12 * heightScale}px`,
-                              `${30 * heightScale}px`,
-                              `${12 * heightScale}px`,
-                            ],
-                          }
-                        : { height: "6px" }
+                        ? { scaleY: [0.4 * heightScale, heightScale, 0.4 * heightScale] }
+                        : { scaleY: 0.2 }
                     }
                     transition={
                       isListening
@@ -223,7 +222,7 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
                           }
                         : { duration: 0.2 }
                     }
-                    className={`w-1.5 rounded-full ${
+                    className={`w-1.5 h-[30px] rounded-full gpu-layer ${
                       isListening ? "bg-[#007AFF]" : "bg-[#E5E5EA]"
                     }`}
                   />
