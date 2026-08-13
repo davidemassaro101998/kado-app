@@ -315,8 +315,13 @@ export default function App() {
         onGoHome={handleGoHome}
       />
 
-      {/* Main Viewport Container */}
-      <main className="flex-1 overflow-hidden relative flex flex-col justify-between">
+      {/* Main Viewport Container. paddingBottom riserva lo spazio del banner
+          PWA fisso in basso, cosi il contenuto sotto non viene coperto su
+          schermi bassi/stretti (es. preview a schermo laterale). */}
+      <main
+        className="flex-1 overflow-hidden relative flex flex-col justify-between"
+        style={{ paddingBottom: "var(--pwa-banner-h, 0px)" }}
+      >
         <AnimatePresence mode="wait">
           {screen === "home" && (
             <motion.div

@@ -3,6 +3,7 @@
 
 @layer base {
   :root {
+    --pwa-banner-h: 0px;
     --bg-main: #F2F2F7;
     --bg-header: rgba(255, 255, 255, 0.85);
     --bg-card: #FFFFFF;

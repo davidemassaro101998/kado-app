@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Download,
@@ -28,6 +28,25 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
   const [showIosGuide, setShowIosGuide] = useState(false);
 
   const [isWindowBlurred, setIsWindowBlurred] = useState(false);
+
+  // Su schermi bassi/stretti (es. preview a schermo laterale) questo banner
+  // fisso in basso può coprire i pulsanti del wizard sottostante. Riserviamo
+  // il suo spazio nel layout tramite una CSS var che i contenitori
+  // scrollabili leggono come padding-bottom, invece di lasciarlo fluttuare
+  // sopra contenuti non raggiungibili con lo scroll.
+  const pwaBannerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!isStandalone && showPwaBanner && pwaBannerRef.current) {
+      const h = pwaBannerRef.current.offsetHeight;
+      root.style.setProperty("--pwa-banner-h", `${h + 24}px`);
+    } else {
+      root.style.setProperty("--pwa-banner-h", "0px");
+    }
+    return () => {
+      root.style.setProperty("--pwa-banner-h", "0px");
+    };
+  }, [isStandalone, showPwaBanner]);
 
   // Haptic feedback helper
   const triggerHaptic = () => {
@@ -240,6 +259,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
       <AnimatePresence>
         {!isStandalone && showPwaBanner && (
           <motion.div
+            ref={pwaBannerRef}
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}

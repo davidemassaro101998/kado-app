@@ -51,7 +51,9 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
     return null;
   }, []);
 
-  const [wizardStep, setWizardStep] = useState<number>(() => savedHomeForm?.wizardStep || 1);
+  // Il wizard riparte sempre da step 1 a ogni mount (cold start/refresh):
+  // solo le scelte già fatte vengono ripristinate, non l'avanzamento.
+  const [wizardStep, setWizardStep] = useState<number>(1);
   const [stepDirection, setStepDirection] = useState<number>(1); // 1 = forward, -1 = back
 
   // Form State
@@ -64,11 +66,10 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
   const [hasAlreadyEverything, setHasAlreadyEverything] = useState<boolean>(() => savedHomeForm?.hasAlreadyEverything || false);
   const [extraDetails, setExtraDetails] = useState<string>(() => savedHomeForm?.extraDetails || "");
 
-  // Save form choices and step to localStorage for seamless background resume
+  // Save form choices to localStorage (step is intentionally not persisted — see wizardStep above)
   useEffect(() => {
     try {
       localStorage.setItem("kado_home_form_state", JSON.stringify({
-        wizardStep,
         recipient,
         vibe,
         budget,
@@ -80,7 +81,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
     } catch (e) {
       // ignore
     }
-  }, [wizardStep, recipient, vibe, budget, customBudgetInput, formatPill, hasAlreadyEverything, extraDetails]);
+  }, [recipient, vibe, budget, customBudgetInput, formatPill, hasAlreadyEverything, extraDetails]);
 
   // Fast Track SOS State & Voice Drawer
   const [fastTrackIdea, setFastTrackIdea] = useState<string>("");
