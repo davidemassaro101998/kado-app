@@ -45,7 +45,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
   onSendFeedback,
 }) => {
   const isIt = language === "it";
-  const [micStatus, setMicStatus] = useState<string>("Verifica...");
+  const [micPermission, setMicPermission] = useState<"unknown" | "granted" | "denied" | "prompt">("unknown");
   const [reminders, setReminders] = useState<SavedReminder[]>([]);
 
   // Ricarica la lista ogni volta che il pannello si apre (potrebbe
@@ -59,27 +59,38 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
     setReminders(getReminders());
   };
 
+  // Legge lo stato REALE del permesso (non solo se esiste hardware audio).
+  // Supportato su Chrome/Edge; su Safari resta "unknown" finche l'utente
+  // non prova ad attivarlo col bottone qui sotto.
   useEffect(() => {
-    if (typeof window !== "undefined" && navigator.mediaDevices) {
-      navigator.mediaDevices
-        .enumerateDevices()
-        .then((devices) => {
-          const hasMic = devices.some((d) => d.kind === "audioinput");
-          setMicStatus(
-            hasMic
-              ? isIt
-                ? "Disponibile"
-                : "Available"
-              : isIt
-              ? "Non Rilevato"
-              : "Not Found"
-          );
-        })
-        .catch(() => setMicStatus(isIt ? "Sconosciuto" : "Unknown"));
-    } else {
-      setMicStatus(isIt ? "Non Supportato" : "Not Supported");
+    if (!isOpen || typeof navigator === "undefined" || !(navigator as any).permissions?.query) return;
+    let status: PermissionStatus | null = null;
+    (navigator as any).permissions
+      .query({ name: "microphone" as PermissionName })
+      .then((s: PermissionStatus) => {
+        status = s;
+        setMicPermission(s.state as any);
+        s.onchange = () => setMicPermission(s.state as any);
+      })
+      .catch(() => setMicPermission("unknown"));
+    return () => {
+      if (status) status.onchange = null;
+    };
+  }, [isOpen]);
+
+  // Unico punto dell'app, oltre al tap sul microfono nel drawer vocale,
+  // che puo far comparire il prompt nativo del browser: e chiamato in
+  // modo sincrono dal click dell'utente, quindi rispetta il requisito
+  // di "user gesture" anche sui browser piu restrittivi.
+  const requestMicAccess = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach((t) => t.stop());
+      setMicPermission("granted");
+    } catch {
+      setMicPermission("denied");
     }
-  }, [isIt, isOpen]);
+  };
 
   const triggerHaptic = () => {
     if (
@@ -176,21 +187,62 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                 </span>
 
                 {/* Microfono */}
-                <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <Mic className="w-4 h-4 text-[#007AFF]" />
-                    <div>
-                      <span className="text-xs font-semibold block">
-                        {isIt ? "Microfono (Ricerca Vocale)" : "Microphone (Voice Search)"}
-                      </span>
-                      <span className="text-[10px] text-[#8E8E93] font-normal">
-                        {micStatus}
-                      </span>
+                <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <Mic className="w-4 h-4 text-[#007AFF]" />
+                      <div>
+                        <span className="text-xs font-semibold block">
+                          {isIt ? "Microfono (Ricerca Vocale)" : "Microphone (Voice Search)"}
+                        </span>
+                        <span className="text-[10px] text-[#8E8E93] font-normal">
+                          {micPermission === "granted"
+                            ? isIt ? "Permesso concesso" : "Permission granted"
+                            : micPermission === "denied"
+                            ? isIt ? "Permesso negato dal browser" : "Denied by browser"
+                            : micPermission === "prompt"
+                            ? isIt ? "Non ancora richiesto" : "Not requested yet"
+                            : isIt ? "Da verificare" : "Not checked yet"}
+                        </span>
+                      </div>
                     </div>
+                    <span
+                      className={`text-xs font-bold px-2.5 py-1 rounded-full bg-white border ${
+                        micPermission === "granted"
+                          ? "border-[#34C759] text-[#34C759]"
+                          : micPermission === "denied"
+                          ? "border-[#FF4D6D] text-[#FF4D6D]"
+                          : "border-[#E5E5EA] text-[#8E8E93]"
+                      }`}
+                    >
+                      {micPermission === "granted"
+                        ? isIt ? "Attivo" : "On"
+                        : micPermission === "denied"
+                        ? isIt ? "Bloccato" : "Blocked"
+                        : "—"}
+                    </span>
                   </div>
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-white border border-[#E5E5EA] text-[#007AFF]">
-                    {micStatus}
-                  </span>
+
+                  {micPermission !== "granted" && (
+                    <button
+                      onClick={() => {
+                        triggerHaptic();
+                        requestMicAccess();
+                      }}
+                      className="w-full py-2 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-xs font-bold text-[#007AFF] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
+                    >
+                      <Mic className="w-3.5 h-3.5 text-[#007AFF]" />
+                      <span>{isIt ? "Attiva Permesso Microfono" : "Enable Microphone Permission"}</span>
+                    </button>
+                  )}
+
+                  {micPermission === "denied" && (
+                    <p className="text-[10px] text-[#8E8E93] text-center px-1 leading-relaxed">
+                      {isIt
+                        ? "Hai bloccato il microfono per questo sito. Riattivalo dalle impostazioni del browser (icona lucchetto nella barra indirizzo)."
+                        : "You've blocked the microphone for this site. Re-enable it from your browser's site settings (padlock icon in the address bar)."}
+                    </p>
+                  )}
                 </div>
 
                 {/* Notifiche */}

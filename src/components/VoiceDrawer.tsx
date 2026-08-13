@@ -23,12 +23,15 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const recognitionRef = useRef<any>(null);
 
-  // Sync initialTranscript when opened
+  // Sync initialTranscript when opened. The mic itself is NOT auto-started here:
+  // starting SpeechRecognition outside a direct user-gesture click handler makes
+  // several browsers (notably Safari/iOS and embedded PWA/webview contexts) silently
+  // refuse to ever show the mic permission prompt. Recognition only starts from the
+  // toggleMic() click handler below, which preserves the user-gesture chain.
   useEffect(() => {
     if (isOpen) {
       setTranscript(initialTranscript);
       setErrorMsg(null);
-      startSpeechRecognition();
     } else {
       stopSpeechRecognition();
     }

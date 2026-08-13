@@ -29,13 +29,13 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center text-center p-6 select-none bg-[#F2F2F7] relative overflow-hidden">
+    <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 select-none bg-[#F2F2F7] relative overflow-y-auto">
       {/* Background Soft Blue Ambient Depth */}
       <div className="absolute w-80 h-80 bg-[#007AFF]/10 rounded-full blur-3xl -top-16 -left-16 pointer-events-none" />
       <div className="absolute w-80 h-80 bg-[#000000]/5 rounded-full blur-3xl -bottom-16 -right-16 pointer-events-none" />
 
-      {/* Cinematic 3D Gift Box Packaging Stage */}
-      <div className="relative mb-8 w-44 h-44 flex items-center justify-center">
+      {/* Cinematic 3D Gift Box Packaging Stage (fluidly scaled to viewport height so it never gets clipped in short/narrow previews) */}
+      <div className="relative mb-[clamp(0.75rem,4vh,2rem)] w-[clamp(6rem,26vh,11rem)] h-[clamp(6rem,26vh,11rem)] shrink-0 flex items-center justify-center">
         {/* Outer Orbiting Apple Blue Ring */}
         <motion.div
           animate={{ rotate: 360 }}
@@ -51,14 +51,14 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
         />
 
         {/* Floating Gift Box Assembly Vector Animation */}
-        <div className="relative z-10 w-28 h-28 flex items-center justify-center">
+        <div className="relative z-10 w-[64%] h-[64%] flex items-center justify-center">
           <motion.div
             animate={{
               y: [-4, 4, -4],
               scale: [0.98, 1.02, 0.98],
             }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="w-20 h-20 rounded-2xl bg-white border border-[#007AFF] shadow-xl flex items-center justify-center relative overflow-hidden"
+            className="w-[72%] h-[72%] rounded-2xl bg-white border border-[#007AFF] shadow-xl flex items-center justify-center relative overflow-hidden"
           >
             {/* Shimmer light pass */}
             <motion.div
@@ -66,8 +66,8 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
               className="absolute inset-0 bg-gradient-to-r from-transparent via-[#007AFF]/10 to-transparent -skew-x-12"
             />
-            
-            <Gift className="w-10 h-10 text-[#007AFF]" />
+
+            <Gift className="w-[45%] h-[45%] text-[#007AFF]" />
           </motion.div>
 
           {/* Orbiting Sparkles */}
@@ -79,7 +79,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-1 right-1 text-[#007AFF]"
           >
-            <Sparkles className="w-6 h-6 fill-[#007AFF]" />
+            <Sparkles className="w-[clamp(0.9rem,3.5vh,1.5rem)] h-[clamp(0.9rem,3.5vh,1.5rem)] fill-[#007AFF]" />
           </motion.div>
 
           <motion.div
@@ -90,7 +90,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
             className="absolute bottom-2 left-1 text-[#000000]"
           >
-            <PackageCheck className="w-5 h-5 text-[#000000]" />
+            <PackageCheck className="w-[clamp(0.75rem,3vh,1.25rem)] h-[clamp(0.75rem,3vh,1.25rem)] text-[#000000]" />
           </motion.div>
         </div>
       </div>
@@ -100,17 +100,17 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: [0.6, 1, 0.6], y: 0 }}
         transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        className="text-xs sm:text-sm font-extrabold tracking-[0.25em] text-[#000000] uppercase relative z-10"
+        className="text-xs sm:text-sm font-extrabold tracking-[0.25em] text-[#000000] uppercase relative z-10 shrink-0"
       >
         {t.curating}
       </motion.p>
-      
-      <p className="text-[11px] text-[#8E8E93] font-medium mt-1 max-w-xs relative z-10">
+
+      <p className="text-[11px] text-[#8E8E93] font-medium mt-1 max-w-xs relative z-10 shrink-0">
         {subtitle || t.curatingSub}
       </p>
 
       {/* Step Progress Assembly List */}
-      <div className="mt-6 w-full max-w-xs space-y-2 relative z-10">
+      <div className="mt-[clamp(0.5rem,3vh,1.5rem)] w-full max-w-xs space-y-2 relative z-10 shrink-0">
         {steps.map((stepText, idx) => {
           const isDone = idx < activeStep;
           const isCurrent = idx === activeStep;

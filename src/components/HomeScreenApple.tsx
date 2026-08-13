@@ -240,7 +240,8 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
       </div>
 
       {/* ================= 2. SEQUENTIAL WIZARD CONTENT ================= */}
-      <div className="flex-1 my-auto flex flex-col justify-center relative overflow-y-auto py-2 compact-short-screen">
+      <div className="flex-1 my-auto relative overflow-y-auto py-2 compact-short-screen">
+        <div className="min-h-full flex flex-col justify-center">
         <AnimatePresence mode="wait" custom={stepDirection}>
           
           {/* STEP 1: CHI È? */}
@@ -478,6 +479,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </div>
 
       {/* ================= 3. BOTTOM ANCHORED PRIMARY BUTTON ================= */}
