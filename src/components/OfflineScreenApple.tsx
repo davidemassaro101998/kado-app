@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { WifiOff, RefreshCw } from "lucide-react";
+import { Language, TRANSLATIONS } from "../data/translations";
 
 interface OfflineScreenAppleProps {
-  language?: "it" | "en" | "es" | "de" | "fr";
+  language?: Language;
 }
 
 export const OfflineScreenApple: React.FC<OfflineScreenAppleProps> = ({
@@ -45,6 +46,8 @@ export const OfflineScreenApple: React.FC<OfflineScreenAppleProps> = ({
 
   if (!isOffline) return null;
 
+  const t = TRANSLATIONS[language] || TRANSLATIONS.en;
+
   return (
     <AnimatePresence>
       <motion.div
@@ -66,12 +69,10 @@ export const OfflineScreenApple: React.FC<OfflineScreenAppleProps> = ({
 
           <div className="space-y-1.5 text-center">
             <h2 className="text-lg font-extrabold tracking-tight text-[#000000]">
-              {language === "it" ? "Nessuna Connessione" : "No Connection"}
+              {t.offlineTitle}
             </h2>
             <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
-              {language === "it"
-                ? "Verifica la tua rete internet per continuare a cercare i regali."
-                : "Check your internet connection to continue searching for gifts."}
+              {t.offlineText}
             </p>
           </div>
 
@@ -82,15 +83,7 @@ export const OfflineScreenApple: React.FC<OfflineScreenAppleProps> = ({
             className="w-full mt-2 py-3.5 px-4 rounded-[18px] bg-[#007AFF] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-[0.97] transition-all border border-[#007AFF] disabled:opacity-60"
           >
             <RefreshCw className={`w-4 h-4 ${isChecking ? "animate-spin" : ""}`} />
-            <span>
-              {isChecking
-                ? language === "it"
-                  ? "VERIFICA IN CORSO..."
-                  : "CHECKING..."
-                : language === "it"
-                ? "RIPROVA"
-                : "RETRY"}
-            </span>
+            <span>{isChecking ? t.offlineChecking : t.offlineRetryBtn}</span>
           </button>
         </motion.div>
       </motion.div>

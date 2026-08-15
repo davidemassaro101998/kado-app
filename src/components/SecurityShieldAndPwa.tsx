@@ -9,14 +9,16 @@ import {
   PlusSquare,
   ArrowDown,
 } from "lucide-react";
+import { Language, TRANSLATIONS } from "../data/translations";
 
 interface SecurityShieldAndPwaProps {
-  language?: "it" | "en" | "es" | "de" | "fr";
+  language?: Language;
 }
 
 export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
   language = "it",
 }) => {
+  const t = TRANSLATIONS[language] || TRANSLATIONS.en;
   // States
   const [isInAppBrowser, setIsInAppBrowser] = useState(false);
   const [showInAppBanner, setShowInAppBanner] = useState(false);
@@ -207,11 +209,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
       setShowIosGuide(true);
     } else {
       // General Fallback
-      alert(
-        language === "it"
-          ? "Per installare l'app, usa il menu del tuo browser e seleziona 'Aggiungi a Schermata Home'."
-          : "To install the app, open your browser menu and select 'Add to Home Screen'."
-      );
+      alert(t.pwaFallbackAlert);
     }
   };
 
@@ -237,9 +235,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
             <div className="flex items-center gap-2">
               <Smartphone className="w-4 h-4 text-[#007AFF] shrink-0" />
               <span className="font-semibold text-[11px] sm:text-xs">
-                {language === "it"
-                  ? "Per la migliore esperienza, apri in Safari o Chrome"
-                  : "For the best experience, open in Safari or Chrome"}
+                {t.inAppBrowserHint}
               </span>
             </div>
             <button
@@ -276,12 +272,10 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                 />
                 <div>
                   <h4 className="font-black text-sm text-[#000000] tracking-tight leading-tight">
-                    {language === "it" ? "Installa l'App in 1 Tap" : "Install App in 1 Tap"}
+                    {t.pwaInstallTitle}
                   </h4>
                   <p className="text-[11px] text-[#8E8E93] font-medium leading-normal mt-0.5">
-                    {language === "it"
-                      ? "Accedi all'istante dalla tua Schermata Home senza scaricare dagli store."
-                      : "Instant 1-tap access from your Home Screen without app stores."}
+                    {t.pwaInstallSubtitle}
                   </p>
                 </div>
               </div>
@@ -290,7 +284,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               <button
                 onClick={handleDismiss}
                 className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer shrink-0"
-                title="Chiudi"
+                title={t.close}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -302,15 +296,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               className="w-full py-3.5 px-4 rounded-[18px] bg-[#000000] hover:bg-[#1A1A1A] active:scale-[0.97] text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all uppercase tracking-wide border border-black"
             >
               <Download className="w-4 h-4 text-white" />
-              <span>
-                {deferredPrompt
-                  ? language === "it"
-                    ? "INSTALLA SUBITO IN HOME"
-                    : "INSTALL NOW ON HOME"
-                  : language === "it"
-                  ? "AGGIUNGI A SCHERMATA HOME"
-                  : "ADD TO HOME SCREEN"}
-              </span>
+              <span>{deferredPrompt ? t.pwaInstallNowBtn : t.pwaAddHomeBtn}</span>
             </button>
           </motion.div>
         )}
@@ -339,13 +325,13 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                     <Smartphone className="w-4 h-4" />
                   </div>
                   <h3 className="font-extrabold text-sm text-[#000000]">
-                    {language === "it" ? "Aggiungi a Home Screen iOS" : "Add to iOS Home Screen"}
+                    {t.iosGuideTitle}
                   </h3>
                 </div>
                 <button
                   onClick={handleDismiss}
                   className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
-                  title="Chiudi"
+                  title={t.close}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -359,12 +345,10 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                   </div>
                   <div className="flex-1 text-xs">
                     <span className="font-extrabold text-[#000000]">
-                      {language === "it" ? "Tocca il tasto 'Condividi'" : "Tap the 'Share' button"}
+                      {t.iosStep1Title}
                     </span>
                     <p className="text-[11px] text-[#8E8E93] font-medium mt-0.5">
-                      {language === "it"
-                        ? "Si trova nella barra in basso di Safari"
-                        : "Located in Safari bottom bar"}
+                      {t.iosStep1Sub}
                     </p>
                   </div>
                   <Share className="w-5 h-5 text-[#007AFF] shrink-0" />
@@ -376,12 +360,10 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                   </div>
                   <div className="flex-1 text-xs">
                     <span className="font-extrabold text-[#000000]">
-                      {language === "it" ? "Seleziona 'Aggiungi alla schermata Home'" : "Select 'Add to Home Screen'"}
+                      {t.iosStep2Title}
                     </span>
                     <p className="text-[11px] text-[#8E8E93] font-medium mt-0.5">
-                      {language === "it"
-                        ? "Scorri le opzioni del menu di condivisione"
-                        : "Scroll through options in the share sheet"}
+                      {t.iosStep2Sub}
                     </p>
                   </div>
                   <PlusSquare className="w-5 h-5 text-[#000000] shrink-0" />
@@ -392,7 +374,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               <div className="flex flex-col items-center justify-center pt-1 animate-bounce text-[#007AFF]">
                 <ArrowDown className="w-6 h-6 stroke-[3]" />
                 <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#007AFF] mt-0.5">
-                  {language === "it" ? "Premi Condividi Qui Sotto" : "Press Share Below"}
+                  {t.iosPressShareBelow}
                 </span>
               </div>
 
@@ -401,7 +383,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                 onClick={handleDismiss}
                 className="w-full py-3.5 rounded-[20px] bg-[#000000] hover:bg-[#1A1A1A] active:scale-[0.97] text-white font-black text-xs uppercase tracking-wider cursor-pointer shadow-md transition-all border border-black"
               >
-                {language === "it" ? "HO CAPITO" : "GOT IT"}
+                {t.iosGotItBtn}
               </button>
             </motion.div>
           </motion.div>

@@ -11,16 +11,17 @@
 // bloccato su una pagina bianca senza spiegazioni.
 
 import React from "react";
+import { Language, TRANSLATIONS } from "../data/translations";
 
 interface ErrorBoundaryState {
   hasError: boolean;
 }
 
 export class ErrorBoundary extends React.Component<
-  { children: React.ReactNode; language?: "it" | "en" },
+  { children: React.ReactNode; language?: Language },
   ErrorBoundaryState
 > {
-  constructor(props: { children: React.ReactNode; language?: "it" | "en" }) {
+  constructor(props: { children: React.ReactNode; language?: Language }) {
     super(props);
     this.state = { hasError: false };
   }
@@ -48,7 +49,7 @@ export class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      const isIt = (this.props.language || "it") === "it";
+      const t = TRANSLATIONS[this.props.language || "it"] || TRANSLATIONS.en;
       return (
         <div className="fixed inset-0 z-[999] bg-[#F2F2F7] flex flex-col items-center justify-center gap-4 px-8 text-center font-sans">
           <div className="w-16 h-16 rounded-[24px] bg-white border border-[#E5E5EA] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center text-3xl">
@@ -58,19 +59,17 @@ export class ErrorBoundary extends React.Component<
             className="text-xl text-[#000000]"
             style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
           >
-            {isIt ? "Qualcosa è andato storto" : "Something went wrong"}
+            {t.errorTitle}
           </h2>
           <p className="text-sm text-[#8E8E93] max-w-xs">
-            {isIt
-              ? "Nessun problema — le tue occasioni salvate sono al sicuro. Riprova a ripartire."
-              : "No worries — your saved occasions are safe. Let's start fresh."}
+            {t.errorText}
           </p>
           <button
             onClick={this.handleReset}
             className="mt-2 py-3 px-6 rounded-[18px] text-white font-bold text-sm cursor-pointer active:scale-[0.97] transition-all"
             style={{ backgroundColor: "var(--brand-coral)" }}
           >
-            {isIt ? "Ricomincia" : "Start over"}
+            {t.errorRestartBtn}
           </button>
         </div>
       );
