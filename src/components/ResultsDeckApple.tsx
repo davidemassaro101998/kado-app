@@ -22,6 +22,7 @@ import {
 import { Language, TRANSLATIONS } from "../data/translations";
 import { trackClickAmazonAffiliate, trackClickWhatsappShare } from "../lib/analytics";
 import { addReminder } from "../lib/reminders";
+import { isAtRiskOfStorageEviction } from "../lib/platform";
 
 interface ResultsDeckAppleProps {
   gifts: GiftItem[];
@@ -529,9 +530,21 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
             )}
           </div>
         ) : (
-          <div className="pt-0.5 flex items-center justify-center gap-1.5 text-[13px] font-semibold" style={{ color: "var(--brand-coral-dark)" }}>
-            <Check className="w-3.5 h-3.5" />
-            {t.reminderSavedMsg}
+          <div className="pt-0.5 space-y-1.5">
+            <div className="flex items-center justify-center gap-1.5 text-[13px] font-semibold" style={{ color: "var(--brand-coral-dark)" }}>
+              <Check className="w-3.5 h-3.5" />
+              {t.reminderSavedMsg}
+            </div>
+            {/* Only on iOS Safari outside a Home Screen install: Safari
+                clears localStorage after 7 days of not opening the site,
+                and a Home Screen web app is explicitly exempt from that —
+                so this is the one thing that actually determines whether
+                the reminder just saved will still exist months from now. */}
+            {isAtRiskOfStorageEviction() && (
+              <p className="text-[12px] text-[#68686D] text-center leading-snug px-2">
+                {t.reminderIosStorageHint}
+              </p>
+            )}
           </div>
         )}
 

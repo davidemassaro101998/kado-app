@@ -60,6 +60,7 @@ export interface Translations {
   remindNextYearBtn: string;
   reminderNamePlaceholder: string;
   reminderSavedMsg: string;
+  reminderIosStorageHint: string;
   wsGreetingTemplate: string;
 
   // AI Concierge & Voice
@@ -224,6 +225,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     remindNextYearBtn: "Remind me again next year",
     reminderNamePlaceholder: "Name (optional)",
     reminderSavedMsg: "Reminder saved — we'll remind you.",
+    reminderIosStorageHint: "On iPhone, Safari can clear saved data after a week of not opening the site. Add Kado AI to your Home Screen so this reminder is safe until the day it matters.",
     wsGreetingTemplate: "Happy Birthday! 🎉 I found a special gift for you: {title} ({price})! Check it out: {link}",
 
     aiConciergeBtn: "Talk to AI Voice Assistant",
@@ -379,6 +381,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     remindNextYearBtn: "Ricordamelo anche l'anno prossimo",
     reminderNamePlaceholder: "Nome (facoltativo)",
     reminderSavedMsg: "Promemoria salvato — te lo ricorderemo noi.",
+    reminderIosStorageHint: "Su iPhone, Safari può cancellare i dati salvati dopo una settimana senza aprire il sito. Aggiungi Kado AI alla Home per essere sicuro che questo promemoria arrivi davvero il giorno giusto.",
     wsGreetingTemplate: "Tanti auguri! 🎉 Ho trovato un regalo speciale per te: {title} ({price})! Guarda qui su Amazon: {link}",
 
     aiConciergeBtn: "Parla con l'Assistente Vocale AI",
@@ -534,6 +537,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     remindNextYearBtn: "Recuérdamelo también el año que viene",
     reminderNamePlaceholder: "Nombre (opcional)",
     reminderSavedMsg: "Recordatorio guardado — te lo recordaremos nosotros.",
+    reminderIosStorageHint: "En iPhone, Safari puede borrar los datos guardados tras una semana sin abrir el sitio. Añade Kado AI a tu pantalla de inicio para asegurarte de que este recordatorio llegue el día que importa.",
     wsGreetingTemplate: "¡Feliz cumpleaños! 🎉 Encontré un regalo especial para ti: {title} ({price}). Míralo aquí: {link}",
 
     aiConciergeBtn: "Habla con el Asistente de Voz AI",
@@ -689,6 +693,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     remindNextYearBtn: "Me le rappeler l'année prochaine aussi",
     reminderNamePlaceholder: "Nom (facultatif)",
     reminderSavedMsg: "Rappel enregistré — nous vous le rappellerons.",
+    reminderIosStorageHint: "Sur iPhone, Safari peut effacer les données enregistrées après une semaine sans ouvrir le site. Ajoutez Kado AI à votre écran d'accueil pour que ce rappel arrive bien le jour J.",
     wsGreetingTemplate: "Joyeux anniversaire ! 🎉 J'ai trouvé un cadeau spécial pour toi : {title} ({price}) ! Découvre-le ici : {link}",
 
     aiConciergeBtn: "Parler à l'Assistant Vocal IA",
@@ -844,6 +849,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     remindNextYearBtn: "Auch nächstes Jahr wieder erinnern",
     reminderNamePlaceholder: "Name (optional)",
     reminderSavedMsg: "Erinnerung gespeichert — wir erinnern dich rechtzeitig.",
+    reminderIosStorageHint: "Auf dem iPhone kann Safari gespeicherte Daten nach einer Woche ohne Öffnen der Seite löschen. Füge Kado AI zum Home-Bildschirm hinzu, damit diese Erinnerung sicher am richtigen Tag ankommt.",
     wsGreetingTemplate: "Alles Gute zum Geburtstag! 🎉 Ich habe ein besonderes Geschenk für dich gefunden: {title} ({price})! Hier ansehen: {link}",
 
     aiConciergeBtn: "Mit dem KI-Sprachassistenten Sprechen",

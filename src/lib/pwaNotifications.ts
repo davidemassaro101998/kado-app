@@ -157,8 +157,84 @@ function markAsSentToday(tag: string): void {
   }
 }
 
+// Permanent (not date-scoped) dedup for the per-reminder tiers below — see
+// checkSavedEventNotifications for why this needs to differ from the
+// same-day dedup above.
+function hasBeenSentEver(tag: string): boolean {
+  try {
+    return localStorage.getItem(`kado_sent_notif_ever_${tag}`) === "true";
+  } catch (e) {
+    return false;
+  }
+}
+
+function markAsSentEver(tag: string): void {
+  try {
+    localStorage.setItem(`kado_sent_notif_ever_${tag}`, "true");
+  } catch (e) {
+    // ignore
+  }
+}
+
+interface ReminderTier {
+  days: number;
+  key: string;
+  build: (name: string, relation: string) => Omit<NotificationPayload, "tag">;
+}
+
+// Ordered least urgent -> most urgent on purpose: when picking which
+// single tier to actually notify about (see below), we want the smallest
+// .days among the crossed-but-unsent ones, and this order makes that a
+// simple "last crossed wins" reduction.
+const REMINDER_TIERS: ReminderTier[] = [
+  {
+    days: 14,
+    key: "14d",
+    build: (name, relation) => ({
+      title: `🎁 Tra 14 giorni è il compleanno di ${name}!`,
+      body: `Zero fretta, massima resa. Scopri ora le 3 idee perfette e approfitta della spedizione standard.`,
+      actions: [{ action: "find_gift", title: "Trova Regalo" }],
+      data: { url: `/?action=find_gift&recipient=${encodeURIComponent(relation || name)}&name=${encodeURIComponent(name)}` },
+    }),
+  },
+  {
+    days: 7,
+    key: "7d",
+    build: (name, relation) => ({
+      title: `⏰ Manca solo 1 settimana per ${name}!`,
+      body: `Non ridurti all'ultimo secondo. L'AI ha selezionato 3 regali con 5 stelle su Amazon per lui.`,
+      actions: [{ action: "find_gift", title: "Vedi le 3 Idee" }],
+      data: { url: `/?action=find_gift&recipient=${encodeURIComponent(relation || name)}&name=${encodeURIComponent(name)}` },
+    }),
+  },
+  {
+    days: 3,
+    key: "3d",
+    build: (name, relation) => ({
+      title: `🚨 SOS Regalo per ${name}!`,
+      body: `Mancano 3 giorni! Ordina oggi con Amazon Prime per farlo arrivare in tempo senza fare brutta figura.`,
+      actions: [{ action: "find_gift", title: "Risolvi in 3 Tap" }],
+      data: { url: `/?action=find_gift&recipient=${encodeURIComponent(relation || name)}&name=${encodeURIComponent(name)}` },
+    }),
+  },
+];
+
 /**
- * Check Saved Event Reminders (14 days, 7 days, 3 days)
+ * Check Saved Event Reminders (14 days, 7 days, 3 days).
+ *
+ * This only runs when the app happens to be open — there is no server-side
+ * push scheduler behind it — so it CANNOT rely on catching the user on the
+ * exact day a threshold is crossed. The original version did exactly that
+ * (`daysLeft === 14`), which meant: open the app on literally any other day
+ * and that tier's notification never fires, ever, for that occasion — the
+ * one thing "remind me next year" is supposed to guarantee. Fixed to treat
+ * each tier as "crossed" once daysLeft <= tier.days, catching up on
+ * whichever tiers were missed the next time the app opens, instead of
+ * requiring a same-day match. To avoid bursting 3 notifications at once
+ * when several tiers are caught up together, only the single most urgent
+ * crossed-and-unsent tier is actually dispatched per check; the less
+ * urgent ones that were also crossed are marked sent without notifying,
+ * so they never fire late/out of order after a more urgent one already did.
  */
 export function checkSavedEventNotifications(reminders: SavedReminder[]): void {
   const now = new Date();
@@ -179,52 +255,22 @@ export function checkSavedEventNotifications(reminders: SavedReminder[]): void {
     const diffMs = eventDate.getTime() - now.getTime();
     const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 
-    const name = rem.name;
+    // Event already happened (or is today with no earlier tier ever sent)
+    // — nothing left to remind about.
+    if (daysLeft < 0) return;
 
-    // A. 14 GIORNI PRIMA
-    if (daysLeft === 14) {
-      const tag = `reminder_14d_${rem.id}`;
-      if (!hasBeenSentToday(tag)) {
-        dispatchPwaNotification({
-          title: `🎁 Tra 14 giorni è il compleanno di ${name}!`,
-          body: `Zero fretta, massima resa. Scopri ora le 3 idee perfette e approfitta della spedizione standard.`,
-          tag,
-          actions: [{ action: "find_gift", title: "Trova Regalo" }],
-          data: { url: `/?action=find_gift&recipient=${encodeURIComponent(rem.relation || name)}&name=${encodeURIComponent(name)}` },
-        });
-        markAsSentToday(tag);
-      }
-    }
+    const crossedUnsent = REMINDER_TIERS.filter(
+      (tier) => daysLeft <= tier.days && !hasBeenSentEver(`reminder_${tier.key}_${rem.id}`)
+    );
+    if (crossedUnsent.length === 0) return;
 
-    // B. 7 GIORNI PRIMA
-    if (daysLeft === 7) {
-      const tag = `reminder_7d_${rem.id}`;
-      if (!hasBeenSentToday(tag)) {
-        dispatchPwaNotification({
-          title: `⏰ Manca solo 1 settimana per ${name}!`,
-          body: `Non ridurti all'ultimo secondo. L'AI ha selezionato 3 regali con 5 stelle su Amazon per lui.`,
-          tag,
-          actions: [{ action: "find_gift", title: "Vedi le 3 Idee" }],
-          data: { url: `/?action=find_gift&recipient=${encodeURIComponent(rem.relation || name)}&name=${encodeURIComponent(name)}` },
-        });
-        markAsSentToday(tag);
-      }
-    }
+    const mostUrgent = crossedUnsent.reduce((a, b) => (a.days < b.days ? a : b));
+    dispatchPwaNotification({
+      ...mostUrgent.build(rem.name, rem.relation),
+      tag: `reminder_${mostUrgent.key}_${rem.id}`,
+    });
 
-    // C. 3 GIORNI PRIMA (SOS LAST MINUTE)
-    if (daysLeft === 3) {
-      const tag = `reminder_3d_${rem.id}`;
-      if (!hasBeenSentToday(tag)) {
-        dispatchPwaNotification({
-          title: `🚨 SOS Regalo per ${name}!`,
-          body: `Mancano 3 giorni! Ordina oggi con Amazon Prime per farlo arrivare in tempo senza fare brutta figura.`,
-          tag,
-          actions: [{ action: "find_gift", title: "Risolvi in 3 Tap" }],
-          data: { url: `/?action=find_gift&recipient=${encodeURIComponent(rem.relation || name)}&name=${encodeURIComponent(name)}` },
-        });
-        markAsSentToday(tag);
-      }
-    }
+    crossedUnsent.forEach((tier) => markAsSentEver(`reminder_${tier.key}_${rem.id}`));
   });
 }
 
