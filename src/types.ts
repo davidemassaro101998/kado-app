@@ -30,6 +30,11 @@ export interface GiftItem {
   reviewsCount?: number; // e.g. 1480
   isPrime?: boolean;
   asin?: string;
+  // "amazon" = real PA-API match (real ASIN, live price/rating). "ai-estimate"
+  // (or absent, e.g. from the offline fallback catalog) = Gemini-estimated
+  // data — no confirmed ASIN, so the store link can only be a search, never
+  // a real cart add. Drives which CTA label ResultsDeckApple shows.
+  dataSource?: "amazon" | "ai-estimate";
 }
 
 export interface SavedReminder {

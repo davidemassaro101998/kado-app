@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { GiftItem, QuizState, CountryConfig } from "../types";
 import { buildAmazonUrl, buildAmazonCartUrl } from "../data/countries";
@@ -9,6 +9,7 @@ import {
   RotateCcw,
   ShoppingBag,
   ShoppingCart,
+  Search,
   MessageCircle,
   Star,
   Check,
@@ -16,6 +17,7 @@ import {
   Zap,
   ArrowLeft,
   CalendarHeart,
+  Gift,
 } from "lucide-react";
 import { Language, TRANSLATIONS } from "../data/translations";
 import { trackClickAmazonAffiliate, trackClickWhatsappShare } from "../lib/analytics";
@@ -71,6 +73,24 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
   }, [reminderDate, reminderName, quizState.recipient]);
 
   const currentGift = gifts[activeIndex] || gifts[0];
+
+  // Product photos are hotlinked (Unsplash stock today, real Amazon images
+  // once PA-API is active) — hotlinking can fail (rate limit, flaky
+  // network) and this card is the single moment the user decides whether
+  // to buy, so a broken <img> here can't just leave a blank box. Tracked
+  // per gift.imageUrl so switching cards resets it instead of freezing on
+  // the previous card's load state.
+  const [imgStatus, setImgStatus] = useState<"loading" | "loaded" | "error">("loading");
+  useEffect(() => {
+    setImgStatus("loading");
+  }, [currentGift?.imageUrl]);
+
+  // Only a real PA-API match (real ASIN) can actually add something to an
+  // Amazon cart or land on the exact product page — an AI-estimated gift
+  // (today's default, and the offline fallback catalog) has neither, so
+  // the second CTA must say "search", not "add to cart", or it's a button
+  // that lies about what tapping it does.
+  const isVerifiedAmazonMatch = currentGift?.dataSource === "amazon" && !!currentGift?.asin;
   // La prima carta (server.ts la genera sempre come "Più Scelto") è la
   // vera raccomandazione dell'AI — le altre due restano alternative
   // secondarie. Prima le 3 card erano visivamente alla pari: un micro
@@ -253,14 +273,33 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
                 {/* 2. Amazon Image Stage (Compact & Modern) */}
                 <div className="relative w-full h-[125px] sm:h-[145px] rounded-[16px] sm:rounded-[20px] overflow-hidden bg-[#FAFAFC] border border-[#E5E5EA] flex items-center justify-center p-2 shrink-0">
-                  <img
-                    src={currentGift.imageUrl}
-                    alt={currentGift.title}
-                    loading="eager"
-                    decoding="async"
-                    className="max-h-full max-w-full object-contain pointer-events-none gpu-layer"
-                  />
-                  
+                  {imgStatus !== "error" && (
+                    <img
+                      src={currentGift.imageUrl}
+                      alt={currentGift.title}
+                      loading="eager"
+                      decoding="async"
+                      onLoad={() => setImgStatus("loaded")}
+                      onError={() => setImgStatus("error")}
+                      className={`max-h-full max-w-full object-contain pointer-events-none gpu-layer transition-opacity duration-300 ${
+                        imgStatus === "loaded" ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  )}
+
+                  {imgStatus === "loading" && (
+                    <div className="absolute inset-2 rounded-2xl bg-[#EDEDF2] animate-pulse" />
+                  )}
+
+                  {imgStatus === "error" && (
+                    <div
+                      className="absolute inset-2 rounded-2xl flex items-center justify-center"
+                      style={{ background: "linear-gradient(145deg, #FFE8EC, #F2F2F7)" }}
+                    >
+                      <Gift className="w-9 h-9" style={{ color: "var(--brand-coral)" }} strokeWidth={1.5} />
+                    </div>
+                  )}
+
                   {/* Price Tag Pill */}
                   <div className="absolute bottom-2 right-2 bg-white/95 backdrop-blur-xs text-[#000000] text-xs sm:text-sm font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#E5E5EA]">
                     {currentGift.price}
@@ -330,7 +369,11 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                   </a>
 
                   <a
-                    href={buildAmazonCartUrl(currentGift, country)}
+                    href={
+                      isVerifiedAmazonMatch
+                        ? buildAmazonCartUrl(currentGift, country)
+                        : buildAmazonUrl(currentGift.amazonSearchQuery, country, currentGift)
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => {
@@ -355,8 +398,12 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                       borderColor: isPrimary ? "var(--brand-coral)" : "#007AFF",
                     }}
                   >
-                    <ShoppingCart className="w-4 h-4 text-white shrink-0" />
-                    <span className="truncate">{t.addToCartBtn}</span>
+                    {isVerifiedAmazonMatch ? (
+                      <ShoppingCart className="w-4 h-4 text-white shrink-0" />
+                    ) : (
+                      <Search className="w-4 h-4 text-white shrink-0" />
+                    )}
+                    <span className="truncate">{isVerifiedAmazonMatch ? t.addToCartBtn : t.searchOnAmazonBtn}</span>
                   </a>
                 </div>
               </motion.div>

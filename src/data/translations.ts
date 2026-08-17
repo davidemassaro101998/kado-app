@@ -53,6 +53,7 @@ export interface Translations {
   whyPerfectLabel: string;
   seeInStoreBtn: string;
   addToCartBtn: string;
+  searchOnAmazonBtn: string;
   copiedOpenedLabel: string;
   copyTicketLabel: string;
   moreIdeasBtn: string;
@@ -103,6 +104,7 @@ export interface Translations {
   affiliateLabel: string;
   supportSection: string;
   sendFeedbackBtn: string;
+  dgmAppsCredit: string;
   affiliateDisclaimerShort: string;
 
   // Legal Modal
@@ -215,6 +217,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     whyPerfectLabel: "Why it's perfect:",
     seeInStoreBtn: "SEE IN STORE",
     addToCartBtn: "ADD TO CART",
+    searchOnAmazonBtn: "SEARCH ON AMAZON",
     copiedOpenedLabel: "Copied & Opened!",
     copyTicketLabel: "Copy Ticket",
     moreIdeasBtn: "3 More Ideas",
@@ -263,6 +266,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     affiliateLabel: "Amazon Affiliate & Disclaimers",
     supportSection: "SUPPORT & INFO",
     sendFeedbackBtn: "Send Feedback",
+    dgmAppsCredit: "Part of DGM Apps",
     affiliateDisclaimerShort: "As an Amazon Associate, Kado AI earns from qualifying purchases.",
 
     legalPrivacyTitle: "Privacy Policy (GDPR EU)",
@@ -368,6 +372,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     whyPerfectLabel: "Perché è perfetto:",
     seeInStoreBtn: "VEDI NELLO STORE",
     addToCartBtn: "METTI IN CARRELLO",
+    searchOnAmazonBtn: "CERCA SU AMAZON",
     copiedOpenedLabel: "Copiato & Aperto!",
     copyTicketLabel: "Copia Biglietto",
     moreIdeasBtn: "Altre 3 Idee",
@@ -416,6 +421,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     affiliateLabel: "Affiliazione Amazon & Disclaimers",
     supportSection: "SUPPORTO & INFO",
     sendFeedbackBtn: "Invia un Feedback",
+    dgmAppsCredit: "Parte di DGM Apps",
     affiliateDisclaimerShort: "In qualità di Affiliato Amazon, Kado AI riceve un guadagno dagli acquisti idonei.",
 
     legalPrivacyTitle: "Privacy Policy (GDPR EU)",
@@ -521,6 +527,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     whyPerfectLabel: "Por qué es perfecto:",
     seeInStoreBtn: "VER EN LA TIENDA",
     addToCartBtn: "AÑADIR AL CARRITO",
+    searchOnAmazonBtn: "BUSCAR EN AMAZON",
     copiedOpenedLabel: "¡Copiado y Abierto!",
     copyTicketLabel: "Copiar Mensaje",
     moreIdeasBtn: "3 Ideas Más",
@@ -569,6 +576,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     affiliateLabel: "Afiliación Amazon y Avisos Legales",
     supportSection: "SOPORTE E INFO",
     sendFeedbackBtn: "Enviar Comentarios",
+    dgmAppsCredit: "Parte de DGM Apps",
     affiliateDisclaimerShort: "Como Afiliado de Amazon, Kado AI obtiene ingresos por las compras que califican.",
 
     legalPrivacyTitle: "Política de Privacidad (RGPD UE)",
@@ -674,6 +682,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     whyPerfectLabel: "Pourquoi c'est parfait :",
     seeInStoreBtn: "VOIR SUR LA BOUTIQUE",
     addToCartBtn: "AJOUTER AU PANIER",
+    searchOnAmazonBtn: "RECHERCHER SUR AMAZON",
     copiedOpenedLabel: "Copié et Ouvert !",
     copyTicketLabel: "Copier le Message",
     moreIdeasBtn: "3 Idées de Plus",
@@ -722,6 +731,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     affiliateLabel: "Affiliation Amazon & Avertissements",
     supportSection: "ASSISTANCE & INFOS",
     sendFeedbackBtn: "Envoyer un Avis",
+    dgmAppsCredit: "Fait partie de DGM Apps",
     affiliateDisclaimerShort: "En tant que Partenaire Amazon, Kado AI perçoit une rémunération sur les achats éligibles.",
 
     legalPrivacyTitle: "Politique de Confidentialité (RGPD UE)",
@@ -827,6 +837,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     whyPerfectLabel: "Warum es perfekt passt:",
     seeInStoreBtn: "IM STORE ANSEHEN",
     addToCartBtn: "IN DEN WARENKORB",
+    searchOnAmazonBtn: "AUF AMAZON SUCHEN",
     copiedOpenedLabel: "Kopiert & Geöffnet!",
     copyTicketLabel: "Nachricht Kopieren",
     moreIdeasBtn: "3 Weitere Ideen",
@@ -875,6 +886,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     affiliateLabel: "Amazon-Partnerprogramm & Haftungsausschlüsse",
     supportSection: "SUPPORT & INFO",
     sendFeedbackBtn: "Feedback Senden",
+    dgmAppsCredit: "Teil von DGM Apps",
     affiliateDisclaimerShort: "Als Amazon-Partner verdient Kado AI an qualifizierten Käufen.",
 
     legalPrivacyTitle: "Datenschutzerklärung (DSGVO EU)",

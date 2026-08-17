@@ -417,9 +417,12 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                     <span>{t.sendFeedbackBtn}</span>
                   </button>
 
-                  <div className="text-center pt-1 border-t border-[#E5E5EA]">
+                  <div className="text-center pt-1 border-t border-[#E5E5EA] space-y-1">
                     <span className="text-[11px] text-[#8E8E93] font-medium block">
                       Kado AI v1.0.0 (Build Stable)
+                    </span>
+                    <span className="text-[10px] text-[#8E8E93] font-medium tracking-wide block">
+                      {t.dgmAppsCredit}
                     </span>
                   </div>
                 </div>
