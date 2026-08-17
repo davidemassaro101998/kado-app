@@ -184,7 +184,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 className={`h-1.5 sm:h-2 rounded-full transition-all duration-200 cursor-pointer ${
                   idx === activeIndex
                     ? "w-6 sm:w-8 bg-[#007AFF]"
-                    : "w-1.5 sm:w-2 bg-[#E5E5EA] hover:bg-[#8E8E93]"
+                    : "w-1.5 sm:w-2 bg-[#E5E5EA] hover:bg-[#68686D]"
                 }`}
                 aria-label={`${t.optionOf} ${idx + 1}`}
               />
@@ -201,7 +201,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
               <ChevronLeft className="w-4 h-4 text-[#000000]" />
             </button>
 
-            <span className="text-[10px] sm:text-[11px] font-extrabold text-[#8E8E93] px-1 min-w-[32px] text-center">
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-[#68686D] px-1 min-w-[32px] text-center">
               {activeIndex + 1} / {gifts.length || 3}
             </span>
 
@@ -326,7 +326,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         {currentGift.rating ? currentGift.rating.toFixed(1) : "4.8"}
                       </span>
                     </div>
-                    <span className="text-[#8E8E93] font-normal text-[10px] sm:text-[11px]">
+                    <span className="text-[#68686D] font-normal text-[10px] sm:text-[11px]">
                       ({currentGift.reviewsCount ? currentGift.reviewsCount.toLocaleString() : "1,240"} {t.reviewsLabel})
                     </span>
                   </div>
@@ -459,7 +459,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 onClick={() => {
                   setShowReminderForm(true);
                 }}
-                className="w-full py-2 px-3 rounded-2xl bg-white border border-dashed border-[#E5E5EA] hover:border-[var(--brand-coral)] text-[11px] sm:text-xs font-semibold text-[#8E8E93] hover:text-[var(--brand-coral-dark)] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="w-full py-2 px-3 rounded-2xl bg-white border border-dashed border-[#E5E5EA] hover:border-[var(--brand-coral)] text-[11px] sm:text-xs font-semibold text-[#68686D] hover:text-[var(--brand-coral-dark)] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                 aria-label={t.saveDate}
               >
                 <CalendarHeart className="w-3.5 h-3.5" style={{ color: "var(--brand-coral)" }} />
@@ -485,7 +485,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowReminderForm(false)}
-                    className="flex-1 py-2 rounded-xl bg-[#F2F2F7] text-[#8E8E93] text-xs font-bold cursor-pointer"
+                    className="flex-1 py-2 rounded-xl bg-[#F2F2F7] text-[#68686D] text-xs font-bold cursor-pointer"
                   >
                     {t.cancel}
                   </button>
@@ -509,7 +509,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
         )}
 
         {/* Legal Disclaimers: Amazon Affiliate */}
-        <div className="text-[9px] sm:text-[10px] text-[#8E8E93] text-center leading-tight px-1 pb-0.5">
+        <div className="text-[9px] sm:text-[10px] text-[#68686D] text-center leading-tight px-1 pb-0.5">
           <p>
             {t.affiliateDisclaimerShort}
           </p>

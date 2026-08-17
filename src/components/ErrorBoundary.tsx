@@ -61,7 +61,7 @@ export class ErrorBoundary extends React.Component<
           >
             {t.errorTitle}
           </h2>
-          <p className="text-sm text-[#8E8E93] max-w-xs">
+          <p className="text-sm text-[#68686D] max-w-xs">
             {t.errorText}
           </p>
           <button

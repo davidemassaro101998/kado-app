@@ -10,13 +10,21 @@ import {
   ArrowDown,
 } from "lucide-react";
 import { Language, TRANSLATIONS } from "../data/translations";
+import { ScreenType } from "../types";
 
 interface SecurityShieldAndPwaProps {
   language?: Language;
+  // Gates WHEN the install banner is allowed to appear (see the dedicated
+  // effect below) — previously it fired 2s after mount unconditionally,
+  // meaning it competed for attention during the quiz itself, before the
+  // user had seen a single gift. Optional so callers that don't track
+  // screen state yet still get the old always-eligible behavior.
+  screen?: ScreenType;
 }
 
 export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
   language = "it",
+  screen,
 }) => {
   const t = TRANSLATIONS[language] || TRANSLATIONS.en;
   // States
@@ -73,13 +81,6 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
 
     setIsStandalone(standaloneMode);
 
-    let isDismissed = false;
-    let isInstalled = false;
-    try {
-      isDismissed = localStorage.getItem("pwa_dismissed") === "true";
-      isInstalled = localStorage.getItem("pwa_installed") === "true";
-    } catch {}
-
     // Check In-App Browser (Instagram, TikTok, Facebook, Messenger, WeChat, etc.)
     const inAppRegex = /FBAN|FBAV|Instagram|TikTok|MicroMessenger|Line|Snapchat/i;
     const detectedInApp = inAppRegex.test(ua);
@@ -111,15 +112,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
     window.addEventListener("appinstalled", handleAppInstalled);
 
-    // 3. Intro Timing: Appear 2 seconds after opening (IF NOT STANDALONE AND NOT DISMISSED)
-    let pwaTimer: any = null;
-    if (!standaloneMode && !isDismissed && !isInstalled) {
-      pwaTimer = setTimeout(() => {
-        setShowPwaBanner(true);
-      }, 2000);
-    }
-
-    // 4. Anti-Cloning & Security Hardening
+    // 3. Anti-Cloning & Security Hardening
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
       return false;
@@ -170,7 +163,6 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
     return () => {
       window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
       window.removeEventListener("appinstalled", handleAppInstalled);
-      if (pwaTimer) clearTimeout(pwaTimer);
       window.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("blur", handleBlur);
@@ -178,6 +170,29 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
+
+  // PWA Install Banner Timing: only becomes eligible once the user has
+  // reached the results screen (i.e. after they've actually seen a
+  // gift), never during the quiz itself — asking for the install
+  // commitment before any value has been delivered competes with the
+  // wizard for attention and screen space. If no `screen` prop is
+  // passed at all, falls back to "always eligible" so this component
+  // stays safe to use standalone.
+  useEffect(() => {
+    const eligibleScreen = screen === undefined || screen === "results";
+    if (!eligibleScreen || isStandalone || showPwaBanner) return;
+
+    let isDismissed = false;
+    let isInstalled = false;
+    try {
+      isDismissed = localStorage.getItem("pwa_dismissed") === "true";
+      isInstalled = localStorage.getItem("pwa_installed") === "true";
+    } catch {}
+    if (isDismissed || isInstalled) return;
+
+    const timer = setTimeout(() => setShowPwaBanner(true), 1200);
+    return () => clearTimeout(timer);
+  }, [screen, isStandalone, showPwaBanner]);
 
   // Clean Dismiss Handler (Saves pwa_dismissed to localStorage and closes all modals)
   const handleDismiss = () => {
@@ -274,7 +289,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                   <h4 className="font-black text-sm text-[#000000] tracking-tight leading-tight">
                     {t.pwaInstallTitle}
                   </h4>
-                  <p className="text-[11px] text-[#8E8E93] font-medium leading-normal mt-0.5">
+                  <p className="text-[11px] text-[#68686D] font-medium leading-normal mt-0.5">
                     {t.pwaInstallSubtitle}
                   </p>
                 </div>
@@ -283,7 +298,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               {/* Minimal Dismiss "X" Button */}
               <button
                 onClick={handleDismiss}
-                className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer shrink-0"
+                className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#68686D] hover:text-[#000000] transition-colors cursor-pointer shrink-0"
                 title={t.close}
               >
                 <X className="w-4 h-4" />
@@ -330,7 +345,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                 </div>
                 <button
                   onClick={handleDismiss}
-                  className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
+                  className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#68686D] hover:text-[#000000] transition-colors cursor-pointer"
                   title={t.close}
                 >
                   <X className="w-4 h-4" />
@@ -347,7 +362,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                     <span className="font-extrabold text-[#000000]">
                       {t.iosStep1Title}
                     </span>
-                    <p className="text-[11px] text-[#8E8E93] font-medium mt-0.5">
+                    <p className="text-[11px] text-[#68686D] font-medium mt-0.5">
                       {t.iosStep1Sub}
                     </p>
                   </div>
@@ -362,7 +377,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                     <span className="font-extrabold text-[#000000]">
                       {t.iosStep2Title}
                     </span>
-                    <p className="text-[11px] text-[#8E8E93] font-medium mt-0.5">
+                    <p className="text-[11px] text-[#68686D] font-medium mt-0.5">
                       {t.iosStep2Sub}
                     </p>
                   </div>

@@ -201,8 +201,8 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
           className="w-full flex items-center justify-between py-2.5 px-3.5 sm:py-3 sm:px-4 rounded-[18px] bg-white/80 backdrop-blur-md border border-[#E5E5EA] shadow-[0_4px_20px_rgba(0,0,0,0.04)] cursor-pointer active:scale-[0.99] transition-all group"
         >
           <div className="flex items-center gap-2.5 flex-1 min-w-0">
-            <Search className="w-4 h-4 text-[#8E8E93] group-hover:text-[#007AFF] transition-colors shrink-0" />
-            <span className="text-xs sm:text-sm font-medium text-[#8E8E93] truncate">
+            <Search className="w-4 h-4 text-[#68686D] group-hover:text-[#007AFF] transition-colors shrink-0" />
+            <span className="text-xs sm:text-sm font-medium text-[#68686D] truncate">
               {t.fastTrackPlaceholder}
             </span>
           </div>
@@ -232,7 +232,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
               <span>{t.back}</span>
             </button>
-            <span className="text-xs font-semibold text-[#8E8E93] truncate max-w-[200px]">
+            <span className="text-xs font-semibold text-[#68686D] truncate max-w-[200px]">
               {wizardStep === 2 ? recipient : `${recipient} • ${vibe}`}
             </span>
           </div>
@@ -259,7 +259,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
                   {t.homeStep1Title}
                 </h1>
-                <p className="text-xs text-[#8E8E93] font-normal">
+                <p className="text-xs text-[#68686D] font-normal">
                   {t.homeStep1Sub}
                 </p>
               </div>
@@ -276,7 +276,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       className={`h-[95px] sm:h-[110px] p-3 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 cursor-pointer transition-all duration-150 active:scale-[0.97] ${
                         isSel
                           ? "bg-[#007AFF] text-white border-[#007AFF] shadow-[0_8px_24px_rgba(0,122,255,0.25)]"
-                          : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-[#8E8E93]"
+                          : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-[#68686D]"
                       }`}
                     >
                       <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-white/20 text-white" : "bg-[#F2F2F7] text-[#007AFF]"}`}>
@@ -305,7 +305,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
                   {t.homeStep2Title}
                 </h1>
-                <p className="text-xs text-[#8E8E93] font-normal">
+                <p className="text-xs text-[#68686D] font-normal">
                   {t.homeStep2Sub}
                 </p>
               </div>
@@ -322,7 +322,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       className={`h-[95px] sm:h-[110px] p-2.5 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer transition-all duration-150 active:scale-[0.97] ${
                         isSel
                           ? "bg-[#007AFF] text-white border-[#007AFF] shadow-[0_6px_20px_rgba(0,122,255,0.22)]"
-                          : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:border-[#8E8E93]"
+                          : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:border-[#68686D]"
                       }`}
                     >
                       <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-white/20 text-white" : "bg-[#F2F2F7] text-[#007AFF]"}`}>
@@ -351,7 +351,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
                   {t.homeStep3Title}
                 </h1>
-                <p className="text-xs text-[#8E8E93] font-normal">
+                <p className="text-xs text-[#68686D] font-normal">
                   {t.homeStep3Sub}
                 </p>
               </div>
@@ -371,7 +371,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       className={`py-3.5 px-4 sm:py-4 rounded-[22px] border flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-150 active:scale-[0.97] ${
                         isSel
                           ? "bg-[#007AFF] text-white border-[#007AFF] shadow-[0_8px_24px_rgba(0,122,255,0.25)]"
-                          : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-[#8E8E93]"
+                          : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-[#68686D]"
                       }`}
                     >
                       <span className="font-semibold text-sm sm:text-base tracking-tight">{b}</span>
@@ -389,7 +389,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-[#8E8E93] block">
+                  <span className="text-xs font-medium text-[#68686D] block">
                     {t.orExactAmountLabel}
                   </span>
                   {customBudgetInput && (
@@ -402,7 +402,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <div className="relative flex items-center">
                   <span
                     className={`absolute left-3.5 text-sm font-bold transition-colors ${
-                      isCustomBudgetFocused || customBudgetInput ? "text-[#007AFF]" : "text-[#8E8E93]"
+                      isCustomBudgetFocused || customBudgetInput ? "text-[#007AFF]" : "text-[#68686D]"
                     }`}
                   >
                     €
@@ -423,7 +423,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       }
                     }}
                     placeholder={t.exactAmountPlaceholder}
-                    className="w-full py-2.5 pl-8 pr-9 rounded-xl bg-[#F2F2F7] text-[#000000] placeholder-[#8E8E93] text-sm font-semibold focus:outline-none transition-colors"
+                    className="w-full py-2.5 pl-8 pr-9 rounded-xl bg-[#F2F2F7] text-[#000000] placeholder-[#68686D] text-sm font-semibold focus:outline-none transition-colors"
                   />
                   {customBudgetInput && (
                     <button
@@ -433,7 +433,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                         setCustomBudgetInput("");
                         setBudget("25 - 50€");
                       }}
-                      className="absolute right-2.5 p-1 rounded-full bg-[#E5E5EA] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
+                      className="absolute right-2.5 p-1 rounded-full bg-[#E5E5EA] text-[#68686D] hover:text-[#000000] transition-colors cursor-pointer"
                       title={t.clear}
                     >
                       <X className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -444,7 +444,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
               {/* Card 3: Opzioni Extra */}
               <div className="p-3.5 rounded-[22px] bg-white border border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-2">
-                <span className="text-[10px] font-extrabold text-[#8E8E93] uppercase tracking-wider block">
+                <span className="text-[10px] font-extrabold text-[#68686D] uppercase tracking-wider block">
                   {t.extraOptionsLabel}
                 </span>
                 <label className="flex items-center gap-2.5 cursor-pointer select-none">
@@ -467,7 +467,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                   value={extraDetails}
                   onChange={(e) => setExtraDetails(e.target.value)}
                   placeholder={t.extraDetailsHomePlaceholder}
-                  className="w-full py-2 px-3 rounded-xl bg-[#F2F2F7] border border-[#E5E5EA] text-[#000000] placeholder-[#8E8E93] text-xs sm:text-sm font-normal focus:outline-none focus:border-[#007AFF]"
+                  className="w-full py-2 px-3 rounded-xl bg-[#F2F2F7] border border-[#E5E5EA] text-[#000000] placeholder-[#68686D] text-xs sm:text-sm font-normal focus:outline-none focus:border-[#007AFF]"
                 />
               </div>
             </motion.div>

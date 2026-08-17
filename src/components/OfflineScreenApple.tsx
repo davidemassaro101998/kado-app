@@ -63,15 +63,15 @@ export const OfflineScreenApple: React.FC<OfflineScreenAppleProps> = ({
           className="w-full max-w-sm bg-white border border-[#E5E5EA] rounded-[28px] p-6 shadow-[0_12px_36px_rgba(0,0,0,0.1)] flex flex-col items-center gap-4"
         >
           {/* Slashed Wi-Fi Icon Badge */}
-          <div className="w-16 h-16 rounded-full bg-[#F2F2F7] border border-[#E5E5EA] flex items-center justify-center text-[#8E8E93]">
-            <WifiOff className="w-8 h-8 text-[#8E8E93] stroke-[2]" />
+          <div className="w-16 h-16 rounded-full bg-[#F2F2F7] border border-[#E5E5EA] flex items-center justify-center text-[#68686D]">
+            <WifiOff className="w-8 h-8 text-[#68686D] stroke-[2]" />
           </div>
 
           <div className="space-y-1.5 text-center">
             <h2 className="text-lg font-extrabold tracking-tight text-[#000000]">
               {t.offlineTitle}
             </h2>
-            <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+            <p className="text-xs text-[#68686D] leading-relaxed font-normal">
               {t.offlineText}
             </p>
           </div>

@@ -105,7 +105,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
         {t.curating}
       </motion.p>
 
-      <p className="text-[11px] text-[#8E8E93] font-medium mt-1 max-w-xs relative z-10 shrink-0">
+      <p className="text-[11px] text-[#68686D] font-medium mt-1 max-w-xs relative z-10 shrink-0">
         {subtitle || t.curatingSub}
       </p>
 
@@ -123,7 +123,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
                   ? "bg-white border-[#007AFF] text-[#000000] shadow-[0_4px_12px_rgba(0,0,0,0.06)] font-extrabold"
                   : isDone
                   ? "bg-white border-[#E5E5EA] text-[#000000] shadow-2xs"
-                  : "bg-white/60 border-transparent text-[#8E8E93]"
+                  : "bg-white/60 border-transparent text-[#68686D]"
               }`}
             >
               <div
@@ -132,7 +132,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
                     ? "bg-[#34C759] text-white font-black"
                     : isCurrent
                     ? "bg-[#007AFF] text-white font-extrabold"
-                    : "bg-[#E5E5EA] text-[#8E8E93]"
+                    : "bg-[#E5E5EA] text-[#68686D]"
                 }`}
               >
                 {isDone ? <Check className="w-3 h-3 text-white stroke-[3]" /> : idx + 1}

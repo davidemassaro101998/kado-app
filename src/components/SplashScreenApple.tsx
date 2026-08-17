@@ -74,7 +74,7 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
                 <circle cx="18" cy="24" r="12" fill="none" stroke="url(#dgmRingA)" strokeWidth="2.75" />
                 <circle cx="30" cy="24" r="12" fill="none" stroke="url(#dgmRingB)" strokeWidth="2.75" />
               </svg>
-              <p className="text-[10px] font-semibold text-[#8E8E93] tracking-[0.2em] uppercase">
+              <p className="text-[10px] font-semibold text-[#68686D] tracking-[0.2em] uppercase">
                 DGM Apps
               </p>
             </motion.div>
@@ -99,7 +99,7 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
             >
               Kado <span style={{ color: "var(--brand-coral)" }}>AI</span>
             </h1>
-            <p className="text-xs font-semibold text-[#8E8E93] tracking-wide uppercase">
+            <p className="text-xs font-semibold text-[#68686D] tracking-wide uppercase">
               Smart Gift Curator
             </p>
           </div>

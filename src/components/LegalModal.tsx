@@ -61,7 +61,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
+              className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#68686D] hover:text-[#000000] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -122,7 +122,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
                   <p>
                     {t.legalAffiliateQuote}
                   </p>
-                  <p className="text-[11px] font-normal text-[#8E8E93]">
+                  <p className="text-[11px] font-normal text-[#68686D]">
                     {t.legalAffiliateProgramText}
                   </p>
                 </div>
@@ -131,7 +131,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
                   <span className="font-bold text-xs text-[#000000] block">
                     {t.legalAffiliatePriceDisclaimerTitle}
                   </span>
-                  <p className="text-[11px] text-[#8E8E93] leading-relaxed">
+                  <p className="text-[11px] text-[#68686D] leading-relaxed">
                     {t.legalAffiliatePriceDisclaimerText}
                   </p>
                 </div>

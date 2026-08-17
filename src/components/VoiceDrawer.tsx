@@ -168,7 +168,7 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
               <button
                 type="button"
                 onClick={onClose}
-                className="p-1.5 rounded-full bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
+                className="p-1.5 rounded-full bg-[#F2F2F7] text-[#68686D] hover:text-[#000000] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4 stroke-[2.5]" />
               </button>
@@ -196,7 +196,7 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
                 {isListening ? (
                   <Mic className="w-9 h-9 text-white stroke-[2.5]" />
                 ) : (
-                  <MicOff className="w-8 h-8 text-[#8E8E93] stroke-[2]" />
+                  <MicOff className="w-8 h-8 text-[#68686D] stroke-[2]" />
                 )}
               </button>
 
@@ -231,7 +231,7 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
                 ))}
               </div>
 
-              <span className="text-xs font-semibold text-[#8E8E93]">
+              <span className="text-xs font-semibold text-[#68686D]">
                 {isListening ? t.voiceListeningHint : t.voiceTapToSpeakHint}
               </span>
             </div>
@@ -245,7 +245,7 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
 
             {/* Live Transcription Area & Quick-Edit Textbox */}
             <div className="w-full space-y-2">
-              <label className="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] block text-left">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-[#68686D] block text-left">
                 {t.voiceTranscriptLabel}
               </label>
 
@@ -255,13 +255,13 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
                   value={transcript}
                   onChange={(e) => setTranscript(e.target.value)}
                   placeholder={t.voiceTranscriptPlaceholder}
-                  className="w-full p-3.5 rounded-[18px] bg-[#F2F2F7] text-[#000000] placeholder-[#8E8E93] text-base sm:text-lg font-bold leading-snug border border-[#E5E5EA] focus:outline-none focus:border-[#007AFF] transition-colors resize-none"
+                  className="w-full p-3.5 rounded-[18px] bg-[#F2F2F7] text-[#000000] placeholder-[#68686D] text-base sm:text-lg font-bold leading-snug border border-[#E5E5EA] focus:outline-none focus:border-[#007AFF] transition-colors resize-none"
                 />
                 {transcript && (
                   <button
                     type="button"
                     onClick={() => setTranscript("")}
-                    className="absolute right-3 top-3 p-1 rounded-full bg-[#E5E5EA] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
+                    className="absolute right-3 top-3 p-1 rounded-full bg-[#E5E5EA] text-[#68686D] hover:text-[#000000] transition-colors cursor-pointer"
                     title={t.clear}
                   >
                     <X className="w-3.5 h-3.5 stroke-[2.5]" />

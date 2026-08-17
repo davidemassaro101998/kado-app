@@ -303,7 +303,7 @@ export default function App() {
       </AnimatePresence>
 
       {/* Security & PWA Hardening Overlay Engine */}
-      <SecurityShieldAndPwa language={language} />
+      <SecurityShieldAndPwa language={language} screen={screen} />
 
       {/* Offline Apple Fallback Screen */}
       <OfflineScreenApple language={language} />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Ribbon3D } from "./Ribbon3D";
 import { CountryConfig } from "../types";
 import { COUNTRIES } from "../data/countries";
-import { Globe, Check, X, Languages, Settings } from "lucide-react";
+import { Check, X, Languages, Settings } from "lucide-react";
 import { Language, TRANSLATIONS } from "../data/translations";
 import { FlagIcon } from "./FlagIcon";
 
@@ -53,12 +53,11 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                 {language.toUpperCase()}
               </span>
               {currentCountry.code.toLowerCase() !== language.toLowerCase() && (
-                <span className="text-[10px] text-[#8E8E93] font-extrabold uppercase border-l border-[#E5E5EA] pl-1.5 flex items-center gap-1">
+                <span className="text-[10px] text-[#68686D] font-extrabold uppercase border-l border-[#E5E5EA] pl-1.5 flex items-center gap-1">
                   <FlagIcon code={currentCountry.code} className="w-3.5 h-2.5" />
                   {currentCountry.code}
                 </span>
               )}
-              <Globe className="w-3.5 h-3.5 text-[#8E8E93] ml-0.5" />
             </button>
 
             {/* Settings Gear Button */}
@@ -88,13 +87,13 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
               </div>
               <button
                 onClick={() => setShowGeoModal(false)}
-                className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] transition-colors cursor-pointer"
+                className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#68686D] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <p className="text-xs text-[#8E8E93] font-medium mb-3 shrink-0">
+            <p className="text-xs text-[#68686D] font-medium mb-3 shrink-0">
               {t.regionNotice}
             </p>
 
@@ -159,7 +158,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                           <FlagIcon code={c.code} className="w-5 h-3.5" />
                           <div className="text-left">
                             <div className="font-extrabold">{c.name}</div>
-                            <div className={`text-[10px] ${isSelected ? "text-white/80" : "text-[#8E8E93]"}`}>
+                            <div className={`text-[10px] ${isSelected ? "text-white/80" : "text-[#68686D]"}`}>
                               {c.amazonDomain} ({c.currency})
                             </div>
                           </div>

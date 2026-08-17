@@ -149,7 +149,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
               </div>
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] transition-colors cursor-pointer"
+                className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#68686D] transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -159,7 +159,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
             <div className="flex-1 overflow-y-auto space-y-4 pr-1">
               {/* 1. SEZIONE INTERAZIONE */}
               <div className="space-y-2">
-                <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
+                <span className="text-[11px] font-bold text-[#68686D] uppercase tracking-wider block px-1">
                   {t.interactionSection}
                 </span>
 
@@ -193,7 +193,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
 
               {/* 2. SEZIONE PERMESSI & PRIVACY */}
               <div className="space-y-2">
-                <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
+                <span className="text-[11px] font-bold text-[#68686D] uppercase tracking-wider block px-1">
                   {t.permissionsSection}
                 </span>
 
@@ -206,7 +206,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                         <span className="text-xs font-semibold block">
                           {t.micLabel}
                         </span>
-                        <span className="text-[10px] text-[#8E8E93] font-normal">
+                        <span className="text-[10px] text-[#68686D] font-normal">
                           {micPermission === "granted"
                             ? t.micStatusGranted
                             : micPermission === "denied"
@@ -223,7 +223,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                           ? "border-[#34C759] text-[#34C759]"
                           : micPermission === "denied"
                           ? "border-[#FF4D6D] text-[#FF4D6D]"
-                          : "border-[#E5E5EA] text-[#8E8E93]"
+                          : "border-[#E5E5EA] text-[#68686D]"
                       }`}
                     >
                       {micPermission === "granted"
@@ -248,7 +248,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   )}
 
                   {micPermission === "denied" && (
-                    <p className="text-[10px] text-[#8E8E93] text-center px-1 leading-relaxed">
+                    <p className="text-[10px] text-[#68686D] text-center px-1 leading-relaxed">
                       {t.micBlockedHint}
                     </p>
                   )}
@@ -299,12 +299,12 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   14/7/3 giorni prima esisteva gia, qui c'e finalmente
                   un posto per vedere/gestire cosa hai salvato. */}
               <div className="space-y-2">
-                <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
+                <span className="text-[11px] font-bold text-[#68686D] uppercase tracking-wider block px-1">
                   {t.myOccasionsSection}
                 </span>
                 <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] space-y-2">
                   {reminders.length === 0 ? (
-                    <p className="text-[11px] text-[#8E8E93] text-center py-2">
+                    <p className="text-[11px] text-[#68686D] text-center py-2">
                       {t.noOccasionsText}
                     </p>
                   ) : (
@@ -324,7 +324,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                               <p className="text-xs font-bold text-[#000000] truncate">
                                 {rem.name || rem.relation}
                               </p>
-                              <p className="text-[10px] text-[#8E8E93]">
+                              <p className="text-[10px] text-[#68686D]">
                                 {new Date(rem.date + "T00:00:00").toLocaleDateString(
                                   DATE_LOCALES[language || "it"] || "en-US",
                                   { day: "numeric", month: "long" }
@@ -337,7 +337,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                               triggerHaptic();
                               handleDeleteReminder(rem.id);
                             }}
-                            className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] hover:text-[#FF4D6D] transition-colors cursor-pointer shrink-0"
+                            className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#68686D] hover:text-[#FF4D6D] transition-colors cursor-pointer shrink-0"
                             aria-label={t.delete}
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -350,7 +350,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
 
               {/* 3. SEZIONE LEGALE & COMPLIANCE */}
               <div className="space-y-2">
-                <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
+                <span className="text-[11px] font-bold text-[#68686D] uppercase tracking-wider block px-1">
                   {t.legalSection}
                 </span>
 
@@ -366,7 +366,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       <ShieldCheck className="w-4 h-4 text-[#007AFF]" />
                       <span>{t.legalPrivacyTitle}</span>
                     </div>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#8E8E93]" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#68686D]" />
                   </button>
 
                   <button
@@ -380,7 +380,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       <FileText className="w-4 h-4 text-[#007AFF]" />
                       <span>{t.termsLabel}</span>
                     </div>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#8E8E93]" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#68686D]" />
                   </button>
 
                   <button
@@ -394,14 +394,14 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       <ShoppingBag className="w-4 h-4 text-[#007AFF]" />
                       <span>{t.affiliateLabel}</span>
                     </div>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#8E8E93]" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#68686D]" />
                   </button>
                 </div>
               </div>
 
               {/* 4. SEZIONE SUPPORTO */}
               <div className="space-y-2">
-                <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
+                <span className="text-[11px] font-bold text-[#68686D] uppercase tracking-wider block px-1">
                   {t.supportSection}
                 </span>
 
@@ -418,10 +418,10 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   </button>
 
                   <div className="text-center pt-1 border-t border-[#E5E5EA] space-y-1">
-                    <span className="text-[11px] text-[#8E8E93] font-medium block">
+                    <span className="text-[11px] text-[#68686D] font-medium block">
                       Kado AI v1.0.0 (Build Stable)
                     </span>
-                    <span className="text-[10px] text-[#8E8E93] font-medium tracking-wide block">
+                    <span className="text-[10px] text-[#68686D] font-medium tracking-wide block">
                       {t.dgmAppsCredit}
                     </span>
                   </div>
@@ -430,7 +430,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
 
               {/* Amazon Affiliate Legal Disclaimer Banner inside Drawer */}
               <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA]">
-                <p className="text-[11px] text-[#8E8E93] font-normal leading-relaxed text-center">
+                <p className="text-[11px] text-[#68686D] font-normal leading-relaxed text-center">
                   {t.affiliateDisclaimerShort}
                 </p>
               </div>
