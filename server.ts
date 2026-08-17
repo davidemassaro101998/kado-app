@@ -8,7 +8,7 @@ import { createServer } from "http";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 const httpServer = createServer(app);
 
 app.use(express.json());
@@ -94,6 +94,48 @@ function sanitizeText(value: unknown, maxLen = 200): string {
   return value.replace(/[\r\n]+/g, " ").trim().slice(0, maxLen);
 }
 
+// Localized copy the server itself needs to generate (Gemini prompt
+// instructions, the 3 fixed gift-card badges, and the safety-net
+// replacement titles used when a suggestion overshoots the budget).
+// Kept local to server.ts rather than importing the frontend's
+// translations module, since this is backend-generated content, not
+// UI chrome — the two are allowed to evolve independently.
+const SUPPORTED_LANGUAGES = ["en", "it", "es", "fr", "de"] as const;
+type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
+
+function resolveLanguage(value: unknown): SupportedLanguage {
+  const v = sanitizeText(value, 5).toLowerCase();
+  return (SUPPORTED_LANGUAGES as readonly string[]).includes(v) ? (v as SupportedLanguage) : "en";
+}
+
+const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
+  en: "English",
+  it: "Italian",
+  es: "Spanish",
+  fr: "French",
+  de: "German",
+};
+
+// The 3 fixed diversification badges, in card order (Bestseller / Original & Books / Top Quality).
+const GIFT_TAGS: Record<SupportedLanguage, [string, string, string]> = {
+  en: ["Top Pick", "Original & Books", "Top Quality"],
+  it: ["Più Scelto", "Originale / Libro", "Top Qualità"],
+  es: ["Más Elegido", "Original y Libros", "Máxima Calidad"],
+  fr: ["Le Plus Choisi", "Original et Livres", "Qualité Supérieure"],
+  de: ["Meistgewählt", "Originell & Bücher", "Top-Qualität"],
+};
+
+// Safety-net replacement titles used when a high-end suggestion (e.g. a
+// Theragun) slips through for a low budget and needs to be swapped for
+// something realistically priced — see the budget-enforcement pass below.
+const DOWNGRADE_FALLBACK_TITLES: Record<SupportedLanguage, { tech: string; books: string; other: string }> = {
+  en: { tech: "Anker Power Bank Wireless 10000mAh", books: "Illustrated Bestseller Guide Book", other: "Ceramic Aromatherapy Diffuser Set" },
+  it: { tech: "Anker Power Bank Wireless 10000mAh", books: "Libro Guida Bestseller Illustrato", other: "Set Diffusore Aromaterapia in Ceramica" },
+  es: { tech: "Power Bank Anker Inalámbrico 10000mAh", books: "Libro Guía Bestseller Ilustrado", other: "Set Difusor de Aromaterapia de Cerámica" },
+  fr: { tech: "Batterie Externe Anker Sans Fil 10000mAh", books: "Livre Guide Best-seller Illustré", other: "Coffret Diffuseur d'Huiles Essentielles en Céramique" },
+  de: { tech: "Anker Wireless Powerbank 10000mAh", books: "Illustrierter Bestseller-Ratgeber", other: "Keramik-Aromatherapie-Diffusor-Set" },
+};
+
 // In-Memory Recommendations Cache (30 Minutes TTL)
 interface CacheEntry {
   data: any;
@@ -102,9 +144,9 @@ interface CacheEntry {
 const recommendationsCache = new Map<string, CacheEntry>();
 
 function getCacheKey(body: any): string {
-  const { recipient, occasion, budget, vibe, formatPill, hasAlreadyEverything, extraDetails, fastTrackIdea, currencySymbol, countryCode } = body;
+  const { recipient, occasion, budget, vibe, formatPill, hasAlreadyEverything, extraDetails, fastTrackIdea, currencySymbol, countryCode, language } = body;
   const cleanExtra = (extraDetails || fastTrackIdea || "").trim().toLowerCase();
-  return `${recipient || ""}_${occasion || ""}_${budget || ""}_${vibe || ""}_${formatPill || ""}_${hasAlreadyEverything ? 1 : 0}_${cleanExtra}_${currencySymbol || "€"}_${countryCode || "IT"}`.toLowerCase();
+  return `${recipient || ""}_${occasion || ""}_${budget || ""}_${vibe || ""}_${formatPill || ""}_${hasAlreadyEverything ? 1 : 0}_${cleanExtra}_${currencySymbol || "€"}_${countryCode || "IT"}_${language || "en"}`.toLowerCase();
 }
 
 // Initialize Gemini Client
@@ -168,6 +210,11 @@ function getRandomImage(category: string, index: number): string {
   return pool[index % pool.length];
 }
 
+// Health check endpoint (used by Railway and other deploy platforms)
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok" });
+});
+
 // API endpoint for Gift Recommendations
 app.post("/api/recommend-gifts", async (req, res) => {
   try {
@@ -185,6 +232,9 @@ app.post("/api/recommend-gifts", async (req, res) => {
       : [];
     const countryCode = sanitizeText(rawBody.countryCode, 5);
     const currencySymbol = sanitizeText(rawBody.currencySymbol, 5) || "€";
+    const language = resolveLanguage(rawBody.language);
+    const languageName = LANGUAGE_NAMES[language];
+    const [tagTopPick, tagOriginalBooks, tagTopQuality] = GIFT_TAGS[language];
 
     // Check In-Memory Cache (skip cache if excludeTitles is populated)
     const cacheKey = getCacheKey({
@@ -198,6 +248,7 @@ app.post("/api/recommend-gifts", async (req, res) => {
       fastTrackIdea,
       currencySymbol,
       countryCode,
+      language,
     });
     if (excludeTitles.length === 0) {
       const cached = recommendationsCache.get(cacheKey);
@@ -208,6 +259,8 @@ app.post("/api/recommend-gifts", async (req, res) => {
 
     const prompt = `You are an expert Amazon gift curator for KADO AI.
 Your absolute top priority is ULTRA-PRECISION and HIGH RELEVANCE to the user's exact inputs.
+
+RESPONSE LANGUAGE: ${languageName}. The "title" and "reason" fields MUST be written in natural, professional ${languageName} — not a literal word-for-word translation. Product titles may keep well-known brand/model names as-is (e.g. "iPhone", "Kindle Paperwhite").
 
 USER SELECTION CONSTRAINTS:
 - Recipient: ${recipient || "Partner"}
@@ -232,9 +285,9 @@ STRICT BUDGET PRICE ENFORCEMENT RULES:
 - If budget is ">100€": price MUST be strictly greater than 100€ (e.g. "129€", "159€").
 
 MANDATORY DIVERSIFICATION RULE (EXACTLY 3 CARDS):
-1. Card 1 (tag: "Più Scelto"): Bestseller physical product or top-rated kit directly related to the user's topic/vibe.
-2. Card 2 (tag: "Originale / Libro"): Bestseller book, specialized guide, journal, or highly original creative gift related to the topic.
-3. Card 3 (tag: "Top Qualità"): High-quality premium accessory, complete set, or gourmet kit related to the topic.
+1. Card 1 (tag: "${tagTopPick}"): Bestseller physical product or top-rated kit directly related to the user's topic/vibe.
+2. Card 2 (tag: "${tagOriginalBooks}"): Bestseller book, specialized guide, journal, or highly original creative gift related to the topic.
+3. Card 3 (tag: "${tagTopQuality}"): High-quality premium accessory, complete set, or gourmet kit related to the topic.
 
 STRICT AMAZON QUALITY FILTERS:
 - Rating MUST be between 4.4 and 4.9 stars.
@@ -287,7 +340,7 @@ STRICT AMAZON QUALITY FILTERS:
               price: { type: Type.STRING },
               reason: { type: Type.STRING, description: "1 sentence motivation sentence" },
               matchScore: { type: Type.INTEGER },
-              tag: { type: Type.STRING, description: "Exact badge: Più Scelto, Originale / Libro, or Top Qualità" },
+              tag: { type: Type.STRING, description: `Exact badge: ${tagTopPick}, ${tagOriginalBooks}, or ${tagTopQuality}` },
               amazonSearchQuery: { type: Type.STRING },
               category: { type: Type.STRING },
               rating: { type: Type.NUMBER, description: "Rating score e.g. 4.8" },
@@ -316,7 +369,7 @@ STRICT AMAZON QUALITY FILTERS:
     const jsonText = response.text ? response.text.trim() : "[]";
     const rawGifts = JSON.parse(jsonText);
 
-    const fallbackBadges = ["Più Scelto", "Originale / Libro", "Top Qualità"];
+    const fallbackBadges = GIFT_TAGS[language];
 
     // Budget range helper
     const cleanB = (budget || "").replace(/\s+/g, "").replace(/\$/g, "").replace(/€/g, "");
@@ -364,9 +417,10 @@ STRICT AMAZON QUALITY FILTERS:
         const highEndKeywords = ["theragun", "playstation", "canon", "iphone", "apple watch", "macbook", "bose soundlink", "sony wh-1000", "fellow stagg", "dyson"];
         if (maxBudget <= 50 && highEndKeywords.some((k) => titleLower.includes(k))) {
           const cat = (gift.category || "").toLowerCase();
-          if (cat.includes("tech")) finalTitle = "Anker Power Bank Wireless 10000mAh";
-          else if (cat.includes("books")) finalTitle = "Libro Guida Bestseller Illustrato";
-          else finalTitle = "Set Diffusore Aromaterapia in Ceramica";
+          const downgradeTitles = DOWNGRADE_FALLBACK_TITLES[language];
+          if (cat.includes("tech")) finalTitle = downgradeTitles.tech;
+          else if (cat.includes("books")) finalTitle = downgradeTitles.books;
+          else finalTitle = downgradeTitles.other;
         }
       }
 
@@ -375,7 +429,12 @@ STRICT AMAZON QUALITY FILTERS:
         title: finalTitle,
         price: finalPrice,
         id: gift.id || `gift-${Date.now()}-${idx}`,
-        tag: gift.tag || fallbackBadges[idx % 3],
+        // Assegnato in modo deterministico dalla posizione della card
+        // (non dal valore restituito dal modello): 3 badge fissi in 5
+        // lingue sono un enum piccolo, meglio garantirne noi la lingua
+        // corretta piuttosto che fidarsi che il modello riecheggi
+        // esattamente la stringa richiesta.
+        tag: fallbackBadges[idx % 3],
         rating: gift.rating && gift.rating >= 4.3 ? gift.rating : 4.7,
         reviewsCount: gift.reviewsCount && gift.reviewsCount >= 100 ? gift.reviewsCount : 1250 + idx * 430,
         isPrime: gift.isPrime !== undefined ? gift.isPrime : true,
@@ -414,7 +473,7 @@ app.post("/api/chat", async (req, res) => {
       role: m?.role === "user" ? "user" : "model",
       content: sanitizeText(m?.content, 800),
     }));
-    const language = sanitizeText(req.body?.language, 5) || "en";
+    const language = resolveLanguage(req.body?.language);
     const quizState = req.body?.quizState || {};
 
     if (!process.env.GEMINI_API_KEY) {
@@ -425,12 +484,16 @@ app.post("/api/chat", async (req, res) => {
     }
 
     if (!canCallGeminiToday()) {
+      const busyMessages: Record<SupportedLanguage, string> = {
+        en: "We're very busy right now — please try again shortly.",
+        it: "Siamo molto richiesti in questo momento — riprova tra poco.",
+        es: "Estamos con mucha demanda en este momento — inténtalo de nuevo en breve.",
+        fr: "Nous sommes très sollicités en ce moment — réessayez dans un instant.",
+        de: "Wir sind gerade sehr gefragt — versuch es gleich noch einmal.",
+      };
       return res.json({
         success: false,
-        response:
-          language === "it"
-            ? "Siamo molto richiesti in questo momento — riprova tra poco."
-            : "We're very busy right now — please try again shortly.",
+        response: busyMessages[language],
       });
     }
 

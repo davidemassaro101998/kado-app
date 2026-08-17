@@ -1,6 +1,14 @@
 import { CountryConfig } from "../types";
 import { withChannelSuffix } from "../lib/channel";
 
+// Amazon Associate tags are configurable via Vite env vars so real
+// tracking IDs can be injected at build/deploy time without touching
+// this file. When an env var is unset, we fall back to the existing
+// placeholder tag (these are NOT real Associate IDs).
+function amazonTag(envVar: string | undefined, fallback: string): string {
+  return envVar && envVar.trim() ? envVar.trim() : fallback;
+}
+
 export const COUNTRIES: CountryConfig[] = [
   {
     code: "US",
@@ -9,7 +17,7 @@ export const COUNTRIES: CountryConfig[] = [
     amazonDomain: "amazon.com",
     currency: "USD",
     symbol: "$",
-    tag: "giftai-20",
+    tag: amazonTag(import.meta.env.VITE_AMAZON_TAG_US, "giftai-20"),
   },
   {
     code: "IT",
@@ -18,7 +26,7 @@ export const COUNTRIES: CountryConfig[] = [
     amazonDomain: "amazon.it",
     currency: "EUR",
     symbol: "€",
-    tag: "giftai0f-21",
+    tag: amazonTag(import.meta.env.VITE_AMAZON_TAG_IT, "giftai0f-21"),
   },
   {
     code: "UK",
@@ -27,7 +35,7 @@ export const COUNTRIES: CountryConfig[] = [
     amazonDomain: "amazon.co.uk",
     currency: "GBP",
     symbol: "£",
-    tag: "giftaiuk-21",
+    tag: amazonTag(import.meta.env.VITE_AMAZON_TAG_UK, "giftaiuk-21"),
   },
   {
     code: "DE",
@@ -36,7 +44,7 @@ export const COUNTRIES: CountryConfig[] = [
     amazonDomain: "amazon.de",
     currency: "EUR",
     symbol: "€",
-    tag: "giftaide-21",
+    tag: amazonTag(import.meta.env.VITE_AMAZON_TAG_DE, "giftaide-21"),
   },
   {
     code: "FR",
@@ -45,7 +53,7 @@ export const COUNTRIES: CountryConfig[] = [
     amazonDomain: "amazon.fr",
     currency: "EUR",
     symbol: "€",
-    tag: "giftaifr-21",
+    tag: amazonTag(import.meta.env.VITE_AMAZON_TAG_FR, "giftaifr-21"),
   },
   {
     code: "ES",
@@ -54,7 +62,7 @@ export const COUNTRIES: CountryConfig[] = [
     amazonDomain: "amazon.es",
     currency: "EUR",
     symbol: "€",
-    tag: "giftaies-21",
+    tag: amazonTag(import.meta.env.VITE_AMAZON_TAG_ES, "giftaies-21"),
   },
   {
     code: "CA",
@@ -63,7 +71,7 @@ export const COUNTRIES: CountryConfig[] = [
     amazonDomain: "amazon.ca",
     currency: "CAD",
     symbol: "CA$",
-    tag: "giftaica-20",
+    tag: amazonTag(import.meta.env.VITE_AMAZON_TAG_CA, "giftaica-20"),
   },
   {
     code: "JP",
@@ -72,7 +80,7 @@ export const COUNTRIES: CountryConfig[] = [
     amazonDomain: "amazon.co.jp",
     currency: "JPY",
     symbol: "¥",
-    tag: "giftaijp-22",
+    tag: amazonTag(import.meta.env.VITE_AMAZON_TAG_JP, "giftaijp-22"),
   },
 ];
 
