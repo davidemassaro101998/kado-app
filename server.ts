@@ -23,6 +23,19 @@ app.use((req, res, next) => {
 });
 
 // Simple In-Memory Rate Limiter (60 requests per minute per IP)
+//
+// SCALING CAVEAT: this Map lives in the process's own memory, so it is
+// per-instance, not per-app. Fine on Railway's default single-instance
+// setup. If this ever runs with more than 1 replica (horizontal
+// scaling / multiple regions), each instance gets its own counter, so
+// the *effective* limit becomes (60 * number of instances) without
+// anyone changing this number — silently weaker exactly when traffic
+// (and the risk this exists to guard against) is highest. Same caveat
+// applies to DAILY_GEMINI_CALL_CAP and recommendationsCache below. If
+// you scale beyond 1 instance, move all three to a shared store
+// (Railway's Redis add-on is the natural fit) before doing so — don't
+// let this comment be the only thing standing between "it usually
+// works" and a real bill surprise.
 const ipRequestCounts = new Map<string, { count: number; resetTime: number }>();
 app.use("/api/", (req, res, next) => {
   const clientIp = (req.headers["x-forwarded-for"] as string) || req.socket.remoteAddress || "127.0.0.1";
