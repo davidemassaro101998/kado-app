@@ -13,21 +13,25 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
   useEffect(() => {
     // Brief "presented by" beat before the app's own splash takes over —
     // same principle as a studio logo before a film. Kept short on
-    // purpose: it's a family credit, not a second splash screen.
+    // purpose: it's a family credit, not a second splash screen. The
+    // handoff itself is sequenced by AnimatePresence (mode="wait") below,
+    // not by hand-tuned delays here — an earlier version raced a fixed
+    // delay against this timer and the two logos briefly overlapped,
+    // reading as a rendering glitch instead of an intentional crossfade.
     const dgmTimer = setTimeout(() => {
       setShowDgmMark(false);
     }, 550);
 
-    // Show mini spinner after 0.2s (relative to the Kado logo appearing)
+    // Show mini spinner ~0.2s after the Kado logo has fully taken over
+    // (DGM exit ~250ms + Kado's own 800ms entrance ≈ 1600ms).
     const spinnerTimer = setTimeout(() => {
       setShowSpinner(true);
-    }, 750);
+    }, 1600);
 
-    // Total duration -> transition to Step 1 (extended slightly to make
-    // room for the DGM Apps beat above without rushing the Kado logo).
+    // Total duration -> transition to Step 1.
     const finishTimer = setTimeout(() => {
       onComplete();
-    }, 3000);
+    }, 3200);
 
     return () => {
       clearTimeout(dgmTimer);
@@ -47,64 +51,66 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
     >
       <div className="flex-1" />
 
-      <div className="relative flex flex-col items-center gap-4 text-center">
-        {/* DGM Apps family credit — fades out as the Kado logo fades in,
-            same slot on screen so nothing shifts layout underneath it. */}
-        <AnimatePresence>
-          {showDgmMark && (
-            <motion.div
-              key="dgm-mark"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.3 } }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 flex flex-col items-center justify-center gap-3"
-            >
-              <svg width="44" height="44" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="dgmRingA" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#A78BFA" />
-                    <stop offset="100%" stopColor="#8B5CF6" />
-                  </linearGradient>
-                  <linearGradient id="dgmRingB" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#67E8F9" />
-                    <stop offset="100%" stopColor="#22D3EE" />
-                  </linearGradient>
-                </defs>
-                <circle cx="18" cy="24" r="12" fill="none" stroke="url(#dgmRingA)" strokeWidth="2.75" />
-                <circle cx="30" cy="24" r="12" fill="none" stroke="url(#dgmRingB)" strokeWidth="2.75" />
-              </svg>
-              <p className="text-[10px] font-semibold text-[#68686D] tracking-[0.2em] uppercase">
-                DGM Apps
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Center Logo with Fade-In Animation */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.45 }}
-          className="flex flex-col items-center gap-4 text-center"
-        >
-          <div className="w-20 h-20 rounded-[28px] bg-white border border-[#E5E5EA] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center p-3">
-            <Ribbon3D size="lg" />
-          </div>
-
-          <div className="space-y-1">
-            <h1
-              className="text-4xl tracking-tight text-[#000000]"
-              style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
-            >
-              Kado <span style={{ color: "var(--brand-coral)" }}>AI</span>
-            </h1>
-            <p className="text-xs font-semibold text-[#68686D] tracking-wide uppercase">
-              Smart Gift Curator
+      {/* mode="wait": guarantees the DGM mark's exit animation fully
+          finishes before the Kado logo starts mounting/entering — never
+          both on screen at once. The earlier version animated both
+          independently with hand-tuned delays and they briefly overlapped
+          mid-transition, which read as a rendering glitch, not a
+          deliberate crossfade. */}
+      <AnimatePresence mode="wait">
+        {showDgmMark ? (
+          <motion.div
+            key="dgm-mark"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="flex flex-col items-center gap-3 text-center"
+          >
+            <svg width="44" height="44" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="dgmRingA" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#A78BFA" />
+                  <stop offset="100%" stopColor="#8B5CF6" />
+                </linearGradient>
+                <linearGradient id="dgmRingB" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#67E8F9" />
+                  <stop offset="100%" stopColor="#22D3EE" />
+                </linearGradient>
+              </defs>
+              <circle cx="18" cy="24" r="12" fill="none" stroke="url(#dgmRingA)" strokeWidth="2.75" />
+              <circle cx="30" cy="24" r="12" fill="none" stroke="url(#dgmRingB)" strokeWidth="2.75" />
+            </svg>
+            <p className="text-[10px] font-semibold text-[#68686D] tracking-[0.2em] uppercase">
+              Presented by DGM Apps
             </p>
-          </div>
-        </motion.div>
-      </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="kado-logo"
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col items-center gap-4 text-center"
+          >
+            <div className="w-20 h-20 rounded-[28px] bg-white border border-[#E5E5EA] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center p-3">
+              <Ribbon3D size="lg" />
+            </div>
+
+            <div className="space-y-1">
+              <h1
+                className="text-4xl tracking-tight text-[#000000]"
+                style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
+              >
+                Kado <span style={{ color: "var(--brand-coral)" }}>AI</span>
+              </h1>
+              <p className="text-xs font-semibold text-[#68686D] tracking-wide uppercase">
+                Smart Gift Curator
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="flex-1 flex flex-col items-center justify-end pb-10">
         {/* Cinematic Glowing Ring Spinner */}
