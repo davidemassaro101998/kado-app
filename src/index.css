@@ -34,6 +34,18 @@
        zero costo di caricamento, massima familiarita/velocita. */
     --font-display: "Fraunces", ui-serif, Georgia, serif;
 
+    /* Scala tipografica fissa: 5 taglie, non un valore arbitrario per
+       ogni etichetta. Prima erano sparsi text-[9px]/[10px]/[11px]/[12px]
+       decisi caso per caso, sotto la soglia di leggibilita comoda su
+       mobile (~12px). Usare SOLO questi 5 valori per il testo dell'app;
+       se serve una taglia diversa, e un segnale che la gerarchia visiva
+       va ripensata, non che serve un sesto valore arbitrario. */
+    --fs-micro: 12px;   /* badge, etichette minuscole (era 9-10px) */
+    --fs-caption: 13px; /* metadati secondari: recensioni, timestamp */
+    --fs-body: 14px;    /* testo dei bottoni, corpo del testo */
+    --fs-label: 15px;   /* sotto-titoli di sezione dentro una card */
+    --fs-title: 18px;   /* titolo della card / titolo di schermata */
+
     --sat: env(safe-area-inset-top, 0px);
     --sab: env(safe-area-inset-bottom, 0px);
     --sal: env(safe-area-inset-left, 0px);

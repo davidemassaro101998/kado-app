@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { GiftItem, QuizState, CountryConfig } from "../types";
 import { buildAmazonUrl, buildAmazonCartUrl } from "../data/countries";
@@ -91,6 +91,18 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
   // the second CTA must say "search", not "add to cart", or it's a button
   // that lies about what tapping it does.
   const isVerifiedAmazonMatch = currentGift?.dataSource === "amazon" && !!currentGift?.asin;
+
+  // Drops `willChange` once the entrance spring settles instead of
+  // leaving the layer permanently GPU-promoted. Keeping will-change set
+  // indefinitely after a scale/rotate animation is a known cause of
+  // slightly-soft text on iOS Safari (the compositor keeps rasterizing
+  // the layer at the animation's texture resolution instead of
+  // re-rasterizing crisply at rest) — this makes the card's text render
+  // sharp once it's actually still, not just while animating.
+  const cardRef = useRef<HTMLDivElement>(null);
+  const handleCardAnimationComplete = useCallback(() => {
+    if (cardRef.current) cardRef.current.style.willChange = "auto";
+  }, []);
   // La prima carta (server.ts la genera sempre come "Più Scelto") è la
   // vera raccomandazione dell'AI — le altre due restano alternative
   // secondarie. Prima le 3 card erano visivamente alla pari: un micro
@@ -154,11 +166,11 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#000000]" />
           </button>
           <div className="min-w-0">
-            <span className="text-[9px] sm:text-[10px] font-extrabold text-[#007AFF] uppercase tracking-wider flex items-center gap-1">
+            <span className="text-[12px] font-extrabold text-[#007AFF] uppercase tracking-wider flex items-center gap-1">
               <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#007AFF] shrink-0" />
               KADO AI • {t.curatedSelection}
             </span>
-            <h2 className="text-xs sm:text-sm font-extrabold text-[#000000] truncate">
+            <h2 className="text-[15px] font-extrabold text-[#000000] truncate">
               {t.forRecipient} {quizState.recipient} • {quizState.vibe} ({quizState.budget})
             </h2>
           </div>
@@ -166,14 +178,20 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
         <button
           onClick={onStartOver}
-          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#E5E5EA] text-[#007AFF] hover:bg-[#E5E5EA] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1 gpu-layer"
+          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#E5E5EA] text-[#007AFF] hover:bg-[#E5E5EA] active:scale-95 transition-transform text-[14px] font-bold shadow-2xs cursor-pointer shrink-0 ml-1 gpu-layer"
         >
           {t.newSearchBtn}
         </button>
       </div>
 
       {/* Main Interactive Container */}
-      <div className="relative flex-1 min-h-0 flex flex-col justify-center my-1.5 overflow-y-auto custom-scrollbar px-0.5">
+      {/* justify-start, not -center: centered flex content that overflows
+          its container leaves the "before" half unreachable by scroll in
+          every major browser (you'd need to scroll to negative space) —
+          exactly what silently ate the two purchase buttons on shorter
+          screens once the type scale below made the card taller than
+          this container. Top-aligned content always scrolls fully. */}
+      <div className="relative flex-1 min-h-0 flex flex-col justify-start my-1.5 overflow-y-auto custom-scrollbar px-0.5">
         {/* Progress Dots & Navigation Controls Indicator */}
         <div className="flex items-center justify-between gap-2 mb-2 shrink-0 px-1">
           <div className="flex items-center gap-1.5">
@@ -201,7 +219,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
               <ChevronLeft className="w-4 h-4 text-[#000000]" />
             </button>
 
-            <span className="text-[10px] sm:text-[11px] font-extrabold text-[#68686D] px-1 min-w-[32px] text-center">
+            <span className="text-[13px] font-extrabold text-[#68686D] px-1 min-w-[32px] text-center">
               {activeIndex + 1} / {gifts.length || 3}
             </span>
 
@@ -216,16 +234,23 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           </div>
         </div>
 
-        {/* Animated Swipeable Active Gift Card */}
+        {/* Animated Swipeable Active Gift Card. No fixed max-height here on
+            purpose: a hard pixel cap + overflow-hidden clipped the reason
+            box and BOTH purchase buttons clean off screen on shorter
+            devices once the type scale below made card content taller —
+            the parent's overflow-y-auto (above) handles any overflow
+            instead of silently cutting off the two CTAs that matter most. */}
         {currentGift && (
-          <div className="relative w-full flex-1 max-h-[470px] sm:max-h-[510px] flex flex-col justify-center overflow-hidden">
+          <div className="relative w-full flex-1 flex flex-col justify-start">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeIndex}
+                ref={cardRef}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.15}
                 onDragEnd={handleDragEnd}
+                onAnimationComplete={handleCardAnimationComplete}
                 initial={
                   isPrimary
                     ? { opacity: 0, scale: 0.9, y: 18, rotate: -4 }
@@ -238,10 +263,12 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     ? { type: "spring", stiffness: 340, damping: 22, mass: 0.9 }
                     : { type: "spring", stiffness: 400, damping: 30, mass: 0.8 }
                 }
-                className="w-full rounded-[22px] sm:rounded-[26px] bg-white p-3 sm:p-4 flex flex-col gap-2.5 sm:gap-3 relative overflow-hidden cursor-grab active:cursor-grabbing gpu-layer"
+                className="w-full rounded-[22px] sm:rounded-[26px] bg-white p-3 sm:p-4 flex flex-col gap-2 sm:gap-2.5 relative overflow-hidden cursor-grab active:cursor-grabbing gpu-layer"
                 style={{
                   touchAction: "pan-y",
                   willChange: "transform, opacity",
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
                   border: isPrimary ? "2px solid var(--brand-coral)" : "1px solid #E5E5EA",
                   boxShadow: isPrimary
                     ? "0 10px 32px rgba(255,77,109,0.18)"
@@ -251,7 +278,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 {/* 1. Badge Header */}
                 <div className="flex items-center justify-between shrink-0">
                   <div
-                    className="flex items-center gap-1 text-[11px] sm:text-xs font-bold"
+                    className="flex items-center gap-1 text-[14px] font-bold"
                     style={{ color: isPrimary ? "var(--brand-coral-dark)" : "#000000" }}
                   >
                     <Zap
@@ -265,7 +292,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                   </div>
 
                   {currentGift.isPrime && (
-                    <span className="text-[10px] sm:text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full tracking-tight">
+                    <span className="text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full tracking-tight">
                       ✓ Prime
                     </span>
                   )}
@@ -301,7 +328,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                   )}
 
                   {/* Price Tag Pill */}
-                  <div className="absolute bottom-2 right-2 bg-white/95 backdrop-blur-xs text-[#000000] text-xs sm:text-sm font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#E5E5EA]">
+                  <div className="absolute bottom-2 right-2 bg-white/95 backdrop-blur-xs text-[#000000] text-[15px] font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#E5E5EA]">
                     {currentGift.price}
                   </div>
                 </div>
@@ -309,7 +336,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 {/* 3. Title & Rating Info */}
                 <div className="space-y-1">
                   <h3
-                    className="text-sm sm:text-base text-[#000000] line-clamp-2 leading-snug"
+                    className="text-[18px] text-[#000000] line-clamp-2 leading-snug"
                     style={
                       isPrimary
                         ? { fontFamily: "var(--font-display)", fontWeight: 600 }
@@ -319,14 +346,14 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     {currentGift.title}
                   </h3>
 
-                  <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-[#000000] font-semibold">
+                  <div className="flex items-center gap-1.5 text-[13px] text-[#000000] font-semibold">
                     <div className="flex items-center text-[#000000]">
                       <Star className="w-3.5 h-3.5 fill-[#000000] text-[#000000]" />
                       <span className="ml-0.5 font-bold">
                         {currentGift.rating ? currentGift.rating.toFixed(1) : "4.8"}
                       </span>
                     </div>
-                    <span className="text-[#68686D] font-normal text-[10px] sm:text-[11px]">
+                    <span className="text-[#68686D] font-normal text-[13px]">
                       ({currentGift.reviewsCount ? currentGift.reviewsCount.toLocaleString() : "1,240"} {t.reviewsLabel})
                     </span>
                   </div>
@@ -334,7 +361,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
                 {/* 4. AI Reason Box */}
                 <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#F2F2F7] border border-[#E5E5EA]">
-                  <p className="text-[11px] sm:text-xs text-[#000000] font-normal leading-relaxed">
+                  <p className="text-[14px] text-[#000000] font-normal leading-relaxed">
                     💡 <span className="font-bold text-[#000000]">{t.whyPerfectLabel}</span> {currentGift.reason}
                   </p>
                 </div>
@@ -361,10 +388,10 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#007AFF] hover:bg-[#F2F2F7] active:scale-[0.98] text-[#007AFF] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-all uppercase tracking-wider gpu-layer"
+                    className="min-w-0 py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#007AFF] hover:bg-[#F2F2F7] active:scale-[0.98] text-[#007AFF] font-black text-[13px] flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-all uppercase tracking-wider gpu-layer"
                   >
                     <ShoppingBag className="w-4 h-4 text-[#007AFF] shrink-0" />
-                    <span className="truncate">{t.seeInStoreBtn}</span>
+                    <span className="leading-tight text-center">{t.seeInStoreBtn}</span>
                     <ExternalLink className="w-3.5 h-3.5 text-[#007AFF] shrink-0 hidden sm:inline" />
                   </a>
 
@@ -392,7 +419,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-90 text-white font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all uppercase tracking-wider border-2 gpu-layer"
+                    className="min-w-0 py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-90 text-white font-black text-[13px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all uppercase tracking-wider border-2 gpu-layer"
                     style={{
                       backgroundColor: isPrimary ? "var(--brand-coral)" : "#007AFF",
                       borderColor: isPrimary ? "var(--brand-coral)" : "#007AFF",
@@ -403,7 +430,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     ) : (
                       <Search className="w-4 h-4 text-white shrink-0" />
                     )}
-                    <span className="truncate">{isVerifiedAmazonMatch ? t.addToCartBtn : t.searchOnAmazonBtn}</span>
+                    <span className="leading-tight text-center">{isVerifiedAmazonMatch ? t.addToCartBtn : t.searchOnAmazonBtn}</span>
                   </a>
                 </div>
               </motion.div>
@@ -418,7 +445,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           {/* 1. [💬 Copia Biglietto] */}
           <button
             onClick={handleCopyWhatsApp}
-            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs active:scale-[0.98] gpu-layer"
+            className="py-2 sm:py-2.5 px-2 rounded-2xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-[#000000] font-bold text-[14px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs active:scale-[0.98] gpu-layer"
             aria-label={t.shareWhatsApp}
           >
             <MessageCircle className="w-4 h-4 text-[#007AFF] shrink-0" />
@@ -437,7 +464,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
               senza competere con il CTA primario "Metti in carrello". */}
           <button
             onClick={onRegenerate}
-            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white hover:bg-[#FFF0F2] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer active:scale-[0.98] gpu-layer border-2"
+            className="py-2 sm:py-2.5 px-2 rounded-2xl bg-white hover:bg-[#FFF0F2] text-[#000000] font-bold text-[14px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer active:scale-[0.98] gpu-layer border-2"
             style={{ borderColor: "var(--brand-coral)" }}
           >
             <RotateCcw className="w-4 h-4 shrink-0" style={{ color: "var(--brand-coral)" }} />
@@ -459,7 +486,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 onClick={() => {
                   setShowReminderForm(true);
                 }}
-                className="w-full py-2 px-3 rounded-2xl bg-white border border-dashed border-[#E5E5EA] hover:border-[var(--brand-coral)] text-[11px] sm:text-xs font-semibold text-[#68686D] hover:text-[var(--brand-coral-dark)] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="w-full py-2 px-3 rounded-2xl bg-white border border-dashed border-[#E5E5EA] hover:border-[var(--brand-coral)] text-[13px] font-semibold text-[#68686D] hover:text-[var(--brand-coral-dark)] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                 aria-label={t.saveDate}
               >
                 <CalendarHeart className="w-3.5 h-3.5" style={{ color: "var(--brand-coral)" }} />
@@ -473,26 +500,26 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     value={reminderName}
                     onChange={(e) => setReminderName(e.target.value)}
                     placeholder={t.reminderNamePlaceholder}
-                    className="flex-1 min-w-0 py-2 px-2.5 rounded-xl border border-[#E5E5EA] text-xs text-[#000000] outline-none focus:border-[var(--brand-coral)]"
+                    className="flex-1 min-w-0 py-2 px-2.5 rounded-xl border border-[#E5E5EA] text-[14px] text-[#000000] outline-none focus:border-[var(--brand-coral)]"
                   />
                   <input
                     type="date"
                     value={reminderDate}
                     onChange={(e) => setReminderDate(e.target.value)}
-                    className="py-2 px-2.5 rounded-xl border border-[#E5E5EA] text-xs text-[#000000] outline-none focus:border-[var(--brand-coral)]"
+                    className="py-2 px-2.5 rounded-xl border border-[#E5E5EA] text-[14px] text-[#000000] outline-none focus:border-[var(--brand-coral)]"
                   />
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowReminderForm(false)}
-                    className="flex-1 py-2 rounded-xl bg-[#F2F2F7] text-[#68686D] text-xs font-bold cursor-pointer"
+                    className="flex-1 py-2 rounded-xl bg-[#F2F2F7] text-[#68686D] text-[14px] font-bold cursor-pointer"
                   >
                     {t.cancel}
                   </button>
                   <button
                     onClick={handleSaveReminder}
                     disabled={!reminderDate}
-                    className="flex-1 py-2 rounded-xl text-white text-xs font-bold cursor-pointer disabled:opacity-40"
+                    className="flex-1 py-2 rounded-xl text-white text-[14px] font-bold cursor-pointer disabled:opacity-40"
                     style={{ backgroundColor: "var(--brand-coral)" }}
                   >
                     {t.save}
@@ -502,14 +529,14 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
             )}
           </div>
         ) : (
-          <div className="pt-0.5 flex items-center justify-center gap-1.5 text-[11px] font-semibold" style={{ color: "var(--brand-coral-dark)" }}>
+          <div className="pt-0.5 flex items-center justify-center gap-1.5 text-[13px] font-semibold" style={{ color: "var(--brand-coral-dark)" }}>
             <Check className="w-3.5 h-3.5" />
             {t.reminderSavedMsg}
           </div>
         )}
 
         {/* Legal Disclaimers: Amazon Affiliate */}
-        <div className="text-[9px] sm:text-[10px] text-[#68686D] text-center leading-tight px-1 pb-0.5">
+        <div className="text-[12px] text-[#68686D] text-center leading-tight px-1 pb-0.5">
           <p>
             {t.affiliateDisclaimerShort}
           </p>
