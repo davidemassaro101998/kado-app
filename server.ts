@@ -4,6 +4,7 @@ import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type, Modality } from "@google/genai";
 import dotenv from "dotenv";
 import { createServer } from "http";
+import { isPaapiConfigured, searchAmazonProduct } from "./paapi";
 
 dotenv.config();
 
@@ -208,6 +209,17 @@ function getRandomImage(category: string, index: number): string {
     }
   }
   return pool[index % pool.length];
+}
+
+// Mirrors the VITE_AMAZON_TAG_* variables src/data/countries.ts reads
+// client-side — Vite exposes them to the browser bundle, but the
+// underlying env var is the same one process.env sees here in the Node
+// server. No real tag configured for a marketplace -> skip PA-API for
+// it entirely; there's no point calling Amazon with a placeholder tag
+// it will reject anyway.
+function getPartnerTag(countryCode: string): string | undefined {
+  const value = process.env[`VITE_AMAZON_TAG_${countryCode}`];
+  return value && value.trim() ? value.trim() : undefined;
 }
 
 // Health check endpoint (used by Railway and other deploy platforms)
@@ -441,6 +453,38 @@ STRICT AMAZON QUALITY FILTERS:
         imageUrl: getRandomImage(gift.category || "default", idx),
       };
     });
+
+    // Best-effort real-data overlay: once Amazon approves PA-API access
+    // and AMAZON_PAAPI_ACCESS_KEY/SECRET_KEY + a real Associates tag are
+    // set, replace the AI-estimated fields with a real Amazon match —
+    // real ASIN, live price, real rating/review count, real image —
+    // instead of the values Gemini was told to estimate above. Until
+    // then (or for any gift PA-API can't confidently match) the
+    // AI-generated fields are kept exactly as today, just labeled so the
+    // frontend can eventually distinguish verified data from an estimate.
+    const partnerTag = getPartnerTag(countryCode || "US");
+    if (isPaapiConfigured() && partnerTag) {
+      await Promise.all(
+        gifts.map(async (gift: any) => {
+          const match = await searchAmazonProduct(gift.amazonSearchQuery || gift.title, countryCode || "US", partnerTag);
+          if (match) {
+            gift.asin = match.asin;
+            gift.price = match.price || gift.price;
+            gift.imageUrl = match.imageUrl || gift.imageUrl;
+            gift.rating = match.rating || gift.rating;
+            gift.reviewsCount = match.reviewsCount || gift.reviewsCount;
+            gift.isPrime = match.isPrime !== undefined ? match.isPrime : gift.isPrime;
+            gift.dataSource = "amazon";
+          } else {
+            gift.dataSource = "ai-estimate";
+          }
+        })
+      );
+    } else {
+      gifts.forEach((gift: any) => {
+        gift.dataSource = "ai-estimate";
+      });
+    }
 
     // Cache valid response for 30 minutes
     if (gifts.length > 0 && excludeTitles.length === 0) {
