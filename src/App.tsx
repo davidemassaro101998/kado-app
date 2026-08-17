@@ -104,17 +104,20 @@ export default function App() {
     }
   }, []);
 
-  // Language State
+  // Language State — detects the browser's language among the 5
+  // supported ones; falls back to English (not Italian) when the
+  // visitor's locale isn't one we support, consistent with
+  // detectUserCountry()'s fallback to the US/English store.
   const [language, setLanguage] = useState<Language>(() => {
     try {
-      const userLang = navigator.language || "";
-      if (userLang.toLowerCase().includes("it")) {
-        return "it";
-      }
+      const userLang = (navigator.language || "").toLowerCase();
+      const supported: Language[] = ["it", "es", "fr", "de", "en"];
+      const match = supported.find((l) => userLang.startsWith(l));
+      if (match) return match;
     } catch (e) {
       // fallback
     }
-    return "it";
+    return "en";
   });
 
   // Quiz State

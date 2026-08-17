@@ -1,7 +1,12 @@
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, ShieldCheck, FileText, ShoppingBag } from "lucide-react";
-import { Language } from "../data/translations";
+import { Language, TRANSLATIONS } from "../data/translations";
+
+// TODO: Iubenda embed — in attesa di site ID da davidemassaro101998.
+// Questo modal custom (privacy/terms/affiliate) resta la fonte
+// attuale dei testi legali e deve continuare a funzionare finche'
+// Iubenda non viene integrato al suo posto (o in aggiunta).
 
 export type LegalDocType = "privacy" | "terms" | "affiliate" | null;
 
@@ -20,12 +25,12 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
 }) => {
   if (!isOpen || !type) return null;
 
-  const isIt = language === "it";
+  const t = TRANSLATIONS[language] || TRANSLATIONS.en;
 
   const getTitle = () => {
-    if (type === "privacy") return "Privacy Policy (GDPR EU)";
-    if (type === "terms") return isIt ? "Termini e Condizioni" : "Terms & Conditions";
-    return isIt ? "Affiliazione Amazon & Disclaimers" : "Amazon Affiliate & Disclaimers";
+    if (type === "privacy") return t.legalPrivacyTitle;
+    if (type === "terms") return t.legalTermsTitle;
+    return t.legalAffiliateTitle;
   };
 
   const getIcon = () => {
@@ -67,22 +72,22 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
             {type === "privacy" && (
               <>
                 <p className="font-bold text-sm text-[#007AFF]">
-                  Informativa sulla Privacy e Trattamento Dati (GDPR EU 2016/679)
+                  {t.legalPrivacyHeading}
                 </p>
                 <p>
-                  <strong>1. Titolare del Trattamento:</strong> Kado AI opera nel rispetto dei principi di minimizzazione dei dati e riservatezza.
+                  <strong>{t.legalPrivacyItem1Title}</strong> {t.legalPrivacyItem1Text}
                 </p>
                 <p>
-                  <strong>2. Tipologia di Dati Raccolti:</strong> Kado AI NON raccoglie, profila né vende dati personali degli utenti. L'applicazione funziona interamente tramite salvataggi locali tecnici nel browser/dispositivo dell'utente (localStorage) per memorizzare le impostazioni di lingua, paese Amazon e promemoria calendario.
+                  <strong>{t.legalPrivacyItem2Title}</strong> {t.legalPrivacyItem2Text}
                 </p>
                 <p>
-                  <strong>3. Cookie Tecnici:</strong> Vengono utilizzati esclusivamente cookie e archivi locali strettamente necessari per le funzionalità operative dell'applet (PWA state, preferenze lingua, lista promemoria). Non vengono impiegati cookie di tracciamento pubblicitario o profilazione di terze parti.
+                  <strong>{t.legalPrivacyItem3Title}</strong> {t.legalPrivacyItem3Text}
                 </p>
                 <p>
-                  <strong>4. Servizi Terzi (Google Gemini AI & Amazon PA-API):</strong> Le elaborazioni per la raccomandazione dei regali avvengono lato server tramite connessioni crittografate HTTPS. Nessun identificativo dell'utente viene trasmesso ai modelli AI.
+                  <strong>{t.legalPrivacyItem4Title}</strong> {t.legalPrivacyItem4Text}
                 </p>
                 <p>
-                  <strong>5. Diritti dell'Utente:</strong> L'utente può in qualsiasi momento cancellare i propri dati salvati semplicemente svuotando la cache del browser o ripristinando le impostazioni dell'app.
+                  <strong>{t.legalPrivacyItem5Title}</strong> {t.legalPrivacyItem5Text}
                 </p>
               </>
             )}
@@ -90,19 +95,19 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
             {type === "terms" && (
               <>
                 <p className="font-bold text-sm text-[#007AFF]">
-                  {isIt ? "Termini e Condizioni di Utilizzo" : "Terms & Conditions"}
+                  {t.legalTermsHeading}
                 </p>
                 <p>
-                  <strong>1. Natura del Servizio:</strong> Kado AI è un motore di raccomandazione intelligente sviluppato per suggerire idee regalo personalizzate reperibili su store online come Amazon.
+                  <strong>{t.legalTermsItem1Title}</strong> {t.legalTermsItem1Text}
                 </p>
                 <p>
-                  <strong>2. Esclusione di Responsabilità:</strong> I suggerimenti generati dall'Intelligenza Artificiale hanno scopo informativo ed euristico. Kado AI non è il venditore diretto dei prodotti consigliati.
+                  <strong>{t.legalTermsItem2Title}</strong> {t.legalTermsItem2Text}
                 </p>
                 <p>
-                  <strong>3. Acquisti Esterni:</strong> Gli acquisti avvengono interamente sui siti ufficiali Amazon del paese selezionato. L'utente si affida alle condizioni di vendita, garanzia e spedizione fornite direttamente da Amazon.
+                  <strong>{t.legalTermsItem3Title}</strong> {t.legalTermsItem3Text}
                 </p>
                 <p>
-                  <strong>4. Proprietà Intellettuale:</strong> Il design, il codice e l'interfaccia di Kado AI sono protetti da copyright. I marchi Amazon e i loghi dei prodotti appartengono ai rispettivi proprietari.
+                  <strong>{t.legalTermsItem4Title}</strong> {t.legalTermsItem4Text}
                 </p>
               </>
             )}
@@ -110,24 +115,24 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
             {type === "affiliate" && (
               <>
                 <p className="font-bold text-sm text-[#007AFF]">
-                  Dichiarazione di Affiliazione Amazon & Disclaimers Obbligatori
+                  {t.legalAffiliateHeading}
                 </p>
 
                 <div className="p-3.5 rounded-2xl bg-[#F2F2F7] border border-[#E5E5EA] font-semibold text-xs text-[#000000] space-y-2">
                   <p>
-                    "In qualità di Affiliato Amazon, Kado AI riceve un guadagno dagli acquisti idonei."
+                    {t.legalAffiliateQuote}
                   </p>
                   <p className="text-[11px] font-normal text-[#8E8E93]">
-                    Kado AI partecipa al Programma Affiliazione Amazon EU e Amazon Associates US, un programma di affiliazione progettato per fornire ai siti un mezzo per guadagnare commissioni pubblicitarie creando link verso Amazon.it, Amazon.com e i rispettivi store internazionali.
+                    {t.legalAffiliateProgramText}
                   </p>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-[#F2F2F7] border border-[#E5E5EA] space-y-1.5">
                   <span className="font-bold text-xs text-[#000000] block">
-                    Disclaimer Prezzi e Disponibilità:
+                    {t.legalAffiliatePriceDisclaimerTitle}
                   </span>
                   <p className="text-[11px] text-[#8E8E93] leading-relaxed">
-                    Prezzi e disponibilità dei prodotti sono forniti in tempo reale da Amazon PA-API e sono soggetti a variazioni continue. Fa fede il prezzo ed la disponibilità mostrati sulla pagina prodotto di Amazon al momento dell'acquisto finale.
+                    {t.legalAffiliatePriceDisclaimerText}
                   </p>
                 </div>
               </>
@@ -140,7 +145,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
               onClick={onClose}
               className="py-2.5 px-5 rounded-xl bg-[#007AFF] text-white font-bold text-xs cursor-pointer hover:bg-[#0062CC] transition-colors"
             >
-              {isIt ? "Chiudi" : "Close"}
+              {t.close}
             </button>
           </div>
         </motion.div>

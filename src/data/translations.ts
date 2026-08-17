@@ -2,20 +2,12 @@ export type Language = "en" | "it" | "es" | "fr" | "de";
 
 export interface Translations {
   // Header
-  savedDates: string;
   selectLanguageRegion: string;
   language: string;
   storeRegion: string;
   regionNotice: string;
 
   // Home Screen
-  heroTag: string;
-  heroTitleLine1: string;
-  heroTitleLine2: string;
-  heroSubtitle: string;
-  findGiftBtn: string;
-  tag20Sec: string;
-  tagDirectLinks: string;
   fastTrackPlaceholder: string;
   homeStep1Title: string;
   homeStep1Sub: string;
@@ -31,49 +23,13 @@ export interface Translations {
   extraDetailsHomePlaceholder: string;
   showPerfectGiftsBtn: string;
 
-  // Quiz Steps
-  step0Tag: string;
-  step0Title: string;
-  step1Tag: string;
-  step1Title: string;
-  addCustomRecipient: string;
-  recipientPlaceholder: string;
-  addBtn: string;
-
-  step2Tag: string;
-  step2Title: string;
-  additionalPreferencesTitle: string;
-  additionalPreferencesOptional: string;
-  prefPlaceholder: string;
-
-  step3Tag: string;
-  step3Title: string;
-  inCurrency: string;
-
-  step4Tag: string;
-  step4Title: string;
-  customVibeTitle: string;
-  vibePlaceholder: string;
-
-  // Calendar Planner
-  calendarPlannerTitle: string;
-  planEventBtn: string;
-  quickPresets: string;
-  upcomingEvents: string;
-  noEventsPlanned: string;
-  planNewEvent: string;
-  findGiftForEvent: string;
-  daysRemaining: string;
-
   // Buttons
-  next: string;
-  skip: string;
-  done: string;
   back: string;
   cancel: string;
   save: string;
   close: string;
   delete: string;
+  clear: string;
 
   // Loading
   curating: string;
@@ -86,10 +42,10 @@ export interface Translations {
   curatedSelection: string;
   forRecipient: string;
   startOver: string;
-  viewOnStore: string;
   shareWhatsApp: string;
   saveDate: string;
   optionOf: string;
+  reviewsLabel: string;
   newSearchBtn: string;
   previousLabel: string;
   nextLabel: string;
@@ -105,18 +61,9 @@ export interface Translations {
   reminderSavedMsg: string;
   wsGreetingTemplate: string;
 
-  // Modals
-  saveEventDate: string;
-  personsName: string;
-  eventDateWheel: string;
-  notesBookmark: string;
-  saveToReminders: string;
-  noSavedDates: string;
-  namePlaceholder: string;
-  notesPlaceholder: string;
-
   // AI Concierge & Voice
   aiConciergeBtn: string;
+  voiceDrawerTitle: string;
   aiVoiceTitle: string;
   aiVoiceSubtitle: string;
   talkToAiPill1: string;
@@ -221,19 +168,11 @@ export interface Translations {
 
 export const TRANSLATIONS: Record<Language, Translations> = {
   en: {
-    savedDates: "Saved Dates",
     selectLanguageRegion: "Language & Region",
     language: "Language",
     storeRegion: "Store Region",
     regionNotice: "Gift links will open in your local store currency and region.",
 
-    heroTag: "Ultra-Fast Gift Curation",
-    heroTitleLine1: "The Right Gift.",
-    heroTitleLine2: "Instantly.",
-    heroSubtitle: "Solved in under 20 seconds. Thoughtful recommendations for everyone you care about.",
-    findGiftBtn: "Find a Gift",
-    tag20Sec: "20 Seconds",
-    tagDirectLinks: "Direct Store Links",
     fastTrackPlaceholder: "Have an idea or SOS? Speak or type...",
     homeStep1Title: "Who is the gift for?",
     homeStep1Sub: "Select recipient to customize",
@@ -249,46 +188,12 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     extraDetailsHomePlaceholder: "Extra details (optional)",
     showPerfectGiftsBtn: "SHOW PERFECT GIFTS",
 
-    step0Tag: "STEP 1 OF 5 • EVENT DATE",
-    step0Title: "When is the event?",
-    step1Tag: "STEP 2 OF 5 • RECIPIENT",
-    step1Title: "Who is this gift for?",
-    addCustomRecipient: "Custom Recipient & Note",
-    recipientPlaceholder: "e.g. Best friend Sarah who loves reading...",
-    addBtn: "Add",
-
-    step2Tag: "STEP 3 OF 5 • OCCASION",
-    step2Title: "What is the occasion?",
-    additionalPreferencesTitle: "Additional Preferences & Details",
-    additionalPreferencesOptional: "Optional",
-    prefPlaceholder: "e.g. Likes outdoor gear, prefers sustainable items...",
-
-    step3Tag: "STEP 4 OF 5 • BUDGET",
-    step3Title: "Choose a budget.",
-    inCurrency: "In",
-
-    step4Tag: "STEP 5 OF 5 • VIBE",
-    step4Title: "Select their vibe.",
-    customVibeTitle: "Custom Style, Hobbies & Interests Note",
-    vibePlaceholder: "e.g. Photography, Specialty coffee, Espresso making...",
-
-    calendarPlannerTitle: "Gift Calendar & Event Planner",
-    planEventBtn: "Plan an Event",
-    quickPresets: "Quick Presets",
-    upcomingEvents: "Upcoming Planned Events",
-    noEventsPlanned: "No events planned yet. Add a date to start planning gifts!",
-    planNewEvent: "Plan New Event",
-    findGiftForEvent: "Find Gift for this Event",
-    daysRemaining: "days away",
-
-    next: "Next",
-    skip: "Skip",
-    done: "Done",
     back: "Back",
     cancel: "Cancel",
     save: "Save",
     close: "Close",
     delete: "Delete",
+    clear: "Clear",
 
     curating: "CURATING...",
     curatingSub: "Matching recipient preferences with premium store availability...",
@@ -299,10 +204,10 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     curatedSelection: "Curated Selection",
     forRecipient: "For",
     startOver: "Start Over",
-    viewOnStore: "View on Store",
     shareWhatsApp: "Share on WhatsApp",
     saveDate: "Save Date",
     optionOf: "Option",
+    reviewsLabel: "reviews",
     newSearchBtn: "New Search",
     previousLabel: "Previous",
     nextLabel: "Next",
@@ -318,16 +223,8 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     reminderSavedMsg: "Reminder saved — we'll remind you.",
     wsGreetingTemplate: "Happy Birthday! 🎉 I found a special gift for you: {title} ({price})! Check it out: {link}",
 
-    saveEventDate: "Save Event Date",
-    personsName: "Person's Name",
-    eventDateWheel: "Event Date (Tactile Wheel Picker)",
-    notesBookmark: "Notes / Gift Bookmark",
-    saveToReminders: "Save to Reminders",
-    noSavedDates: "No saved dates yet.",
-    namePlaceholder: "e.g. Alex",
-    notesPlaceholder: "e.g. Ember Mug or Wireless Charger",
-
     aiConciergeBtn: "Talk to AI Voice Assistant",
+    voiceDrawerTitle: "AI Voice Assistant",
     aiVoiceTitle: "Wrap AI Concierge",
     aiVoiceSubtitle: "Have an initial idea or want a voice-guided discovery?",
     talkToAiPill1: "💡 I already have an idea, help me refine it",
@@ -393,7 +290,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     legalTermsItem4Text: "The design, code, and interface of Kado AI are protected by copyright. Amazon trademarks and product logos belong to their respective owners.",
     legalAffiliateHeading: "Amazon Affiliate Disclosure & Mandatory Disclaimers",
     legalAffiliateQuote: "\"As an Amazon Associate, Kado AI earns from qualifying purchases.\"",
-    legalAffiliateProgramText: "Kado AI participates in the Amazon EU Associates Programme and the Amazon.com Associates Program, affiliate advertising programs designed to provide a means for sites to earn advertising fees by linking to Amazon.it, Amazon.com, and their respective international stores.",
+    legalAffiliateProgramText: "Kado AI participates in the Amazon EU Associates Programme and the Amazon.com Associates Program, affiliate advertising programs designed to provide a means for sites to earn advertising fees by linking to Amazon.com, Amazon.co.uk, and their respective international stores.",
     legalAffiliatePriceDisclaimerTitle: "Price & Availability Disclaimer:",
     legalAffiliatePriceDisclaimerText: "Product prices and availability are provided in real time by the Amazon PA-API and are subject to continuous change. The price and availability shown on the Amazon product page at the time of final purchase apply.",
 
@@ -424,19 +321,11 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     iosGotItBtn: "GOT IT",
   },
   it: {
-    savedDates: "Date Salvate",
     selectLanguageRegion: "Lingua e Regione",
     language: "Lingua",
     storeRegion: "Regione dello Store",
     regionNotice: "I link dei regali si apriranno nella tua valuta e store locale.",
 
-    heroTag: "Curatela Regali Ultra-Veloce",
-    heroTitleLine1: "Il Regalo Perfetto.",
-    heroTitleLine2: "All'Istante.",
-    heroSubtitle: "Trovato in meno di 20 secondi. Idee speciali e premurose per tutti le persone a cui tieni.",
-    findGiftBtn: "Trova un Regalo",
-    tag20Sec: "20 Secondi",
-    tagDirectLinks: "Link Diretti allo Store",
     fastTrackPlaceholder: "Hai un'idea o SOS? Parla o scrivi...",
     homeStep1Title: "Per chi è il regalo?",
     homeStep1Sub: "Seleziona il destinatario per personalizzare",
@@ -452,46 +341,12 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     extraDetailsHomePlaceholder: "Dettaglio extra (opzionale)",
     showPerfectGiftsBtn: "MOSTRA REGALI PERFETTI",
 
-    step0Tag: "PASSAGGIO 1 DI 5 • DATA EVENTO",
-    step0Title: "Quando è l'evento o la festa?",
-    step1Tag: "PASSAGGIO 2 DI 5 • DESTINATARIO",
-    step1Title: "Per chi è questo regalo?",
-    addCustomRecipient: "Destinatario o Note Personalizzate",
-    recipientPlaceholder: "es. La mia amica Sara che ama la lettura...",
-    addBtn: "Aggiungi",
-
-    step2Tag: "PASSAGGIO 3 DI 5 • OCCASIONE",
-    step2Title: "Qual è l'occasione?",
-    additionalPreferencesTitle: "Preferenze e Dettagli Aggiuntivi",
-    additionalPreferencesOptional: "Opzionale",
-    prefPlaceholder: "es. Ama l'aria aperta, preferisce materiali eco...",
-
-    step3Tag: "PASSAGGIO 4 DI 5 • BUDGET",
-    step3Title: "Scegli un budget.",
-    inCurrency: "In",
-
-    step4Tag: "PASSAGGIO 5 DI 5 • STILE",
-    step4Title: "Seleziona il suo stile.",
-    customVibeTitle: "Note su Hobby, Stile e Interessi",
-    vibePlaceholder: "es. Fotografia, Caffè specialty, Tennis, Libri...",
-
-    calendarPlannerTitle: "Calendario Eventi & Pianificatore Regali",
-    planEventBtn: "Pianifica un Evento",
-    quickPresets: "Scelta Rapida",
-    upcomingEvents: "Prossimi Eventi Pianificati",
-    noEventsPlanned: "Nessun evento pianificato. Aggiungi una data per iniziare a cercare i regali!",
-    planNewEvent: "Pianifica Nuovo Evento",
-    findGiftForEvent: "Trova Regalo per questo Evento",
-    daysRemaining: "giorni rimasti",
-
-    next: "Avanti",
-    skip: "Salta",
-    done: "Fatto",
     back: "Indietro",
     cancel: "Annulla",
     save: "Salva",
     close: "Chiudi",
     delete: "Elimina",
+    clear: "Cancella",
 
     curating: "CREAZIONE SELEZIONE...",
     curatingSub: "Ricerca dei migliori regali in corso per le preferenze indicate...",
@@ -502,10 +357,10 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     curatedSelection: "Selezione Su Misura",
     forRecipient: "Per",
     startOver: "Ricomincia",
-    viewOnStore: "Vedi sullo Store",
     shareWhatsApp: "Condividi su WhatsApp",
     saveDate: "Salva Data",
     optionOf: "Opzione",
+    reviewsLabel: "recensioni",
     newSearchBtn: "Nuova Ricerca",
     previousLabel: "Precedente",
     nextLabel: "Successivo",
@@ -521,16 +376,8 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     reminderSavedMsg: "Promemoria salvato — te lo ricorderemo noi.",
     wsGreetingTemplate: "Tanti auguri! 🎉 Ho trovato un regalo speciale per te: {title} ({price})! Guarda qui su Amazon: {link}",
 
-    saveEventDate: "Salva Data Evento",
-    personsName: "Nome della Persona",
-    eventDateWheel: "Data dell'Evento (Selettore a Ruota)",
-    notesBookmark: "Note / Regalo Salvato",
-    saveToReminders: "Salva nei Promemoria",
-    noSavedDates: "Nessuna data salvata al momento.",
-    namePlaceholder: "es. Marco",
-    notesPlaceholder: "es. Tazza Ember o Caricatore Wireless",
-
     aiConciergeBtn: "Parla con l'Assistente Vocale AI",
+    voiceDrawerTitle: "Assistente Vocale AI",
     aiVoiceTitle: "Wrap AI Concierge",
     aiVoiceSubtitle: "Hai già un'idea o vuoi farti guidare a voce?",
     talkToAiPill1: "💡 Ho già un'idea, aiutami a perfezionarla",
@@ -627,19 +474,11 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     iosGotItBtn: "HO CAPITO",
   },
   es: {
-    savedDates: "Fechas Guardadas",
     selectLanguageRegion: "Idioma y Región",
     language: "Idioma",
     storeRegion: "Región de la Tienda",
     regionNotice: "Los enlaces de regalo se abrirán en la moneda y tienda de tu región.",
 
-    heroTag: "Selección de Regalos Ultra-Rápida",
-    heroTitleLine1: "El Regalo Perfecto.",
-    heroTitleLine2: "Al Instante.",
-    heroSubtitle: "Resuelto en menos de 20 segundos. Ideas cuidadas para todas las personas que te importan.",
-    findGiftBtn: "Buscar un Regalo",
-    tag20Sec: "20 Segundos",
-    tagDirectLinks: "Enlaces Directos a la Tienda",
     fastTrackPlaceholder: "¿Tienes una idea o un SOS? Habla o escribe...",
     homeStep1Title: "¿Para quién es el regalo?",
     homeStep1Sub: "Selecciona el destinatario para personalizar",
@@ -655,46 +494,12 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     extraDetailsHomePlaceholder: "Detalle extra (opcional)",
     showPerfectGiftsBtn: "MOSTRAR REGALOS PERFECTOS",
 
-    step0Tag: "PASO 1 DE 5 • FECHA DEL EVENTO",
-    step0Title: "¿Cuándo es el evento?",
-    step1Tag: "PASO 2 DE 5 • DESTINATARIO",
-    step1Title: "¿Para quién es este regalo?",
-    addCustomRecipient: "Destinatario y Nota Personalizada",
-    recipientPlaceholder: "ej. Mi mejor amiga Sara que ama leer...",
-    addBtn: "Añadir",
-
-    step2Tag: "PASO 3 DE 5 • OCASIÓN",
-    step2Title: "¿Cuál es la ocasión?",
-    additionalPreferencesTitle: "Preferencias y Detalles Adicionales",
-    additionalPreferencesOptional: "Opcional",
-    prefPlaceholder: "ej. Le gusta el aire libre, prefiere artículos sostenibles...",
-
-    step3Tag: "PASO 4 DE 5 • PRESUPUESTO",
-    step3Title: "Elige un presupuesto.",
-    inCurrency: "En",
-
-    step4Tag: "PASO 5 DE 5 • ESTILO",
-    step4Title: "Selecciona su estilo.",
-    customVibeTitle: "Nota Personalizada de Estilo, Aficiones e Intereses",
-    vibePlaceholder: "ej. Fotografía, café de especialidad, hacer espresso...",
-
-    calendarPlannerTitle: "Calendario de Regalos y Planificador de Eventos",
-    planEventBtn: "Planificar un Evento",
-    quickPresets: "Accesos Rápidos",
-    upcomingEvents: "Próximos Eventos Planificados",
-    noEventsPlanned: "Aún no hay eventos planificados. ¡Añade una fecha para empezar a planificar regalos!",
-    planNewEvent: "Planificar Nuevo Evento",
-    findGiftForEvent: "Buscar Regalo para este Evento",
-    daysRemaining: "días restantes",
-
-    next: "Siguiente",
-    skip: "Omitir",
-    done: "Listo",
     back: "Atrás",
     cancel: "Cancelar",
     save: "Guardar",
     close: "Cerrar",
     delete: "Eliminar",
+    clear: "Borrar",
 
     curating: "PREPARANDO SELECCIÓN...",
     curatingSub: "Buscando los mejores regalos según tus preferencias...",
@@ -705,10 +510,10 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     curatedSelection: "Selección a tu Medida",
     forRecipient: "Para",
     startOver: "Empezar de Nuevo",
-    viewOnStore: "Ver en la Tienda",
     shareWhatsApp: "Compartir en WhatsApp",
     saveDate: "Guardar Fecha",
     optionOf: "Opción",
+    reviewsLabel: "reseñas",
     newSearchBtn: "Nueva Búsqueda",
     previousLabel: "Anterior",
     nextLabel: "Siguiente",
@@ -724,16 +529,8 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     reminderSavedMsg: "Recordatorio guardado — te lo recordaremos nosotros.",
     wsGreetingTemplate: "¡Feliz cumpleaños! 🎉 Encontré un regalo especial para ti: {title} ({price}). Míralo aquí: {link}",
 
-    saveEventDate: "Guardar Fecha del Evento",
-    personsName: "Nombre de la Persona",
-    eventDateWheel: "Fecha del Evento (Selector de Rueda)",
-    notesBookmark: "Notas / Regalo Guardado",
-    saveToReminders: "Guardar en Recordatorios",
-    noSavedDates: "Aún no hay fechas guardadas.",
-    namePlaceholder: "ej. Alex",
-    notesPlaceholder: "ej. Taza Ember o Cargador Inalámbrico",
-
     aiConciergeBtn: "Habla con el Asistente de Voz AI",
+    voiceDrawerTitle: "Asistente de Voz AI",
     aiVoiceTitle: "Wrap AI Concierge",
     aiVoiceSubtitle: "¿Ya tienes una idea o prefieres que te guiemos por voz?",
     talkToAiPill1: "💡 Ya tengo una idea, ayúdame a perfeccionarla",
@@ -830,19 +627,11 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     iosGotItBtn: "ENTENDIDO",
   },
   fr: {
-    savedDates: "Dates Enregistrées",
     selectLanguageRegion: "Langue et Région",
     language: "Langue",
     storeRegion: "Région de la Boutique",
     regionNotice: "Les liens des cadeaux s'ouvriront dans la devise et la boutique de votre région.",
 
-    heroTag: "Sélection de Cadeaux Ultra-Rapide",
-    heroTitleLine1: "Le Bon Cadeau.",
-    heroTitleLine2: "Instantanément.",
-    heroSubtitle: "Résolu en moins de 20 secondes. Des idées attentionnées pour tous ceux qui comptent pour vous.",
-    findGiftBtn: "Trouver un Cadeau",
-    tag20Sec: "20 Secondes",
-    tagDirectLinks: "Liens Directs vers la Boutique",
     fastTrackPlaceholder: "Une idée ou un SOS ? Parlez ou écrivez...",
     homeStep1Title: "Pour qui est le cadeau ?",
     homeStep1Sub: "Sélectionnez le destinataire pour personnaliser",
@@ -858,46 +647,12 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     extraDetailsHomePlaceholder: "Détail supplémentaire (facultatif)",
     showPerfectGiftsBtn: "AFFICHER LES CADEAUX PARFAITS",
 
-    step0Tag: "ÉTAPE 1 SUR 5 • DATE DE L'ÉVÉNEMENT",
-    step0Title: "Quand a lieu l'événement ?",
-    step1Tag: "ÉTAPE 2 SUR 5 • DESTINATAIRE",
-    step1Title: "Pour qui est ce cadeau ?",
-    addCustomRecipient: "Destinataire et Note Personnalisés",
-    recipientPlaceholder: "ex. Ma meilleure amie Sarah qui adore lire...",
-    addBtn: "Ajouter",
-
-    step2Tag: "ÉTAPE 3 SUR 5 • OCCASION",
-    step2Title: "Quelle est l'occasion ?",
-    additionalPreferencesTitle: "Préférences et Détails Complémentaires",
-    additionalPreferencesOptional: "Facultatif",
-    prefPlaceholder: "ex. Aime le plein air, préfère les produits durables...",
-
-    step3Tag: "ÉTAPE 4 SUR 5 • BUDGET",
-    step3Title: "Choisissez un budget.",
-    inCurrency: "En",
-
-    step4Tag: "ÉTAPE 5 SUR 5 • STYLE",
-    step4Title: "Sélectionnez son style.",
-    customVibeTitle: "Note Personnalisée sur le Style, les Loisirs et les Intérêts",
-    vibePlaceholder: "ex. Photographie, café de spécialité, art de l'espresso...",
-
-    calendarPlannerTitle: "Calendrier Cadeaux & Planificateur d'Événements",
-    planEventBtn: "Planifier un Événement",
-    quickPresets: "Raccourcis Rapides",
-    upcomingEvents: "Prochains Événements Planifiés",
-    noEventsPlanned: "Aucun événement planifié pour l'instant. Ajoutez une date pour commencer à planifier des cadeaux !",
-    planNewEvent: "Planifier un Nouvel Événement",
-    findGiftForEvent: "Trouver un Cadeau pour cet Événement",
-    daysRemaining: "jours restants",
-
-    next: "Suivant",
-    skip: "Passer",
-    done: "Terminé",
     back: "Retour",
     cancel: "Annuler",
     save: "Enregistrer",
     close: "Fermer",
     delete: "Supprimer",
+    clear: "Effacer",
 
     curating: "SÉLECTION EN COURS...",
     curatingSub: "Recherche des meilleurs cadeaux selon vos préférences...",
@@ -908,10 +663,10 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     curatedSelection: "Sélection Sur Mesure",
     forRecipient: "Pour",
     startOver: "Recommencer",
-    viewOnStore: "Voir sur la Boutique",
     shareWhatsApp: "Partager sur WhatsApp",
     saveDate: "Enregistrer la Date",
     optionOf: "Option",
+    reviewsLabel: "avis",
     newSearchBtn: "Nouvelle Recherche",
     previousLabel: "Précédent",
     nextLabel: "Suivant",
@@ -927,16 +682,8 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     reminderSavedMsg: "Rappel enregistré — nous vous le rappellerons.",
     wsGreetingTemplate: "Joyeux anniversaire ! 🎉 J'ai trouvé un cadeau spécial pour toi : {title} ({price}) ! Découvre-le ici : {link}",
 
-    saveEventDate: "Enregistrer la Date de l'Événement",
-    personsName: "Nom de la Personne",
-    eventDateWheel: "Date de l'Événement (Sélecteur à Molette)",
-    notesBookmark: "Notes / Cadeau Enregistré",
-    saveToReminders: "Enregistrer dans les Rappels",
-    noSavedDates: "Aucune date enregistrée pour l'instant.",
-    namePlaceholder: "ex. Alex",
-    notesPlaceholder: "ex. Mug Ember ou Chargeur Sans Fil",
-
     aiConciergeBtn: "Parler à l'Assistant Vocal IA",
+    voiceDrawerTitle: "Assistant Vocal IA",
     aiVoiceTitle: "Wrap AI Concierge",
     aiVoiceSubtitle: "Vous avez déjà une idée ou préférez être guidé(e) à la voix ?",
     talkToAiPill1: "💡 J'ai déjà une idée, aidez-moi à l'affiner",
@@ -1033,19 +780,11 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     iosGotItBtn: "COMPRIS",
   },
   de: {
-    savedDates: "Gespeicherte Termine",
     selectLanguageRegion: "Sprache & Region",
     language: "Sprache",
     storeRegion: "Store-Region",
     regionNotice: "Geschenklinks öffnen sich in der Währung und im Store deiner Region.",
 
-    heroTag: "Ultraschnelle Geschenkauswahl",
-    heroTitleLine1: "Das Perfekte Geschenk.",
-    heroTitleLine2: "Sofort.",
-    heroSubtitle: "In unter 20 Sekunden gelöst. Durchdachte Empfehlungen für alle, die dir wichtig sind.",
-    findGiftBtn: "Geschenk Finden",
-    tag20Sec: "20 Sekunden",
-    tagDirectLinks: "Direkte Store-Links",
     fastTrackPlaceholder: "Hast du eine Idee oder einen SOS? Sprich oder schreib...",
     homeStep1Title: "Für wen ist das Geschenk?",
     homeStep1Sub: "Empfänger auswählen, um zu personalisieren",
@@ -1061,46 +800,12 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     extraDetailsHomePlaceholder: "Zusätzliches Detail (optional)",
     showPerfectGiftsBtn: "PERFEKTE GESCHENKE ANZEIGEN",
 
-    step0Tag: "SCHRITT 1 VON 5 • EVENT-DATUM",
-    step0Title: "Wann findet das Event statt?",
-    step1Tag: "SCHRITT 2 VON 5 • EMPFÄNGER",
-    step1Title: "Für wen ist dieses Geschenk?",
-    addCustomRecipient: "Individueller Empfänger & Notiz",
-    recipientPlaceholder: "z. B. Beste Freundin Sarah, die gerne liest...",
-    addBtn: "Hinzufügen",
-
-    step2Tag: "SCHRITT 3 VON 5 • ANLASS",
-    step2Title: "Was ist der Anlass?",
-    additionalPreferencesTitle: "Zusätzliche Vorlieben & Details",
-    additionalPreferencesOptional: "Optional",
-    prefPlaceholder: "z. B. Mag Outdoor-Ausrüstung, bevorzugt nachhaltige Produkte...",
-
-    step3Tag: "SCHRITT 4 VON 5 • BUDGET",
-    step3Title: "Wähle ein Budget.",
-    inCurrency: "In",
-
-    step4Tag: "SCHRITT 5 VON 5 • STIL",
-    step4Title: "Wähle den passenden Stil.",
-    customVibeTitle: "Individuelle Notiz zu Stil, Hobbys & Interessen",
-    vibePlaceholder: "z. B. Fotografie, Spezialitätenkaffee, Espresso-Zubereitung...",
-
-    calendarPlannerTitle: "Geschenkkalender & Event-Planer",
-    planEventBtn: "Event Planen",
-    quickPresets: "Schnellauswahl",
-    upcomingEvents: "Anstehende Geplante Events",
-    noEventsPlanned: "Noch keine Events geplant. Füge ein Datum hinzu, um mit der Geschenkplanung zu beginnen!",
-    planNewEvent: "Neues Event Planen",
-    findGiftForEvent: "Geschenk für dieses Event Finden",
-    daysRemaining: "Tage verbleibend",
-
-    next: "Weiter",
-    skip: "Überspringen",
-    done: "Fertig",
     back: "Zurück",
     cancel: "Abbrechen",
     save: "Speichern",
     close: "Schließen",
     delete: "Löschen",
+    clear: "Löschen",
 
     curating: "AUSWAHL WIRD ERSTELLT...",
     curatingSub: "Suche nach den besten Geschenken passend zu deinen Vorlieben...",
@@ -1111,10 +816,10 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     curatedSelection: "Maßgeschneiderte Auswahl",
     forRecipient: "Für",
     startOver: "Neu Starten",
-    viewOnStore: "Im Store Ansehen",
     shareWhatsApp: "Auf WhatsApp Teilen",
     saveDate: "Datum Speichern",
     optionOf: "Option",
+    reviewsLabel: "Bewertungen",
     newSearchBtn: "Neue Suche",
     previousLabel: "Zurück",
     nextLabel: "Weiter",
@@ -1130,16 +835,8 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     reminderSavedMsg: "Erinnerung gespeichert — wir erinnern dich rechtzeitig.",
     wsGreetingTemplate: "Alles Gute zum Geburtstag! 🎉 Ich habe ein besonderes Geschenk für dich gefunden: {title} ({price})! Hier ansehen: {link}",
 
-    saveEventDate: "Event-Datum Speichern",
-    personsName: "Name der Person",
-    eventDateWheel: "Event-Datum (Drehrad-Auswahl)",
-    notesBookmark: "Notizen / Gemerktes Geschenk",
-    saveToReminders: "Zu Erinnerungen Hinzufügen",
-    noSavedDates: "Noch keine gespeicherten Termine.",
-    namePlaceholder: "z. B. Alex",
-    notesPlaceholder: "z. B. Ember Tasse oder Wireless-Ladegerät",
-
     aiConciergeBtn: "Mit dem KI-Sprachassistenten Sprechen",
+    voiceDrawerTitle: "KI-Sprachassistent",
     aiVoiceTitle: "Wrap AI Concierge",
     aiVoiceSubtitle: "Hast du schon eine Idee oder möchtest du sprachgeführt entdecken?",
     talkToAiPill1: "💡 Ich habe schon eine Idee, hilf mir, sie zu verfeinern",

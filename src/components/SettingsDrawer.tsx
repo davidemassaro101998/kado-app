@@ -18,11 +18,22 @@ import { LegalDocType } from "./LegalModal";
 import { triggerTestNotification } from "../lib/pwaNotifications";
 import { getReminders, deleteReminder } from "../lib/reminders";
 import { SavedReminder } from "../types";
+import { Language, TRANSLATIONS } from "../data/translations";
+
+// Locale used for formatting saved-occasion dates, one per supported
+// language (falls back to en-US for anything unmapped).
+const DATE_LOCALES: Record<Language, string> = {
+  en: "en-US",
+  it: "it-IT",
+  es: "es-ES",
+  fr: "fr-FR",
+  de: "de-DE",
+};
 
 interface SettingsDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  language?: string;
+  language?: Language;
   theme: "light";
   onSelectTheme: (theme: "light") => void;
   hapticEnabled: boolean;
@@ -44,7 +55,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
   onOpenLegalModal,
   onSendFeedback,
 }) => {
-  const isIt = language === "it";
+  const t = TRANSLATIONS[language || "it"] || TRANSLATIONS.en;
   const [micPermission, setMicPermission] = useState<"unknown" | "granted" | "denied" | "prompt">("unknown");
   const [reminders, setReminders] = useState<SavedReminder[]>([]);
 
@@ -133,7 +144,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   <Settings className="w-4 h-4" />
                 </div>
                 <h2 className="text-base font-extrabold text-[#000000]">
-                  {isIt ? "Impostazioni & App" : "Settings & App"}
+                  {t.settingsTitle}
                 </h2>
               </div>
               <button
@@ -149,7 +160,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
               {/* 1. SEZIONE INTERAZIONE */}
               <div className="space-y-2">
                 <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
-                  {isIt ? "INTERAZIONE" : "INTERACTION"}
+                  {t.interactionSection}
                 </span>
 
                 {/* Haptic Switch */}
@@ -157,7 +168,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   <div className="flex items-center gap-2.5">
                     <Vibrate className="w-4 h-4 text-[#007AFF]" />
                     <span className="text-xs font-semibold">
-                      {isIt ? "Feedback Tattile (Vibrazione)" : "Haptic Feedback"}
+                      {t.hapticFeedbackLabel}
                     </span>
                   </div>
                   <button
@@ -183,7 +194,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
               {/* 2. SEZIONE PERMESSI & PRIVACY */}
               <div className="space-y-2">
                 <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
-                  {isIt ? "PERMESSI & PRIVACY" : "PERMISSIONS & PRIVACY"}
+                  {t.permissionsSection}
                 </span>
 
                 {/* Microfono */}
@@ -193,16 +204,16 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       <Mic className="w-4 h-4 text-[#007AFF]" />
                       <div>
                         <span className="text-xs font-semibold block">
-                          {isIt ? "Microfono (Ricerca Vocale)" : "Microphone (Voice Search)"}
+                          {t.micLabel}
                         </span>
                         <span className="text-[10px] text-[#8E8E93] font-normal">
                           {micPermission === "granted"
-                            ? isIt ? "Permesso concesso" : "Permission granted"
+                            ? t.micStatusGranted
                             : micPermission === "denied"
-                            ? isIt ? "Permesso negato dal browser" : "Denied by browser"
+                            ? t.micStatusDenied
                             : micPermission === "prompt"
-                            ? isIt ? "Non ancora richiesto" : "Not requested yet"
-                            : isIt ? "Da verificare" : "Not checked yet"}
+                            ? t.micStatusPrompt
+                            : t.micStatusUnknown}
                         </span>
                       </div>
                     </div>
@@ -216,9 +227,9 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       }`}
                     >
                       {micPermission === "granted"
-                        ? isIt ? "Attivo" : "On"
+                        ? t.micBadgeOn
                         : micPermission === "denied"
-                        ? isIt ? "Bloccato" : "Blocked"
+                        ? t.micBadgeBlocked
                         : "—"}
                     </span>
                   </div>
@@ -232,15 +243,13 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       className="w-full py-2 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-xs font-bold text-[#007AFF] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
                     >
                       <Mic className="w-3.5 h-3.5 text-[#007AFF]" />
-                      <span>{isIt ? "Attiva Permesso Microfono" : "Enable Microphone Permission"}</span>
+                      <span>{t.micEnableBtn}</span>
                     </button>
                   )}
 
                   {micPermission === "denied" && (
                     <p className="text-[10px] text-[#8E8E93] text-center px-1 leading-relaxed">
-                      {isIt
-                        ? "Hai bloccato il microfono per questo sito. Riattivalo dalle impostazioni del browser (icona lucchetto nella barra indirizzo)."
-                        : "You've blocked the microphone for this site. Re-enable it from your browser's site settings (padlock icon in the address bar)."}
+                      {t.micBlockedHint}
                     </p>
                   )}
                 </div>
@@ -251,7 +260,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                     <div className="flex items-center gap-2.5">
                       <Bell className="w-4 h-4 text-[#007AFF]" />
                       <span className="text-xs font-semibold">
-                        {isIt ? "Notifiche PWA Promemoria" : "PWA Reminder Notifications"}
+                        {t.notificationsLabel}
                       </span>
                     </div>
                     <button
@@ -279,7 +288,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                     className="w-full py-2 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-xs font-bold text-[#007AFF] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
                   >
                     <Bell className="w-3.5 h-3.5 text-[#007AFF]" />
-                    <span>{isIt ? "⚡ Invia Notifica di Prova PWA" : "⚡ Send Test PWA Notification"}</span>
+                    <span>{t.notifTestBtn}</span>
                   </button>
                 </div>
               </div>
@@ -291,14 +300,12 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   un posto per vedere/gestire cosa hai salvato. */}
               <div className="space-y-2">
                 <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
-                  {isIt ? "LE MIE OCCASIONI" : "MY OCCASIONS"}
+                  {t.myOccasionsSection}
                 </span>
                 <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] space-y-2">
                   {reminders.length === 0 ? (
                     <p className="text-[11px] text-[#8E8E93] text-center py-2">
-                      {isIt
-                        ? "Nessuna occasione salvata. Dopo aver trovato un regalo, potrai salvare la data per ricevere un promemoria."
-                        : "No saved occasions yet. After finding a gift, you can save the date to get a reminder."}
+                      {t.noOccasionsText}
                     </p>
                   ) : (
                     reminders
@@ -319,7 +326,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                               </p>
                               <p className="text-[10px] text-[#8E8E93]">
                                 {new Date(rem.date + "T00:00:00").toLocaleDateString(
-                                  isIt ? "it-IT" : "en-US",
+                                  DATE_LOCALES[language || "it"] || "en-US",
                                   { day: "numeric", month: "long" }
                                 )}
                               </p>
@@ -331,7 +338,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                               handleDeleteReminder(rem.id);
                             }}
                             className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] hover:text-[#FF4D6D] transition-colors cursor-pointer shrink-0"
-                            aria-label={isIt ? "Elimina" : "Delete"}
+                            aria-label={t.delete}
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -344,7 +351,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
               {/* 3. SEZIONE LEGALE & COMPLIANCE */}
               <div className="space-y-2">
                 <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
-                  {isIt ? "LEGALE & COMPLIANCE" : "LEGAL & COMPLIANCE"}
+                  {t.legalSection}
                 </span>
 
                 <div className="p-1 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] space-y-1">
@@ -357,7 +364,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   >
                     <div className="flex items-center gap-2.5">
                       <ShieldCheck className="w-4 h-4 text-[#007AFF]" />
-                      <span>Privacy Policy (GDPR EU)</span>
+                      <span>{t.legalPrivacyTitle}</span>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#8E8E93]" />
                   </button>
@@ -371,7 +378,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   >
                     <div className="flex items-center gap-2.5">
                       <FileText className="w-4 h-4 text-[#007AFF]" />
-                      <span>{isIt ? "Termini e Condizioni" : "Terms & Conditions"}</span>
+                      <span>{t.termsLabel}</span>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#8E8E93]" />
                   </button>
@@ -385,7 +392,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                   >
                     <div className="flex items-center gap-2.5">
                       <ShoppingBag className="w-4 h-4 text-[#007AFF]" />
-                      <span>{isIt ? "Affiliazione Amazon & Disclaimers" : "Amazon Affiliate & Disclaimers"}</span>
+                      <span>{t.affiliateLabel}</span>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#8E8E93]" />
                   </button>
@@ -395,7 +402,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
               {/* 4. SEZIONE SUPPORTO */}
               <div className="space-y-2">
                 <span className="text-[11px] font-bold text-[#8E8E93] uppercase tracking-wider block px-1">
-                  {isIt ? "SUPPORTO & INFO" : "SUPPORT & INFO"}
+                  {t.supportSection}
                 </span>
 
                 <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] space-y-3">
@@ -407,7 +414,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                     className="w-full py-2.5 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-xs font-bold text-[#007AFF] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
                   >
                     <Mail className="w-4 h-4 text-[#007AFF]" />
-                    <span>{isIt ? "Invia un Feedback" : "Send Feedback"}</span>
+                    <span>{t.sendFeedbackBtn}</span>
                   </button>
 
                   <div className="text-center pt-1 border-t border-[#E5E5EA]">
@@ -421,9 +428,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
               {/* Amazon Affiliate Legal Disclaimer Banner inside Drawer */}
               <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA]">
                 <p className="text-[11px] text-[#8E8E93] font-normal leading-relaxed text-center">
-                  {isIt
-                    ? "In qualità di Affiliato Amazon, Kado AI riceve un guadagno dagli acquisti idonei."
-                    : "As an Amazon Associate, Kado AI earns from qualifying purchases."}
+                  {t.affiliateDisclaimerShort}
                 </p>
               </div>
             </div>

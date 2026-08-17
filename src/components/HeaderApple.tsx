@@ -105,31 +105,29 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                   {t.language}
                 </span>
                 <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => onSelectLanguage("en")}
-                    className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-all ${
-                      language === "en"
-                        ? "bg-[#007AFF] text-white border-[#007AFF] shadow-xs"
-                        : "bg-white text-[#000000] border-[#E5E5EA] hover:bg-[#E5E5EA]"
-                    }`}
-                  >
-                    <FlagIcon code="GB" className="w-4 h-3" />
-                    <span>English</span>
-                    {language === "en" && <Check className="w-3.5 h-3.5 text-white ml-auto" />}
-                  </button>
-
-                  <button
-                    onClick={() => onSelectLanguage("it")}
-                    className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-all ${
-                      language === "it"
-                        ? "bg-[#007AFF] text-white border-[#007AFF] shadow-xs"
-                        : "bg-white text-[#000000] border-[#E5E5EA] hover:bg-[#E5E5EA]"
-                    }`}
-                  >
-                    <FlagIcon code="IT" className="w-4 h-3" />
-                    <span>Italiano</span>
-                    {language === "it" && <Check className="w-3.5 h-3.5 text-white ml-auto" />}
-                  </button>
+                  {(
+                    [
+                      { code: "en", flag: "GB", label: "English" },
+                      { code: "it", flag: "IT", label: "Italiano" },
+                      { code: "es", flag: "ES", label: "Español" },
+                      { code: "fr", flag: "FR", label: "Français" },
+                      { code: "de", flag: "DE", label: "Deutsch" },
+                    ] as const
+                  ).map((opt) => (
+                    <button
+                      key={opt.code}
+                      onClick={() => onSelectLanguage(opt.code)}
+                      className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-all ${
+                        language === opt.code
+                          ? "bg-[#007AFF] text-white border-[#007AFF] shadow-xs"
+                          : "bg-white text-[#000000] border-[#E5E5EA] hover:bg-[#E5E5EA]"
+                      }`}
+                    >
+                      <FlagIcon code={opt.flag} className="w-4 h-3" />
+                      <span>{opt.label}</span>
+                      {language === opt.code && <Check className="w-3.5 h-3.5 text-white ml-auto" />}
+                    </button>
+                  ))}
                 </div>
               </div>
 
