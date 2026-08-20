@@ -37,15 +37,6 @@ export interface GiftItem {
   dataSource?: "amazon" | "ai-estimate";
 }
 
-export interface SavedReminder {
-  id: string;
-  name: string;
-  relation: string;
-  date: string; // YYYY-MM-DD
-  notes?: string;
-  createdAt: number;
-}
-
 export interface CountryConfig {
   code: string;
   name: string;

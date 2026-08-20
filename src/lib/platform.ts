@@ -1,6 +1,4 @@
-// Shared platform checks used by both the PWA install flow
-// (SecurityShieldAndPwa) and anything that needs to warn the user their
-// locally-saved data is at risk (ResultsDeckApple's reminder confirmation).
+// Shared platform checks used by the PWA install flow (SecurityShieldAndPwa).
 
 export function isIos(): boolean {
   if (typeof navigator === "undefined") return false;
@@ -15,15 +13,4 @@ export function isStandalone(): boolean {
     (window.navigator as any).standalone === true ||
     document.referrer.includes("android-app://")
   );
-}
-
-// True when localStorage is at real risk of silent eviction: Safari's ITP
-// clears all script-writable storage (including localStorage) after 7 days
-// with no user interaction on the site — UNLESS the site is running as a
-// Home Screen web app, which is explicitly exempt from that policy. This
-// matters here specifically because saved reminders are meant to survive
-// months, not a week, and there is no way to warn the user after the fact —
-// the data is just silently gone by the time the reminder would fire.
-export function isAtRiskOfStorageEviction(): boolean {
-  return isIos() && !isStandalone();
 }

@@ -25,10 +25,7 @@ export interface Translations {
 
   // Buttons
   back: string;
-  cancel: string;
-  save: string;
   close: string;
-  delete: string;
   clear: string;
 
   // Loading
@@ -43,7 +40,6 @@ export interface Translations {
   forRecipient: string;
   startOver: string;
   shareWhatsApp: string;
-  saveDate: string;
   optionOf: string;
   reviewsLabel: string;
   newSearchBtn: string;
@@ -57,10 +53,6 @@ export interface Translations {
   copiedOpenedLabel: string;
   copyTicketLabel: string;
   moreIdeasBtn: string;
-  remindNextYearBtn: string;
-  reminderNamePlaceholder: string;
-  reminderSavedMsg: string;
-  reminderIosStorageHint: string;
   wsGreetingTemplate: string;
 
   // AI Concierge & Voice
@@ -96,10 +88,6 @@ export interface Translations {
   micBadgeBlocked: string;
   micEnableBtn: string;
   micBlockedHint: string;
-  notificationsLabel: string;
-  notifTestBtn: string;
-  myOccasionsSection: string;
-  noOccasionsText: string;
   legalSection: string;
   termsLabel: string;
   affiliateLabel: string;
@@ -192,10 +180,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     showPerfectGiftsBtn: "SHOW MY GIFT IDEAS",
 
     back: "Back",
-    cancel: "Cancel",
-    save: "Save",
     close: "Close",
-    delete: "Delete",
     clear: "Clear",
 
     curating: "CURATING...",
@@ -208,7 +193,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     forRecipient: "For",
     startOver: "Start Over",
     shareWhatsApp: "Share on WhatsApp",
-    saveDate: "Save Date",
     optionOf: "Option",
     reviewsLabel: "reviews",
     newSearchBtn: "New Search",
@@ -222,10 +206,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     copiedOpenedLabel: "Copied & Opened!",
     copyTicketLabel: "Copy Ticket",
     moreIdeasBtn: "3 More Ideas",
-    remindNextYearBtn: "Remind me again next year",
-    reminderNamePlaceholder: "Name (optional)",
-    reminderSavedMsg: "Reminder saved — we'll remind you.",
-    reminderIosStorageHint: "On iPhone, Safari can clear saved data after a week of not opening the site. Add Kado AI to your Home Screen so this reminder is safe until the day it matters.",
     wsGreetingTemplate: "Happy Birthday! 🎉 I found a special gift for you: {title} ({price})! Check it out: {link}",
 
     aiConciergeBtn: "Talk to AI Voice Assistant",
@@ -259,10 +239,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     micBadgeBlocked: "Blocked",
     micEnableBtn: "Enable Microphone Permission",
     micBlockedHint: "You've blocked the microphone for this site. Re-enable it from your browser's site settings (padlock icon in the address bar).",
-    notificationsLabel: "PWA Reminder Notifications",
-    notifTestBtn: "⚡ Send Test PWA Notification",
-    myOccasionsSection: "MY OCCASIONS",
-    noOccasionsText: "No saved occasions yet. After finding a gift, you can save the date to get a reminder.",
     legalSection: "LEGAL & COMPLIANCE",
     termsLabel: "Terms & Conditions",
     affiliateLabel: "Amazon Affiliate & Disclaimers",
@@ -348,10 +324,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     showPerfectGiftsBtn: "MOSTRA LE MIE IDEE REGALO",
 
     back: "Indietro",
-    cancel: "Annulla",
-    save: "Salva",
     close: "Chiudi",
-    delete: "Elimina",
     clear: "Cancella",
 
     curating: "CREAZIONE SELEZIONE...",
@@ -364,7 +337,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     forRecipient: "Per",
     startOver: "Ricomincia",
     shareWhatsApp: "Condividi su WhatsApp",
-    saveDate: "Salva Data",
     optionOf: "Opzione",
     reviewsLabel: "recensioni",
     newSearchBtn: "Nuova Ricerca",
@@ -378,10 +350,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     copiedOpenedLabel: "Copiato & Aperto!",
     copyTicketLabel: "Copia Biglietto",
     moreIdeasBtn: "Altre 3 Idee",
-    remindNextYearBtn: "Ricordamelo anche l'anno prossimo",
-    reminderNamePlaceholder: "Nome (facoltativo)",
-    reminderSavedMsg: "Promemoria salvato — te lo ricorderemo noi.",
-    reminderIosStorageHint: "Su iPhone, Safari può cancellare i dati salvati dopo una settimana senza aprire il sito. Aggiungi Kado AI alla Home per essere sicuro che questo promemoria arrivi davvero il giorno giusto.",
     wsGreetingTemplate: "Tanti auguri! 🎉 Ho trovato un regalo speciale per te: {title} ({price})! Guarda qui su Amazon: {link}",
 
     aiConciergeBtn: "Parla con l'Assistente Vocale AI",
@@ -415,10 +383,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     micBadgeBlocked: "Bloccato",
     micEnableBtn: "Attiva Permesso Microfono",
     micBlockedHint: "Hai bloccato il microfono per questo sito. Riattivalo dalle impostazioni del browser (icona lucchetto nella barra indirizzo).",
-    notificationsLabel: "Notifiche PWA Promemoria",
-    notifTestBtn: "⚡ Invia Notifica di Prova PWA",
-    myOccasionsSection: "LE MIE OCCASIONI",
-    noOccasionsText: "Nessuna occasione salvata. Dopo aver trovato un regalo, potrai salvare la data per ricevere un promemoria.",
     legalSection: "LEGALE & COMPLIANCE",
     termsLabel: "Termini e Condizioni",
     affiliateLabel: "Affiliazione Amazon & Disclaimers",
@@ -504,10 +468,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     showPerfectGiftsBtn: "VER MIS IDEAS DE REGALO",
 
     back: "Atrás",
-    cancel: "Cancelar",
-    save: "Guardar",
     close: "Cerrar",
-    delete: "Eliminar",
     clear: "Borrar",
 
     curating: "PREPARANDO SELECCIÓN...",
@@ -520,7 +481,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     forRecipient: "Para",
     startOver: "Empezar de Nuevo",
     shareWhatsApp: "Compartir en WhatsApp",
-    saveDate: "Guardar Fecha",
     optionOf: "Opción",
     reviewsLabel: "reseñas",
     newSearchBtn: "Nueva Búsqueda",
@@ -534,10 +494,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     copiedOpenedLabel: "¡Copiado y Abierto!",
     copyTicketLabel: "Copiar Mensaje",
     moreIdeasBtn: "3 Ideas Más",
-    remindNextYearBtn: "Recuérdamelo también el año que viene",
-    reminderNamePlaceholder: "Nombre (opcional)",
-    reminderSavedMsg: "Recordatorio guardado — te lo recordaremos nosotros.",
-    reminderIosStorageHint: "En iPhone, Safari puede borrar los datos guardados tras una semana sin abrir el sitio. Añade Kado AI a tu pantalla de inicio para asegurarte de que este recordatorio llegue el día que importa.",
     wsGreetingTemplate: "¡Feliz cumpleaños! 🎉 Encontré un regalo especial para ti: {title} ({price}). Míralo aquí: {link}",
 
     aiConciergeBtn: "Habla con el Asistente de Voz AI",
@@ -571,10 +527,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     micBadgeBlocked: "Bloqueado",
     micEnableBtn: "Activar Permiso de Micrófono",
     micBlockedHint: "Has bloqueado el micrófono para este sitio. Actívalo desde la configuración del navegador (icono de candado en la barra de direcciones).",
-    notificationsLabel: "Notificaciones PWA de Recordatorios",
-    notifTestBtn: "⚡ Enviar Notificación de Prueba PWA",
-    myOccasionsSection: "MIS OCASIONES",
-    noOccasionsText: "Aún no hay ocasiones guardadas. Después de encontrar un regalo, podrás guardar la fecha para recibir un recordatorio.",
     legalSection: "LEGAL Y CUMPLIMIENTO",
     termsLabel: "Términos y Condiciones",
     affiliateLabel: "Afiliación Amazon y Avisos Legales",
@@ -660,10 +612,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     showPerfectGiftsBtn: "VOIR MES IDÉES CADEAUX",
 
     back: "Retour",
-    cancel: "Annuler",
-    save: "Enregistrer",
     close: "Fermer",
-    delete: "Supprimer",
     clear: "Effacer",
 
     curating: "SÉLECTION EN COURS...",
@@ -676,7 +625,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     forRecipient: "Pour",
     startOver: "Recommencer",
     shareWhatsApp: "Partager sur WhatsApp",
-    saveDate: "Enregistrer la Date",
     optionOf: "Option",
     reviewsLabel: "avis",
     newSearchBtn: "Nouvelle Recherche",
@@ -690,10 +638,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     copiedOpenedLabel: "Copié et Ouvert !",
     copyTicketLabel: "Copier le Message",
     moreIdeasBtn: "3 Idées de Plus",
-    remindNextYearBtn: "Me le rappeler l'année prochaine aussi",
-    reminderNamePlaceholder: "Nom (facultatif)",
-    reminderSavedMsg: "Rappel enregistré — nous vous le rappellerons.",
-    reminderIosStorageHint: "Sur iPhone, Safari peut effacer les données enregistrées après une semaine sans ouvrir le site. Ajoutez Kado AI à votre écran d'accueil pour que ce rappel arrive bien le jour J.",
     wsGreetingTemplate: "Joyeux anniversaire ! 🎉 J'ai trouvé un cadeau spécial pour toi : {title} ({price}) ! Découvre-le ici : {link}",
 
     aiConciergeBtn: "Parler à l'Assistant Vocal IA",
@@ -727,10 +671,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     micBadgeBlocked: "Bloqué",
     micEnableBtn: "Activer l'Autorisation du Microphone",
     micBlockedHint: "Vous avez bloqué le microphone pour ce site. Réactivez-le dans les réglages du navigateur (icône cadenas dans la barre d'adresse).",
-    notificationsLabel: "Notifications PWA de Rappel",
-    notifTestBtn: "⚡ Envoyer une Notification PWA de Test",
-    myOccasionsSection: "MES OCCASIONS",
-    noOccasionsText: "Aucune occasion enregistrée pour l'instant. Après avoir trouvé un cadeau, vous pourrez enregistrer la date pour recevoir un rappel.",
     legalSection: "MENTIONS LÉGALES & CONFORMITÉ",
     termsLabel: "Conditions Générales",
     affiliateLabel: "Affiliation Amazon & Avertissements",
@@ -816,10 +756,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     showPerfectGiftsBtn: "MEINE GESCHENKIDEEN ANZEIGEN",
 
     back: "Zurück",
-    cancel: "Abbrechen",
-    save: "Speichern",
     close: "Schließen",
-    delete: "Löschen",
     clear: "Löschen",
 
     curating: "AUSWAHL WIRD ERSTELLT...",
@@ -832,7 +769,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     forRecipient: "Für",
     startOver: "Neu Starten",
     shareWhatsApp: "Auf WhatsApp Teilen",
-    saveDate: "Datum Speichern",
     optionOf: "Option",
     reviewsLabel: "Bewertungen",
     newSearchBtn: "Neue Suche",
@@ -846,10 +782,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     copiedOpenedLabel: "Kopiert & Geöffnet!",
     copyTicketLabel: "Nachricht Kopieren",
     moreIdeasBtn: "3 Weitere Ideen",
-    remindNextYearBtn: "Auch nächstes Jahr wieder erinnern",
-    reminderNamePlaceholder: "Name (optional)",
-    reminderSavedMsg: "Erinnerung gespeichert — wir erinnern dich rechtzeitig.",
-    reminderIosStorageHint: "Auf dem iPhone kann Safari gespeicherte Daten nach einer Woche ohne Öffnen der Seite löschen. Füge Kado AI zum Home-Bildschirm hinzu, damit diese Erinnerung sicher am richtigen Tag ankommt.",
     wsGreetingTemplate: "Alles Gute zum Geburtstag! 🎉 Ich habe ein besonderes Geschenk für dich gefunden: {title} ({price})! Hier ansehen: {link}",
 
     aiConciergeBtn: "Mit dem KI-Sprachassistenten Sprechen",
@@ -883,10 +815,6 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     micBadgeBlocked: "Blockiert",
     micEnableBtn: "Mikrofonzugriff Aktivieren",
     micBlockedHint: "Du hast das Mikrofon für diese Seite blockiert. Aktiviere es in den Website-Einstellungen deines Browsers (Schloss-Symbol in der Adressleiste).",
-    notificationsLabel: "PWA-Erinnerungsbenachrichtigungen",
-    notifTestBtn: "⚡ Test-PWA-Benachrichtigung Senden",
-    myOccasionsSection: "MEINE ANLÄSSE",
-    noOccasionsText: "Noch keine Anlässe gespeichert. Nachdem du ein Geschenk gefunden hast, kannst du das Datum speichern, um eine Erinnerung zu erhalten.",
     legalSection: "RECHTLICHES & COMPLIANCE",
     termsLabel: "Allgemeine Geschäftsbedingungen",
     affiliateLabel: "Amazon-Partnerprogramm & Haftungsausschlüsse",

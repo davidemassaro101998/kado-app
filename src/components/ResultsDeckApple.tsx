@@ -16,13 +16,10 @@ import {
   Sparkles,
   Zap,
   ArrowLeft,
-  CalendarHeart,
   Gift,
 } from "lucide-react";
 import { Language, TRANSLATIONS } from "../data/translations";
 import { trackClickAmazonAffiliate, trackClickWhatsappShare } from "../lib/analytics";
-import { addReminder } from "../lib/reminders";
-import { isAtRiskOfStorageEviction } from "../lib/platform";
 
 interface ResultsDeckAppleProps {
   gifts: GiftItem[];
@@ -50,27 +47,6 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
     return initialActiveIndex < gifts.length ? initialActiveIndex : 0;
   });
   const [copiedWs, setCopiedWs] = useState(false);
-
-  // Salva l'occasione DOPO che il valore e gia stato dato (mai prima —
-  // e la regola che evita che il concetto di calendario diventi
-  // frizione): un tap opzionale, nessun campo obbligatorio oltre alla
-  // data. Alimenta il motore di promemoria 14/7/3 giorni gia costruito
-  // in pwaNotifications.ts.
-  const [showReminderForm, setShowReminderForm] = useState(false);
-  const [reminderSaved, setReminderSaved] = useState(false);
-  const [reminderName, setReminderName] = useState("");
-  const [reminderDate, setReminderDate] = useState("");
-
-  const handleSaveReminder = useCallback(() => {
-    if (!reminderDate) return;
-    addReminder({
-      name: reminderName.trim() || quizState.recipient,
-      relation: quizState.recipient,
-      date: reminderDate,
-    });
-    setReminderSaved(true);
-    setShowReminderForm(false);
-  }, [reminderDate, reminderName, quizState.recipient]);
 
   const currentGift = gifts[activeIndex] || gifts[0];
 
@@ -473,79 +449,6 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
             </span>
           </button>
         </div>
-
-        {/* Promemoria opzionale — appare SOLO qui, dopo che l'utente ha
-            gia ricevuto il valore (il regalo trovato), mai prima o
-            dentro il wizard. Un tap, un solo campo obbligatorio (la
-            data), nome facoltativo. Questo e cio che trasforma un uso
-            singolo in un ritorno futuro. */}
-        {!reminderSaved ? (
-          <div className="pt-0.5">
-            {!showReminderForm ? (
-              <button
-                onClick={() => {
-                  setShowReminderForm(true);
-                }}
-                className="w-full py-2 px-3 rounded-2xl bg-white border border-dashed border-[#E5E5EA] hover:border-[var(--brand-coral)] text-[13px] font-semibold text-[#68686D] hover:text-[var(--brand-coral-dark)] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                aria-label={t.saveDate}
-              >
-                <CalendarHeart className="w-3.5 h-3.5" style={{ color: "var(--brand-coral)" }} />
-                {t.remindNextYearBtn}
-              </button>
-            ) : (
-              <div className="p-3 rounded-2xl bg-white border-2 flex flex-col gap-2" style={{ borderColor: "var(--brand-coral)" }}>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={reminderName}
-                    onChange={(e) => setReminderName(e.target.value)}
-                    placeholder={t.reminderNamePlaceholder}
-                    className="flex-1 min-w-0 py-2 px-2.5 rounded-xl border border-[#E5E5EA] text-[14px] text-[#000000] outline-none focus:border-[var(--brand-coral)]"
-                  />
-                  <input
-                    type="date"
-                    value={reminderDate}
-                    onChange={(e) => setReminderDate(e.target.value)}
-                    className="py-2 px-2.5 rounded-xl border border-[#E5E5EA] text-[14px] text-[#000000] outline-none focus:border-[var(--brand-coral)]"
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowReminderForm(false)}
-                    className="flex-1 py-2 rounded-xl bg-[#F2F2F7] text-[#68686D] text-[14px] font-bold cursor-pointer"
-                  >
-                    {t.cancel}
-                  </button>
-                  <button
-                    onClick={handleSaveReminder}
-                    disabled={!reminderDate}
-                    className="flex-1 py-2 rounded-xl text-white text-[14px] font-bold cursor-pointer disabled:opacity-40"
-                    style={{ backgroundColor: "var(--brand-coral)" }}
-                  >
-                    {t.save}
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="pt-0.5 space-y-1.5">
-            <div className="flex items-center justify-center gap-1.5 text-[13px] font-semibold" style={{ color: "var(--brand-coral-dark)" }}>
-              <Check className="w-3.5 h-3.5" />
-              {t.reminderSavedMsg}
-            </div>
-            {/* Only on iOS Safari outside a Home Screen install: Safari
-                clears localStorage after 7 days of not opening the site,
-                and a Home Screen web app is explicitly exempt from that —
-                so this is the one thing that actually determines whether
-                the reminder just saved will still exist months from now. */}
-            {isAtRiskOfStorageEviction() && (
-              <p className="text-[12px] text-[#68686D] text-center leading-snug px-2">
-                {t.reminderIosStorageHint}
-              </p>
-            )}
-          </div>
-        )}
 
         {/* Legal Disclaimers: Amazon Affiliate */}
         <div className="text-[12px] text-[#68686D] text-center leading-tight px-1 pb-0.5">
