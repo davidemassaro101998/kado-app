@@ -271,10 +271,14 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
             >
               {/* Hero Voice CTA — the app's signature interaction gets top
                   billing on the very first screen instead of a small icon
-                  buried in the search pill above. Pure CSS ping animation
-                  (not JS/motion) so it costs nothing on low-end devices and
-                  never desyncs from the rest of the page. */}
-              <div className="flex flex-col items-center gap-1.5 pb-1">
+                  buried in the search pill above. Pure CSS animation (not
+                  JS/motion) so it costs nothing on low-end devices and
+                  never desyncs from the rest of the page. Uses a custom
+                  hero-mic-pulse-ring (capped at 1.3x), NOT Tailwind's
+                  animate-ping (scales to 2x) — at peak that would balloon
+                  past the search bar sitting right above it on short
+                  screens. pt-2 gives the ring clearance from that bar. */}
+              <div className="flex flex-col items-center gap-1.5 pb-1 pt-2">
                 <button
                   onClick={() => {
                     triggerHaptic();
@@ -284,7 +288,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                   className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
                 >
                   <span
-                    className="absolute inset-0 rounded-full animate-ping opacity-25"
+                    className="absolute inset-0 rounded-full hero-mic-pulse-ring"
                     style={{ backgroundColor: "var(--brand-coral)" }}
                   />
                   <span
@@ -316,7 +320,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                     <button
                       key={opt.label}
                       onClick={() => handleSelectRecipient(opt.label)}
-                      className={`h-[95px] sm:h-[110px] p-3 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 cursor-pointer transition-all duration-150 active:scale-[0.97] ${
+                      className={`h-[clamp(64px,14vh,110px)] p-3 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 cursor-pointer transition-all duration-150 active:scale-[0.97] ${
                         isSel
                           ? "bg-[#FF4D6D] text-white border-[#FF4D6D] shadow-[0_8px_24px_rgba(255,77,109,0.25)]"
                           : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-[#68686D]"
@@ -362,7 +366,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                     <button
                       key={opt.label}
                       onClick={() => handleSelectVibe(opt.label)}
-                      className={`h-[95px] sm:h-[110px] p-2.5 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer transition-all duration-150 active:scale-[0.97] ${
+                      className={`h-[clamp(64px,14vh,110px)] p-2.5 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer transition-all duration-150 active:scale-[0.97] ${
                         isSel
                           ? "bg-[#FF4D6D] text-white border-[#FF4D6D] shadow-[0_6px_20px_rgba(255,77,109,0.22)]"
                           : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:border-[#68686D]"
@@ -388,7 +392,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full flex flex-col space-y-3 sm:space-y-3.5 gpu-layer"
+              className="w-full flex flex-col space-y-[clamp(6px,1.6vh,14px)] gpu-layer"
             >
               <div className="text-center space-y-1">
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
@@ -400,7 +404,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               </div>
 
               {/* Card 1: 2x2 Grid of Budget Cards */}
-              <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+              <div className="grid grid-cols-2 gap-[clamp(6px,1.4vh,12px)]">
                 {budgetOptions.map((b) => {
                   const isSel = budget === b && !customBudgetInput;
                   return (
@@ -411,7 +415,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                         setCustomBudgetInput("");
                         setBudget(b);
                       }}
-                      className={`py-3.5 px-4 sm:py-4 rounded-[22px] border flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-150 active:scale-[0.97] ${
+                      className={`py-[clamp(8px,2vh,16px)] px-4 rounded-[22px] border flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-150 active:scale-[0.97] ${
                         isSel
                           ? "bg-[#FF4D6D] text-white border-[#FF4D6D] shadow-[0_8px_24px_rgba(255,77,109,0.25)]"
                           : "bg-white text-[#000000] border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] hover:border-[#68686D]"
@@ -425,7 +429,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
               {/* Card 2: Custom Budget Card */}
               <div
-                className={`p-3.5 rounded-[22px] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-1.5 transition-all border compact-card ${
+                className={`p-[clamp(6px,1.6vh,14px)] rounded-[22px] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-1.5 transition-all border ${
                   isCustomBudgetFocused || customBudgetInput
                     ? "border-2 border-[#FF4D6D]"
                     : "border-[#E5E5EA]"
@@ -466,7 +470,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       }
                     }}
                     placeholder={t.exactAmountPlaceholder}
-                    className="w-full py-2.5 pl-8 pr-9 rounded-xl bg-[#F2F2F7] text-[#000000] placeholder-[#68686D] text-sm font-semibold focus:outline-none transition-colors"
+                    className="w-full py-[clamp(6px,1.4vh,10px)] pl-8 pr-9 rounded-xl bg-[#F2F2F7] text-[#000000] placeholder-[#68686D] text-sm font-semibold focus:outline-none transition-colors"
                   />
                   {customBudgetInput && (
                     <button
@@ -486,7 +490,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               </div>
 
               {/* Card 3: Opzioni Extra */}
-              <div className="p-3.5 rounded-[22px] bg-white border border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-2 compact-card">
+              <div className="p-[clamp(6px,1.6vh,14px)] rounded-[22px] bg-white border border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-[clamp(2px,0.8vh,8px)]">
                 <span className="text-[10px] font-extrabold text-[#68686D] uppercase tracking-wider block">
                   {t.extraOptionsLabel}
                 </span>
@@ -521,7 +525,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
       {/* ================= 3. BOTTOM ANCHORED PRIMARY BUTTON ================= */}
       {wizardStep === 3 && (
-        <div className="shrink-0 pb-3 pt-2 w-full space-y-2.5">
+        <div className="shrink-0 pb-[clamp(6px,1.4vh,12px)] pt-[clamp(4px,1vh,8px)] w-full space-y-[clamp(4px,1vh,10px)]">
           {/* Selection recap — same "For X • Y (Z)" phrasing as the
               results header, so step 3 reads as a preview of what you're
               about to get rather than dead space before the button. */}
