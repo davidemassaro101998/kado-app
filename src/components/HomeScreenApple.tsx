@@ -189,7 +189,10 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
   };
 
   return (
-    <div className="relative w-full flex-1 h-full bg-[#F2F2F7] flex flex-col justify-between overflow-hidden font-sans select-none px-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))] max-w-lg sm:max-w-xl mx-auto pt-2 pb-[max(16px,env(safe-area-inset-bottom,0px))] gpu-layer">
+    <div
+      className="relative w-full flex-1 h-full flex flex-col justify-between overflow-hidden font-sans select-none px-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))] max-w-lg sm:max-w-xl mx-auto pt-2 pb-[max(16px,env(safe-area-inset-bottom,0px))] gpu-layer"
+      style={{ background: "var(--page-bg)" }}
+    >
       
       {/* ================= 1. BARRA UNICA FAST-TRACK SOS (Apple Glassmorphism) ================= */}
       <div className="shrink-0 pt-0.5">
@@ -292,8 +295,8 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                     style={{ backgroundColor: "var(--brand-coral)" }}
                   />
                   <span
-                    className="absolute inset-0 rounded-full shadow-[0_10px_28px_rgba(255,77,109,0.35)]"
-                    style={{ background: "linear-gradient(135deg, var(--brand-coral), var(--brand-coral-dark))" }}
+                    className="absolute inset-0 rounded-full shadow-[0_10px_28px_rgba(255,77,109,0.35)] raised-surface"
+                    style={{ backgroundColor: "var(--brand-coral)" }}
                   />
                   <Mic className="relative w-8 h-8 sm:w-9 sm:h-9 text-white stroke-[2.2]" />
                 </button>
@@ -537,7 +540,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
           </div>
           <button
             onClick={handleFinalSubmit}
-            className="w-full py-4 rounded-[22px] bg-[#FF4D6D] hover:bg-[#E63354] active:scale-[0.97] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_24px_rgba(255,77,109,0.3)] transition-all uppercase tracking-wide border border-[#FF4D6D]"
+            className="w-full py-4 rounded-[22px] bg-[#FF4D6D] hover:bg-[#E63354] active:scale-[0.97] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_24px_rgba(255,77,109,0.3)] raised-surface transition-all uppercase tracking-wide border border-[#FF4D6D]"
           >
             <Sparkles className="w-5 h-5 fill-current text-current" />
             <span>

@@ -130,7 +130,10 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
   }, [handleNext, handlePrev]);
 
   return (
-    <div className="relative w-full h-full bg-[#F2F2F7] flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top,0px))] pb-[max(8px,env(safe-area-inset-bottom,0px))] px-[max(12px,env(safe-area-inset-left,0px))] pr-[max(12px,env(safe-area-inset-right,0px))] select-none max-w-lg sm:max-w-xl md:max-w-2xl mx-auto overflow-hidden font-sans gpu-layer">
+    <div
+      className="relative w-full h-full flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top,0px))] pb-[max(8px,env(safe-area-inset-bottom,0px))] px-[max(12px,env(safe-area-inset-left,0px))] pr-[max(12px,env(safe-area-inset-right,0px))] select-none max-w-lg sm:max-w-xl md:max-w-2xl mx-auto overflow-hidden font-sans gpu-layer"
+      style={{ background: "var(--page-bg)" }}
+    >
       {/* Top Header Navigation */}
       <div className="flex items-center justify-between shrink-0 pt-0.5 pb-2 border-b border-[#E5E5EA]">
         <div className="flex items-center gap-2 min-w-0">
@@ -395,7 +398,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="min-w-0 py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-90 text-white font-black text-[13px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all uppercase tracking-wider border-2 gpu-layer"
+                    className="min-w-0 py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-90 text-white font-black text-[13px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm raised-surface transition-all uppercase tracking-wider border-2 gpu-layer"
                     style={{
                       backgroundColor: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
                       borderColor: isPrimary ? "var(--brand-coral)" : "#FF4D6D",

@@ -51,7 +51,7 @@ export class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       const t = TRANSLATIONS[this.props.language || "it"] || TRANSLATIONS.en;
       return (
-        <div className="fixed inset-0 z-[999] bg-[#F2F2F7] flex flex-col items-center justify-center gap-4 px-8 text-center font-sans">
+        <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center gap-4 px-8 text-center font-sans" style={{ background: "var(--page-bg)" }}>
           <div className="w-16 h-16 rounded-[24px] bg-white border border-[#E5E5EA] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center text-3xl">
             🎁
           </div>

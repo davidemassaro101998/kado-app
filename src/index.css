@@ -6,27 +6,32 @@
     --bg-main: #F2F2F7;
     --bg-header: rgba(255, 255, 255, 0.85);
     --bg-card: #FFFFFF;
-    --bg-card-selected: #007AFF;
     --text-main: #000000;
     --text-sub: #68686D;
     --text-selected: #FFFFFF;
     --border-card: rgba(0, 0, 0, 0.05);
-    --accent-blue: #007AFF;
 
-    /* Identita di marchio: il blu resta il colore funzionale di sistema
-       (bottoni secondari, chrome della UI) — il corallo e l'oro sono
-       gli UNICI due punti dove il marchio si fa notare: il momento
-       della rivelazione del regalo e la card raccomandata, non ovunque.
-       Corallo scelto per l'associazione calda/dono/affetto, distinto
-       dal mare di app blu-tech che affollano i social; oro tenue solo
-       per il badge "Top Qualita", mai come colore dominante. */
+    /* Identita di marchio: il corallo (e l'oro, solo sul badge "Top
+       Qualita") sono gli unici colori che il marchio usa per farsi
+       notare — bottoni, icone attive, stato selezionato. Lo sfondo
+       resta neutro apposta: le foto prodotto reali di Amazon hanno
+       colori arbitrari e uno sfondo saturo del brand ci scontrerebbe
+       visivamente; il neutro e anche cio che fa risaltare per
+       contrasto il bottone "Metti in carrello", il vero obiettivo
+       della schermata. */
     --brand-coral: #FF4D6D;
     --brand-coral-dark: #E63354;
     --brand-gold: #C9A15C;
 
     --text-primary: var(--text-main);
     --text-secondary: var(--text-sub);
-    --accent: var(--accent-blue);
+
+    /* Sfondo pagina: resta neutro (vedi nota sopra), ma con una traccia
+       di colore del marchio invece di un grigio piatto — una tinta
+       corallo bassissima solo in alto, che sfuma nel neutro entro il
+       60% dell'altezza. Abbastanza per dare atmosfera di marchio senza
+       mai competere con foto prodotto o testo. */
+    --page-bg: radial-gradient(120% 60% at 50% -8%, color-mix(in srgb, var(--brand-coral) 7%, transparent), transparent 60%), #F2F2F7;
 
     /* Font display: solo per i momenti di marchio (splash, titolo del
        risultato) — tutta la UI funzionale resta sul font di sistema,
@@ -265,4 +270,23 @@
 }
 .hero-mic-pulse-ring {
   animation: hero-mic-pulse 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Premium "raised" surface for solid-color primary buttons — flat fill
+   color (never a literal gradient across the button face, which read as
+   cheap/plasticky), lifted off the page with an ambient drop shadow, a
+   thin top highlight to catch the light like a physically raised
+   surface, and a soft inset shadow along the bottom edge for volume.
+   Colorless (black/white rgba only) so it works over any brand color. */
+.raised-surface {
+  box-shadow:
+    0 10px 24px -4px rgba(0, 0, 0, 0.28),
+    inset 0 1.5px 0 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px 0 rgba(0, 0, 0, 0.12);
+}
+.raised-surface:active {
+  box-shadow:
+    0 4px 10px -2px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+    inset 0 1px 3px 0 rgba(0, 0, 0, 0.18);
 }

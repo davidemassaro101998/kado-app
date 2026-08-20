@@ -29,7 +29,10 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 select-none bg-[#F2F2F7] relative overflow-y-auto">
+    <div
+      className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 select-none relative overflow-y-auto"
+      style={{ background: "var(--page-bg)" }}
+    >
       {/* Background Soft Blue Ambient Depth */}
       <div className="absolute w-80 h-80 bg-[#FF4D6D]/10 rounded-full blur-3xl -top-16 -left-16 pointer-events-none" />
       <div className="absolute w-80 h-80 bg-[#000000]/5 rounded-full blur-3xl -bottom-16 -right-16 pointer-events-none" />

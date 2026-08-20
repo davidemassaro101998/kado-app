@@ -274,7 +274,7 @@ export default function App() {
   const handleHideSplash = useCallback(() => setShowSplash(false), []);
 
   return (
-    <div id="app-root" className="app-container fixed inset-0 h-[100dvh] w-[100vw] overflow-hidden bg-[#F2F2F7] text-[#000000] select-none flex flex-col font-sans gpu-layer">
+    <div id="app-root" className="app-container fixed inset-0 h-[100dvh] w-[100vw] overflow-hidden text-[#000000] select-none flex flex-col font-sans gpu-layer" style={{ background: "var(--page-bg)" }}>
       <AnimatePresence>
         {showSplash && (
           <SplashScreenApple onComplete={handleHideSplash} />

@@ -284,7 +284,7 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
               type="button"
               disabled={!transcript.trim()}
               onClick={handleSubmit}
-              className="w-full py-4 px-6 rounded-[20px] bg-[#FF4D6D] hover:bg-[#E63354] text-white font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-[0_8px_20px_rgba(255,77,109,0.3)] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed border border-[#FF4D6D] shrink-0 mt-1"
+              className="w-full py-4 px-6 rounded-[20px] bg-[#FF4D6D] hover:bg-[#E63354] text-white font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-[0_8px_20px_rgba(255,77,109,0.3)] raised-surface active:scale-[0.98] transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed border border-[#FF4D6D] shrink-0 mt-1"
             >
               <Send className="w-4 h-4 fill-current stroke-[2]" />
               <span>
