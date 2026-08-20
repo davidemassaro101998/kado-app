@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Ribbon3D } from "./Ribbon3D";
+import { GiftBadge3D } from "./GiftBadge3D";
 
 interface SplashScreenAppleProps {
   onComplete: () => void;
@@ -20,18 +20,18 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
     // reading as a rendering glitch instead of an intentional crossfade.
     const dgmTimer = setTimeout(() => {
       setShowDgmMark(false);
-    }, 550);
+    }, 750);
 
     // Show mini spinner ~0.2s after the Kado logo has fully taken over
-    // (DGM exit ~250ms + Kado's own 800ms entrance ≈ 1600ms).
+    // (DGM exit ~250ms + Kado's own 800ms entrance ≈ 1800ms).
     const spinnerTimer = setTimeout(() => {
       setShowSpinner(true);
-    }, 1600);
+    }, 1800);
 
     // Total duration -> transition to Step 1.
     const finishTimer = setTimeout(() => {
       onComplete();
-    }, 3200);
+    }, 3600);
 
     return () => {
       clearTimeout(dgmTimer);
@@ -94,7 +94,7 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
             className="flex flex-col items-center gap-4 text-center"
           >
             <div className="w-20 h-20 rounded-[28px] bg-white border border-[#E5E5EA] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center p-3">
-              <Ribbon3D size="lg" />
+              <GiftBadge3D size="lg" />
             </div>
 
             <div className="space-y-1">
@@ -122,13 +122,13 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
             className="relative flex items-center justify-center w-10 h-10"
           >
             {/* Soft pulsing outer glow halo */}
-            <div className="absolute inset-0 rounded-full bg-[#007AFF]/20 blur-md animate-pulse" />
-            
+            <div className="absolute inset-0 rounded-full blur-md animate-pulse" style={{ backgroundColor: "color-mix(in srgb, var(--brand-coral) 20%, transparent)" }} />
+
             {/* Cinematic spinning gradient ring */}
-            <div className="w-7 h-7 rounded-full border-[2.5px] border-[#E5E5EA] border-t-[#007AFF] border-r-[#007AFF]/60 animate-spin" />
-            
+            <div className="w-7 h-7 rounded-full border-[2.5px] border-[#E5E5EA] animate-spin" style={{ borderTopColor: "var(--brand-coral)", borderRightColor: "color-mix(in srgb, var(--brand-coral) 60%, transparent)" }} />
+
             {/* Core dot */}
-            <div className="absolute w-2 h-2 rounded-full bg-[#007AFF] shadow-xs" />
+            <div className="absolute w-2 h-2 rounded-full shadow-xs" style={{ backgroundColor: "var(--brand-coral)" }} />
           </motion.div>
         )}
       </div>

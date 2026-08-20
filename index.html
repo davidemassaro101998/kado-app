@@ -4,7 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Kado AI • Il Regalo Perfetto in 3 Tap</title>
-    
+
+    <!-- Font loaded async, not as a CSS @import and not as a plain
+         <link rel="stylesheet">: both of those are render/parser-blocking
+         — the browser holds first paint (and can hold script execution)
+         until the request settles. On a slow, flaky, or first-open-after-
+         install connection where this request stalls, that reads as a
+         blank/broken screen for several seconds, exactly the "download
+         then broken screen" bug this fixes. The media="print" -> onload
+         swap trick (standard async-CSS pattern) fetches the stylesheet
+         without ever blocking rendering; <noscript> covers the no-JS
+         case. display=swap in the URL means the app's own text still
+         renders immediately in the fallback font and swaps once Fraunces
+         actually loads. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" />
+    </noscript>
+
     <!-- Open Graph Social Meta Tags (WhatsApp / iMessage Preview) -->
     <meta property="og:title" content="Kado AI • Il Regalo Perfetto in 3 Tap" />
     <meta property="og:description" content="Trova l'idea regalo ideale su Amazon con l'intelligenza artificiale. Veloce, preciso e senza stress." />

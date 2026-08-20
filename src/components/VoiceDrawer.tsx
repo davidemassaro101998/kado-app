@@ -83,7 +83,16 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
       recognition.onerror = (event: any) => {
         console.warn("Speech recognition error:", event.error);
         setIsListening(false);
-        if (event.error === "not-allowed") {
+        // "no-speech" (user just went quiet) and "aborted" (user tapped
+        // stop) are expected, not failures — nothing to tell the user.
+        // Everything else (denied permission, no mic hardware, or the
+        // browser's speech backend needing network and not getting it —
+        // Chrome's Web Speech API is server-based, so this fires for a
+        // flaky connection too) previously failed completely silently:
+        // the mic icon just stopped listening with zero explanation.
+        // Surfacing the same actionable fallback for all of them beats
+        // a user left wondering why voice input "just stopped working".
+        if (event.error !== "no-speech" && event.error !== "aborted") {
           setErrorMsg(t.voiceMicDenied);
         }
       };

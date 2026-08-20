@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Ribbon3D } from "./Ribbon3D";
+import { GiftBadge3D } from "./GiftBadge3D";
 import { CountryConfig } from "../types";
 import { COUNTRIES } from "../data/countries";
 import { Check, X, Languages, Settings } from "lucide-react";
@@ -35,9 +35,9 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
             onClick={onGoHome}
             className="flex items-center gap-2 cursor-pointer focus:outline-none group active:scale-95 transition-transform"
           >
-            <Ribbon3D size="sm" />
+            <GiftBadge3D size="sm" />
             <span className="font-extrabold text-base sm:text-lg tracking-tight text-[#000000]">
-              Kado <span className="text-[#007AFF] font-black">AI</span>
+              Kado <span style={{ color: "var(--brand-coral)" }} className="font-black">AI</span>
             </span>
           </button>
 

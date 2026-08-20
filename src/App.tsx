@@ -36,9 +36,16 @@ export default function App() {
     return null;
   }, []);
 
-  const [showSplash, setShowSplash] = useState(true);
+  const hasRestorableSession =
+    savedSession?.screen === "results" && Array.isArray(savedSession?.gifts) && savedSession.gifts.length > 0;
+
+  // The branded splash is a first-open credit, not something to sit
+  // through on every reopen — a returning visitor with results already
+  // saved (most relevant for someone who never installed the PWA and is
+  // just reopening a browser tab/bookmark) skips straight back in.
+  const [showSplash, setShowSplash] = useState(!hasRestorableSession);
   const [screen, setScreen] = useState<ScreenType>(() => {
-    if (savedSession?.screen === "results" && Array.isArray(savedSession?.gifts) && savedSession.gifts.length > 0) {
+    if (hasRestorableSession) {
       return "results";
     }
     return "home";
