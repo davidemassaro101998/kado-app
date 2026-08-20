@@ -140,7 +140,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
             {/* Drawer Header */}
             <div className="flex items-center justify-between pb-3 border-b border-[#E5E5EA] mb-3">
               <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-[#007AFF] text-white shadow-xs">
+                <div className="p-2 rounded-xl bg-[#FF4D6D] text-white shadow-xs">
                   <Settings className="w-4 h-4" />
                 </div>
                 <h2 className="text-base font-extrabold text-[#000000]">
@@ -166,7 +166,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                 {/* Haptic Switch */}
                 <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <Vibrate className="w-4 h-4 text-[#007AFF]" />
+                    <Vibrate className="w-4 h-4 text-[#FF4D6D]" />
                     <span className="text-xs font-semibold">
                       {t.hapticFeedbackLabel}
                     </span>
@@ -179,7 +179,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       }
                     }}
                     className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer p-0.5 ${
-                      hapticEnabled ? "bg-[#007AFF]" : "bg-[#E5E5EA]"
+                      hapticEnabled ? "bg-[#FF4D6D]" : "bg-[#E5E5EA]"
                     }`}
                   >
                     <div
@@ -201,7 +201,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                 <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] space-y-2.5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <Mic className="w-4 h-4 text-[#007AFF]" />
+                      <Mic className="w-4 h-4 text-[#FF4D6D]" />
                       <div>
                         <span className="text-xs font-semibold block">
                           {t.micLabel}
@@ -240,9 +240,9 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                         triggerHaptic();
                         requestMicAccess();
                       }}
-                      className="w-full py-2 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-xs font-bold text-[#007AFF] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
+                      className="w-full py-2 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#FF4D6D] text-xs font-bold text-[#FF4D6D] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
                     >
-                      <Mic className="w-3.5 h-3.5 text-[#007AFF]" />
+                      <Mic className="w-3.5 h-3.5 text-[#FF4D6D]" />
                       <span>{t.micEnableBtn}</span>
                     </button>
                   )}
@@ -258,7 +258,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                 <div className="p-3.5 rounded-[22px] bg-[#F2F2F7] border border-[#E5E5EA] space-y-2.5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <Bell className="w-4 h-4 text-[#007AFF]" />
+                      <Bell className="w-4 h-4 text-[#FF4D6D]" />
                       <span className="text-xs font-semibold">
                         {t.notificationsLabel}
                       </span>
@@ -269,7 +269,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                         onToggleNotifications(!notificationsEnabled);
                       }}
                       className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer p-0.5 ${
-                        notificationsEnabled ? "bg-[#007AFF]" : "bg-[#E5E5EA]"
+                        notificationsEnabled ? "bg-[#FF4D6D]" : "bg-[#E5E5EA]"
                       }`}
                     >
                       <div
@@ -285,9 +285,9 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       triggerHaptic();
                       triggerTestNotification("Marco");
                     }}
-                    className="w-full py-2 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-xs font-bold text-[#007AFF] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
+                    className="w-full py-2 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#FF4D6D] text-xs font-bold text-[#FF4D6D] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
                   >
-                    <Bell className="w-3.5 h-3.5 text-[#007AFF]" />
+                    <Bell className="w-3.5 h-3.5 text-[#FF4D6D]" />
                     <span>{t.notifTestBtn}</span>
                   </button>
                 </div>
@@ -317,8 +317,8 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                           className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-white border border-[#E5E5EA]"
                         >
                           <div className="flex items-center gap-2.5 min-w-0">
-                            <div className="w-8 h-8 rounded-xl bg-[#007AFF]/10 flex items-center justify-center shrink-0">
-                              <Gift className="w-4 h-4 text-[#007AFF]" />
+                            <div className="w-8 h-8 rounded-xl bg-[#FF4D6D]/10 flex items-center justify-center shrink-0">
+                              <Gift className="w-4 h-4 text-[#FF4D6D]" />
                             </div>
                             <div className="min-w-0">
                               <p className="text-xs font-bold text-[#000000] truncate">
@@ -363,7 +363,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                     className="w-full p-3 rounded-2xl hover:bg-white text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
-                      <ShieldCheck className="w-4 h-4 text-[#007AFF]" />
+                      <ShieldCheck className="w-4 h-4 text-[#FF4D6D]" />
                       <span>{t.legalPrivacyTitle}</span>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#68686D]" />
@@ -377,7 +377,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                     className="w-full p-3 rounded-2xl hover:bg-white text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
-                      <FileText className="w-4 h-4 text-[#007AFF]" />
+                      <FileText className="w-4 h-4 text-[#FF4D6D]" />
                       <span>{t.termsLabel}</span>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#68686D]" />
@@ -391,7 +391,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                     className="w-full p-3 rounded-2xl hover:bg-white text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
-                      <ShoppingBag className="w-4 h-4 text-[#007AFF]" />
+                      <ShoppingBag className="w-4 h-4 text-[#FF4D6D]" />
                       <span>{t.affiliateLabel}</span>
                     </div>
                     <ExternalLink className="w-3.5 h-3.5 text-[#68686D]" />
@@ -411,9 +411,9 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       triggerHaptic();
                       onSendFeedback();
                     }}
-                    className="w-full py-2.5 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-xs font-bold text-[#007AFF] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
+                    className="w-full py-2.5 px-3 rounded-xl bg-white border border-[#E5E5EA] hover:border-[#FF4D6D] text-xs font-bold text-[#FF4D6D] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
                   >
-                    <Mail className="w-4 h-4 text-[#007AFF]" />
+                    <Mail className="w-4 h-4 text-[#FF4D6D]" />
                     <span>{t.sendFeedbackBtn}</span>
                   </button>
 

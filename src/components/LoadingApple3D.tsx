@@ -31,7 +31,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
   return (
     <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 select-none bg-[#F2F2F7] relative overflow-y-auto">
       {/* Background Soft Blue Ambient Depth */}
-      <div className="absolute w-80 h-80 bg-[#007AFF]/10 rounded-full blur-3xl -top-16 -left-16 pointer-events-none" />
+      <div className="absolute w-80 h-80 bg-[#FF4D6D]/10 rounded-full blur-3xl -top-16 -left-16 pointer-events-none" />
       <div className="absolute w-80 h-80 bg-[#000000]/5 rounded-full blur-3xl -bottom-16 -right-16 pointer-events-none" />
 
       {/* Cinematic 3D Gift Box Packaging Stage (fluidly scaled to viewport height so it never gets clipped in short/narrow previews) */}
@@ -40,7 +40,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 rounded-full border-2 border-dashed border-[#007AFF]/40"
+          className="absolute inset-0 rounded-full border-2 border-dashed border-[#FF4D6D]/40"
         />
 
         {/* Counter-rotating Ring */}
@@ -58,16 +58,16 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
               scale: [0.98, 1.02, 0.98],
             }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[72%] h-[72%] rounded-2xl bg-white border border-[#007AFF] shadow-xl flex items-center justify-center relative overflow-hidden"
+            className="w-[72%] h-[72%] rounded-2xl bg-white border border-[#FF4D6D] shadow-xl flex items-center justify-center relative overflow-hidden"
           >
             {/* Shimmer light pass */}
             <motion.div
               animate={{ x: ["-100%", "200%"] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#007AFF]/10 to-transparent -skew-x-12"
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FF4D6D]/10 to-transparent -skew-x-12"
             />
 
-            <Gift className="w-[45%] h-[45%] text-[#007AFF]" />
+            <Gift className="w-[45%] h-[45%] text-[#FF4D6D]" />
           </motion.div>
 
           {/* Orbiting Sparkles */}
@@ -77,9 +77,9 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
               scale: [0.8, 1.2, 0.8],
             }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1 right-1 text-[#007AFF]"
+            className="absolute top-1 right-1 text-[#FF4D6D]"
           >
-            <Sparkles className="w-[clamp(0.9rem,3.5vh,1.5rem)] h-[clamp(0.9rem,3.5vh,1.5rem)] fill-[#007AFF]" />
+            <Sparkles className="w-[clamp(0.9rem,3.5vh,1.5rem)] h-[clamp(0.9rem,3.5vh,1.5rem)] fill-[#FF4D6D]" />
           </motion.div>
 
           <motion.div
@@ -120,7 +120,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
               key={idx}
               className={`p-3 rounded-[16px] border text-xs font-semibold flex items-center gap-3 transition-all duration-300 ${
                 isCurrent
-                  ? "bg-white border-[#007AFF] text-[#000000] shadow-[0_4px_12px_rgba(0,0,0,0.06)] font-extrabold"
+                  ? "bg-white border-[#FF4D6D] text-[#000000] shadow-[0_4px_12px_rgba(0,0,0,0.06)] font-extrabold"
                   : isDone
                   ? "bg-white border-[#E5E5EA] text-[#000000] shadow-2xs"
                   : "bg-white/60 border-transparent text-[#68686D]"
@@ -131,7 +131,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
                   isDone
                     ? "bg-[#34C759] text-white font-black"
                     : isCurrent
-                    ? "bg-[#007AFF] text-white font-extrabold"
+                    ? "bg-[#FF4D6D] text-white font-extrabold"
                     : "bg-[#E5E5EA] text-[#68686D]"
                 }`}
               >

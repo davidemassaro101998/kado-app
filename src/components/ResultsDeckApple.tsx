@@ -167,8 +167,8 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#000000]" />
           </button>
           <div className="min-w-0">
-            <span className="text-[12px] font-extrabold text-[#007AFF] uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#007AFF] shrink-0" />
+            <span className="text-[12px] font-extrabold text-[#FF4D6D] uppercase tracking-wider flex items-center gap-1">
+              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FF4D6D] shrink-0" />
               KADO AI • {t.curatedSelection}
             </span>
             <h2 className="text-[15px] font-extrabold text-[#000000] truncate">
@@ -179,7 +179,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
         <button
           onClick={onStartOver}
-          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#E5E5EA] text-[#007AFF] hover:bg-[#E5E5EA] active:scale-95 transition-transform text-[14px] font-bold shadow-2xs cursor-pointer shrink-0 ml-1 gpu-layer"
+          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#E5E5EA] text-[#FF4D6D] hover:bg-[#E5E5EA] active:scale-95 transition-transform text-[14px] font-bold shadow-2xs cursor-pointer shrink-0 ml-1 gpu-layer"
         >
           {t.newSearchBtn}
         </button>
@@ -202,7 +202,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 onClick={() => handleSelectIndex(idx)}
                 className={`h-1.5 sm:h-2 rounded-full transition-all duration-200 cursor-pointer ${
                   idx === activeIndex
-                    ? "w-6 sm:w-8 bg-[#007AFF]"
+                    ? "w-6 sm:w-8 bg-[#FF4D6D]"
                     : "w-1.5 sm:w-2 bg-[#E5E5EA] hover:bg-[#68686D]"
                 }`}
                 aria-label={`${t.optionOf} ${idx + 1}`}
@@ -285,15 +285,15 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     <Zap
                       className="w-3.5 h-3.5 shrink-0"
                       style={{
-                        color: isPrimary ? "var(--brand-coral)" : "#007AFF",
-                        fill: isPrimary ? "var(--brand-coral)" : "#007AFF",
+                        color: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
+                        fill: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
                       }}
                     />
                     <span>{isPrimary ? t.ourPickLabel : currentGift.tag}</span>
                   </div>
 
                   {currentGift.isPrime && (
-                    <span className="text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full tracking-tight">
+                    <span className="text-[13px] font-semibold text-[#FF4D6D] bg-[#FF4D6D]/10 px-2 py-0.5 rounded-full tracking-tight">
                       ✓ Prime
                     </span>
                   )}
@@ -389,11 +389,11 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="min-w-0 py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#007AFF] hover:bg-[#F2F2F7] active:scale-[0.98] text-[#007AFF] font-black text-[13px] flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-all uppercase tracking-wider gpu-layer"
+                    className="min-w-0 py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#FF4D6D] hover:bg-[#F2F2F7] active:scale-[0.98] text-[#FF4D6D] font-black text-[13px] flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-all uppercase tracking-wider gpu-layer"
                   >
-                    <ShoppingBag className="w-4 h-4 text-[#007AFF] shrink-0" />
+                    <ShoppingBag className="w-4 h-4 text-[#FF4D6D] shrink-0" />
                     <span className="leading-tight text-center">{t.seeInStoreBtn}</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#007AFF] shrink-0 hidden sm:inline" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#FF4D6D] shrink-0 hidden sm:inline" />
                   </a>
 
                   <a
@@ -422,8 +422,8 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     }}
                     className="min-w-0 py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-90 text-white font-black text-[13px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all uppercase tracking-wider border-2 gpu-layer"
                     style={{
-                      backgroundColor: isPrimary ? "var(--brand-coral)" : "#007AFF",
-                      borderColor: isPrimary ? "var(--brand-coral)" : "#007AFF",
+                      backgroundColor: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
+                      borderColor: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
                     }}
                   >
                     {isVerifiedAmazonMatch ? (
@@ -446,14 +446,14 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           {/* 1. [💬 Copia Biglietto] */}
           <button
             onClick={handleCopyWhatsApp}
-            className="py-2 sm:py-2.5 px-2 rounded-2xl bg-white border border-[#E5E5EA] hover:border-[#007AFF] text-[#000000] font-bold text-[14px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs active:scale-[0.98] gpu-layer"
+            className="py-2 sm:py-2.5 px-2 rounded-2xl bg-white border border-[#E5E5EA] hover:border-[#FF4D6D] text-[#000000] font-bold text-[14px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs active:scale-[0.98] gpu-layer"
             aria-label={t.shareWhatsApp}
           >
-            <MessageCircle className="w-4 h-4 text-[#007AFF] shrink-0" />
+            <MessageCircle className="w-4 h-4 text-[#FF4D6D] shrink-0" />
             <span className="truncate">
               {copiedWs ? t.copiedOpenedLabel : t.copyTicketLabel}
             </span>
-            {copiedWs && <Check className="w-4 h-4 text-[#007AFF] shrink-0" />}
+            {copiedWs && <Check className="w-4 h-4 text-[#FF4D6D] shrink-0" />}
           </button>
 
           {/* 2. [⚡️ Altre 3 Idee] Direct Regenerate — meccanismo a

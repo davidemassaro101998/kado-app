@@ -241,7 +241,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
       {/* Privacy Blur Overlay when App is sent to system background */}
       {isWindowBlurred && (
         <div className="fixed inset-0 z-[9999] bg-[#000000]/60 backdrop-blur-xl filter blur-[10px] flex flex-col items-center justify-center p-6 text-white text-center pointer-events-none select-none transition-opacity duration-150">
-          <ShieldCheck className="w-10 h-10 text-[#007AFF] mb-2 animate-pulse" />
+          <ShieldCheck className="w-10 h-10 text-[#FF4D6D] mb-2 animate-pulse" />
           <h3 className="text-base font-extrabold tracking-tight">Kado AI</h3>
         </div>
       )}
@@ -256,7 +256,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
             className="fixed top-0 left-0 right-0 z-[100] bg-[#000000] text-white px-3 py-2 border-b border-[#E5E5EA]/20 flex items-center justify-between shadow-lg text-xs"
           >
             <div className="flex items-center gap-2">
-              <Smartphone className="w-4 h-4 text-[#007AFF] shrink-0" />
+              <Smartphone className="w-4 h-4 text-[#FF4D6D] shrink-0" />
               <span className="font-semibold text-[11px] sm:text-xs">
                 {t.inAppBrowserHint}
               </span>
@@ -344,7 +344,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
             >
               <div className="flex items-center justify-between border-b border-[#E5E5EA] pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-2xl bg-[#007AFF] text-white shadow-2xs">
+                  <div className="p-2 rounded-2xl bg-[#FF4D6D] text-white shadow-2xs">
                     <Smartphone className="w-4 h-4" />
                   </div>
                   <h3 className="font-extrabold text-sm text-[#000000]">
@@ -363,7 +363,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               {/* Step 1 & Step 2 Visual Instructions */}
               <div className="space-y-3">
                 <div className="p-3.5 rounded-2xl bg-[#F2F2F7] border border-[#E5E5EA] flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#007AFF] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-2xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#FF4D6D] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-2xs">
                     1
                   </div>
                   <div className="flex-1 text-xs">
@@ -374,7 +374,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                       {t.iosStep1Sub}
                     </p>
                   </div>
-                  <Share className="w-5 h-5 text-[#007AFF] shrink-0" />
+                  <Share className="w-5 h-5 text-[#FF4D6D] shrink-0" />
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-[#F2F2F7] border border-[#E5E5EA] flex items-center gap-3">
@@ -394,9 +394,9 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               </div>
 
               {/* Dynamic Animated Pointer Arrow */}
-              <div className="flex flex-col items-center justify-center pt-1 animate-bounce text-[#007AFF]">
+              <div className="flex flex-col items-center justify-center pt-1 animate-bounce text-[#FF4D6D]">
                 <ArrowDown className="w-6 h-6 stroke-[3]" />
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#007AFF] mt-0.5">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#FF4D6D] mt-0.5">
                   {t.iosPressShareBelow}
                 </span>
               </div>
