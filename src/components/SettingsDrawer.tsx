@@ -34,8 +34,6 @@ interface SettingsDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   language?: Language;
-  theme: "light";
-  onSelectTheme: (theme: "light") => void;
   hapticEnabled: boolean;
   onToggleHaptic: (enabled: boolean) => void;
   notificationsEnabled: boolean;

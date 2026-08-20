@@ -50,7 +50,6 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
     return initialActiveIndex < gifts.length ? initialActiveIndex : 0;
   });
   const [copiedWs, setCopiedWs] = useState(false);
-  const [showDrawer, setShowDrawer] = useState(false);
 
   // Salva l'occasione DOPO che il valore e gia stato dato (mai prima —
   // e la regola che evita che il concetto di calendario diventi
