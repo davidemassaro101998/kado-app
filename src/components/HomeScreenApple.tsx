@@ -207,11 +207,18 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 pl-2.5 shrink-0 border-l border-[#E5E5EA]">
-            <div className="p-1.5 rounded-full bg-[#FF4D6D]/10 text-[#FF4D6D] group-hover:bg-[#FF4D6D] group-hover:text-white transition-all">
-              <Mic className="w-4 h-4 stroke-[2.2]" />
+          {/* The mic pill here would duplicate the hero mic button that
+              now owns step 1 (two microphones on the same screen reads as
+              a mistake, not as reinforcement). It stays hidden on step 1
+              and reappears on steps 2-3, where the hero button isn't
+              rendered and this bar is the only visible voice affordance. */}
+          {wizardStep !== 1 && (
+            <div className="flex items-center gap-1.5 pl-2.5 shrink-0 border-l border-[#E5E5EA]">
+              <div className="p-1.5 rounded-full bg-[#FF4D6D]/10 text-[#FF4D6D] group-hover:bg-[#FF4D6D] group-hover:text-white transition-all">
+                <Mic className="w-4 h-4 stroke-[2.2]" />
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Wizard Ultra-Thin Continuous Progress Line (2px) */}
@@ -241,7 +248,14 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
       {/* ================= 2. SEQUENTIAL WIZARD CONTENT ================= */}
       <div className="flex-1 my-auto relative overflow-y-auto py-2 compact-short-screen">
-        <div className="min-h-full flex flex-col justify-center">
+        {/* Content is top-anchored, not vertically centered: centering a
+            block whose height changes per step (short recipient grid vs.
+            tall budget/cards) split the leftover space unevenly above and
+            below on tall screens, so each step felt like a different app.
+            Anchoring to the top keeps every step starting at the same Y
+            position; any leftover room settles predictably at the bottom,
+            above the CTA on step 3. */}
+        <div className="min-h-full flex flex-col justify-start">
         <AnimatePresence mode="wait" custom={stepDirection}>
           
           {/* STEP 1: CHI È? */}
@@ -255,6 +269,35 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               exit="exit"
               className="w-full flex flex-col justify-center space-y-3 sm:space-y-4"
             >
+              {/* Hero Voice CTA — the app's signature interaction gets top
+                  billing on the very first screen instead of a small icon
+                  buried in the search pill above. Pure CSS ping animation
+                  (not JS/motion) so it costs nothing on low-end devices and
+                  never desyncs from the rest of the page. */}
+              <div className="flex flex-col items-center gap-1.5 pb-1">
+                <button
+                  onClick={() => {
+                    triggerHaptic();
+                    setIsVoiceDrawerOpen(true);
+                  }}
+                  aria-label={t.heroMicLabel}
+                  className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
+                >
+                  <span
+                    className="absolute inset-0 rounded-full animate-ping opacity-25"
+                    style={{ backgroundColor: "var(--brand-coral)" }}
+                  />
+                  <span
+                    className="absolute inset-0 rounded-full shadow-[0_10px_28px_rgba(255,77,109,0.35)]"
+                    style={{ background: "linear-gradient(135deg, var(--brand-coral), var(--brand-coral-dark))" }}
+                  />
+                  <Mic className="relative w-8 h-8 sm:w-9 sm:h-9 text-white stroke-[2.2]" />
+                </button>
+                <span className="text-xs font-bold" style={{ color: "var(--brand-coral-dark)" }}>
+                  {t.heroMicLabel}
+                </span>
+              </div>
+
               <div className="text-center space-y-1">
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
                   {t.homeStep1Title}
@@ -299,7 +342,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full flex-1 flex flex-col justify-center space-y-3 py-1 gpu-layer"
+              className="w-full flex flex-col space-y-3 py-1 gpu-layer"
             >
               <div className="text-center space-y-0.5">
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
@@ -345,7 +388,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full flex flex-col justify-center space-y-3 sm:space-y-3.5 my-auto gpu-layer"
+              className="w-full flex flex-col space-y-3 sm:space-y-3.5 gpu-layer"
             >
               <div className="text-center space-y-1">
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
@@ -382,7 +425,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
               {/* Card 2: Custom Budget Card */}
               <div
-                className={`p-3.5 rounded-[22px] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-1.5 transition-all border ${
+                className={`p-3.5 rounded-[22px] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-1.5 transition-all border compact-card ${
                   isCustomBudgetFocused || customBudgetInput
                     ? "border-2 border-[#FF4D6D]"
                     : "border-[#E5E5EA]"
@@ -443,7 +486,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               </div>
 
               {/* Card 3: Opzioni Extra */}
-              <div className="p-3.5 rounded-[22px] bg-white border border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-2">
+              <div className="p-3.5 rounded-[22px] bg-white border border-[#E5E5EA] shadow-[0_8px_24px_rgba(0,0,0,0.04)] space-y-2 compact-card">
                 <span className="text-[10px] font-extrabold text-[#68686D] uppercase tracking-wider block">
                   {t.extraOptionsLabel}
                 </span>
@@ -478,7 +521,16 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
       {/* ================= 3. BOTTOM ANCHORED PRIMARY BUTTON ================= */}
       {wizardStep === 3 && (
-        <div className="shrink-0 pb-3 pt-2 w-full">
+        <div className="shrink-0 pb-3 pt-2 w-full space-y-2.5">
+          {/* Selection recap — same "For X • Y (Z)" phrasing as the
+              results header, so step 3 reads as a preview of what you're
+              about to get rather than dead space before the button. */}
+          <div className="flex items-center justify-center gap-1.5 text-xs font-semibold text-[#68686D]">
+            <Sparkles className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--brand-coral)" }} />
+            <span className="truncate">
+              {t.forRecipient} {recipient} • {vibe} ({budget})
+            </span>
+          </div>
           <button
             onClick={handleFinalSubmit}
             className="w-full py-4 rounded-[22px] bg-[#FF4D6D] hover:bg-[#E63354] active:scale-[0.97] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_24px_rgba(255,77,109,0.3)] transition-all uppercase tracking-wide border border-[#FF4D6D]"

@@ -226,8 +226,11 @@
   }
 }
 
-/* In-App Browser & Short Screen Adaptation (<660px screen height) */
-@media (max-height: 660px) {
+/* In-App Browser & Short Screen Adaptation (<=700px screen height) —
+   660px missed the iPhone SE/8 (667px CSS height), the single most
+   common "short screen" real device, so the compact mode never actually
+   activated on it. 700px covers that class of device with margin. */
+@media (max-height: 700px) {
   .compact-short-screen {
     padding-top: 0.25rem !important;
     padding-bottom: 0.25rem !important;

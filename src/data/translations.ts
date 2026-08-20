@@ -9,6 +9,7 @@ export interface Translations {
 
   // Home Screen
   fastTrackPlaceholder: string;
+  heroMicLabel: string;
   homeStep1Title: string;
   homeStep1Sub: string;
   homeStep2Title: string;
@@ -165,6 +166,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     regionNotice: "Gift links will open in your local store currency and region.",
 
     fastTrackPlaceholder: "Have an idea or SOS? Speak or type...",
+    heroMicLabel: "Tap to speak",
     homeStep1Title: "Who is the gift for?",
     homeStep1Sub: "Select recipient to customize",
     homeStep2Title: "What vibe does it have?",
@@ -176,7 +178,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     exactAmountPlaceholder: "Exact amount (e.g. 18)",
     extraOptionsLabel: "EXTRA OPTIONS",
     hasEverythingLabel: "Has everything already (unique/consumables)",
-    extraDetailsHomePlaceholder: "Extra details (optional)",
+    extraDetailsHomePlaceholder: "Add a detail (e.g. brand, color)",
     showPerfectGiftsBtn: "SHOW MY GIFT IDEAS",
 
     back: "Back",
@@ -309,6 +311,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     regionNotice: "I link dei regali si apriranno nella tua valuta e store locale.",
 
     fastTrackPlaceholder: "Hai un'idea o SOS? Parla o scrivi...",
+    heroMicLabel: "Tocca e parla",
     homeStep1Title: "Per chi è il regalo?",
     homeStep1Sub: "Seleziona il destinatario per personalizzare",
     homeStep2Title: "Che vibe ha?",
@@ -320,7 +323,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     exactAmountPlaceholder: "Cifra esatta (es. 18)",
     extraOptionsLabel: "OPZIONI EXTRA",
     hasEverythingLabel: "Ha già tutto (idee uniche o consumabili)",
-    extraDetailsHomePlaceholder: "Dettaglio extra (opzionale)",
+    extraDetailsHomePlaceholder: "Aggiungi un dettaglio (es. marca, colore)",
     showPerfectGiftsBtn: "MOSTRA LE MIE IDEE REGALO",
 
     back: "Indietro",
@@ -453,6 +456,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     regionNotice: "Los enlaces de regalo se abrirán en la moneda y tienda de tu región.",
 
     fastTrackPlaceholder: "¿Tienes una idea o un SOS? Habla o escribe...",
+    heroMicLabel: "Toca y habla",
     homeStep1Title: "¿Para quién es el regalo?",
     homeStep1Sub: "Selecciona el destinatario para personalizar",
     homeStep2Title: "¿Qué estilo tiene?",
@@ -464,7 +468,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     exactAmountPlaceholder: "Importe exacto (ej. 18)",
     extraOptionsLabel: "OPCIONES EXTRA",
     hasEverythingLabel: "Ya lo tiene todo (ideas únicas o consumibles)",
-    extraDetailsHomePlaceholder: "Detalle extra (opcional)",
+    extraDetailsHomePlaceholder: "Añade un detalle (ej. marca, color)",
     showPerfectGiftsBtn: "VER MIS IDEAS DE REGALO",
 
     back: "Atrás",
@@ -597,6 +601,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     regionNotice: "Les liens des cadeaux s'ouvriront dans la devise et la boutique de votre région.",
 
     fastTrackPlaceholder: "Une idée ou un SOS ? Parlez ou écrivez...",
+    heroMicLabel: "Touchez et parlez",
     homeStep1Title: "Pour qui est le cadeau ?",
     homeStep1Sub: "Sélectionnez le destinataire pour personnaliser",
     homeStep2Title: "Quel est son style ?",
@@ -608,7 +613,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     exactAmountPlaceholder: "Montant exact (ex. 18)",
     extraOptionsLabel: "OPTIONS SUPPLÉMENTAIRES",
     hasEverythingLabel: "A déjà tout (idées uniques ou consommables)",
-    extraDetailsHomePlaceholder: "Détail supplémentaire (facultatif)",
+    extraDetailsHomePlaceholder: "Ajoutez un détail (ex. marque, couleur)",
     showPerfectGiftsBtn: "VOIR MES IDÉES CADEAUX",
 
     back: "Retour",
@@ -741,6 +746,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     regionNotice: "Geschenklinks öffnen sich in der Währung und im Store deiner Region.",
 
     fastTrackPlaceholder: "Hast du eine Idee oder einen SOS? Sprich oder schreib...",
+    heroMicLabel: "Tippen und sprechen",
     homeStep1Title: "Für wen ist das Geschenk?",
     homeStep1Sub: "Empfänger auswählen, um zu personalisieren",
     homeStep2Title: "Welchen Stil hat die Person?",
@@ -752,7 +758,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     exactAmountPlaceholder: "Genauer Betrag (z. B. 18)",
     extraOptionsLabel: "ZUSATZOPTIONEN",
     hasEverythingLabel: "Hat schon alles (einzigartige Ideen oder Verbrauchsgüter)",
-    extraDetailsHomePlaceholder: "Zusätzliches Detail (optional)",
+    extraDetailsHomePlaceholder: "Füge ein Detail hinzu (z. B. Marke, Farbe)",
     showPerfectGiftsBtn: "MEINE GESCHENKIDEEN ANZEIGEN",
 
     back: "Zurück",
