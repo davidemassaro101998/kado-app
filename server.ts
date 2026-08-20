@@ -12,6 +12,17 @@ const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const httpServer = createServer(app);
 
+// Trust exactly one reverse-proxy hop (Railway's own edge). Without this,
+// req.ip falls back to the raw socket address (usually the proxy itself,
+// useless for per-client rate limiting) — but blindly trusting the
+// X-Forwarded-For header from req.headers instead (the previous approach)
+// is spoofable: any client can set that header directly and pick a fresh
+// fake IP on every request, resetting the rate limiter's bucket for free.
+// With trust proxy set, Express validates the hop count itself and
+// req.ip becomes the real client IP as seen by Railway's proxy — the one
+// header value an ordinary client cannot forge past it.
+app.set("trust proxy", 1);
+
 app.use(express.json());
 
 // Security & Performance Headers
@@ -38,7 +49,7 @@ app.use((req, res, next) => {
 // works" and a real bill surprise.
 const ipRequestCounts = new Map<string, { count: number; resetTime: number }>();
 app.use("/api/", (req, res, next) => {
-  const clientIp = (req.headers["x-forwarded-for"] as string) || req.socket.remoteAddress || "127.0.0.1";
+  const clientIp = req.ip || "127.0.0.1";
   const now = Date.now();
   const windowMs = 60 * 1000; // 1 minute
   const maxRequests = 60;

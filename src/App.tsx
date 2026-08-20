@@ -36,8 +36,32 @@ export default function App() {
     return null;
   }, []);
 
+  // A saved results session older than this is treated as expired rather
+  // than restored. Without a cutoff, someone who used the app once and
+  // comes back weeks later (never having installed it — just reopening a
+  // browser tab or bookmark) lands straight back on old results with no
+  // way in sight to start over feeling natural — the stale screen reads
+  // as a wall blocking a fresh visit, not a convenience. 24h comfortably
+  // covers "closed the tab, came back tomorrow" while still guaranteeing
+  // a multi-week-old visit gets a clean start.
+  const SAVED_SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000;
   const hasRestorableSession =
-    savedSession?.screen === "results" && Array.isArray(savedSession?.gifts) && savedSession.gifts.length > 0;
+    savedSession?.screen === "results" &&
+    Array.isArray(savedSession?.gifts) &&
+    savedSession.gifts.length > 0 &&
+    typeof savedSession?.timestamp === "number" &&
+    Date.now() - savedSession.timestamp < SAVED_SESSION_MAX_AGE_MS;
+
+  // Clear out a session that exists but is past the cutoff above — it
+  // was already excluded from hasRestorableSession, this just stops it
+  // from lingering in storage indefinitely.
+  useEffect(() => {
+    if (savedSession && !hasRestorableSession) {
+      try {
+        localStorage.removeItem("kado_saved_session");
+      } catch (e) {}
+    }
+  }, []);
 
   // The branded splash is a first-open credit, not something to sit
   // through on every reopen — a returning visitor with results already

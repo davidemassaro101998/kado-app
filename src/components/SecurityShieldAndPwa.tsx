@@ -178,6 +178,13 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
   // wizard for attention and screen space. If no `screen` prop is
   // passed at all, falls back to "always eligible" so this component
   // stays safe to use standalone.
+  // How long a dismissal suppresses the banner before it becomes
+  // eligible again. Without a cooldown, one tap on "X" — possibly on a
+  // first, exploratory visit — silences the install prompt forever, even
+  // for someone who comes back repeatedly over the following months and
+  // is by then a genuinely good candidate to ask again.
+  const PWA_DISMISS_COOLDOWN_MS = 14 * 24 * 60 * 60 * 1000;
+
   useEffect(() => {
     const eligibleScreen = screen === undefined || screen === "results";
     if (!eligibleScreen || isStandalone || showPwaBanner) return;
@@ -185,7 +192,8 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
     let isDismissed = false;
     let isInstalled = false;
     try {
-      isDismissed = localStorage.getItem("pwa_dismissed") === "true";
+      const dismissedAt = Number(localStorage.getItem("pwa_dismissed_at") || 0);
+      isDismissed = dismissedAt > 0 && Date.now() - dismissedAt < PWA_DISMISS_COOLDOWN_MS;
       isInstalled = localStorage.getItem("pwa_installed") === "true";
     } catch {}
     if (isDismissed || isInstalled) return;
@@ -194,11 +202,11 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
     return () => clearTimeout(timer);
   }, [screen, isStandalone, showPwaBanner]);
 
-  // Clean Dismiss Handler (Saves pwa_dismissed to localStorage and closes all modals)
+  // Clean Dismiss Handler (Saves pwa_dismissed_at to localStorage and closes all modals)
   const handleDismiss = () => {
     triggerHaptic();
     try {
-      localStorage.setItem("pwa_dismissed", "true");
+      localStorage.setItem("pwa_dismissed_at", String(Date.now()));
     } catch {}
     setShowPwaBanner(false);
     setShowIosGuide(false);
