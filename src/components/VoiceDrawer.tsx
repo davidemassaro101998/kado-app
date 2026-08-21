@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useImperativeHandle, forwardRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Mic, MicOff, X, Sparkles, Send } from "lucide-react";
 import { Language } from "../data/translations";
@@ -11,13 +11,17 @@ interface VoiceDrawerProps {
   language?: Language;
 }
 
-export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
+export interface VoiceDrawerHandle {
+  startListening: () => void;
+}
+
+export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerProps>(({
   isOpen,
   onClose,
   onSubmitIdea,
   initialTranscript = "",
   language = "it",
-}) => {
+}, ref) => {
   const [transcript, setTranscript] = useState<string>(initialTranscript);
   const [isListening, setIsListening] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -78,10 +82,14 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
         console.warn("Speech recognition error:", event.error);
         setIsListening(false);
         if (event.error === "not-allowed") {
+          // Once denied, the browser remembers the choice and won't show its
+          // own prompt again on request -- the only way back is the user
+          // re-enabling it themselves in their browser's site settings, so
+          // tell them exactly where to look instead of just "denied".
           setErrorMsg(
             language === "it"
-              ? "Permesso microfono negato. Puoi digitare la tua idea qui sotto."
-              : "Microphone permission denied. You can type below."
+              ? "Microfono bloccato per questo sito. Riattivalo dalle impostazioni del browser (tocca l'icona 'ⓘ' o il lucchetto vicino all'indirizzo del sito → Microfono → Consenti), oppure digita la tua idea qui sotto."
+              : "Microphone blocked for this site. Re-enable it in your browser's site settings (tap the 'ⓘ' or padlock icon next to the site address → Microphone → Allow), or type your idea below."
           );
         }
       };
@@ -103,6 +111,15 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
       setIsListening(false);
     }
   };
+
+  // Lets a caller (e.g. the hero mic button) start listening immediately as
+  // part of the SAME click that opens the drawer, instead of requiring a
+  // second tap once it's open. Must still be invoked synchronously from a
+  // click handler -- calling this from a useEffect instead would break the
+  // user-gesture chain Safari/iOS requires to ever show the mic prompt.
+  useImperativeHandle(ref, () => ({
+    startListening: startSpeechRecognition,
+  }));
 
   const stopSpeechRecognition = () => {
     if (recognitionRef.current) {
@@ -295,4 +312,4 @@ export const VoiceDrawer: React.FC<VoiceDrawerProps> = React.memo(({
       )}
     </AnimatePresence>
   );
-});
+}));

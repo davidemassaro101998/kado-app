@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence, Variants } from "motion/react";
 import {
   Mic,
@@ -26,7 +26,7 @@ import {
   trackWizardStep2,
   trackWizardStep3,
 } from "../lib/analytics";
-import { VoiceDrawer } from "./VoiceDrawer";
+import { VoiceDrawer, VoiceDrawerHandle } from "./VoiceDrawer";
 
 interface HomeScreenAppleProps {
   onGenerateGifts: (quizData: QuizState) => void;
@@ -55,6 +55,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
   // solo le scelte già fatte vengono ripristinate, non l'avanzamento.
   const [wizardStep, setWizardStep] = useState<number>(1);
   const [stepDirection, setStepDirection] = useState<number>(1); // 1 = forward, -1 = back
+  const voiceDrawerRef = useRef<VoiceDrawerHandle>(null);
 
   // Form State
   const [recipient, setRecipient] = useState<string>(() => savedHomeForm?.recipient || "Partner");
@@ -195,6 +196,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
           onClick={() => {
             triggerHaptic();
             setIsVoiceDrawerOpen(true);
+            voiceDrawerRef.current?.startListening();
           }}
           className="w-full flex items-center justify-between py-2.5 px-3.5 sm:py-3 sm:px-4 rounded-[18px] bg-white/80 backdrop-blur-md border border-[#E5E5EA] shadow-[0_4px_20px_rgba(0,0,0,0.04)] cursor-pointer active:scale-[0.99] transition-all group"
         >
@@ -272,6 +274,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                   onClick={() => {
                     triggerHaptic();
                     setIsVoiceDrawerOpen(true);
+                    voiceDrawerRef.current?.startListening();
                   }}
                   aria-label={language === "it" ? "Tocca e parla" : "Tap to speak"}
                   className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
@@ -521,6 +524,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
       {/* Voice Drawer Modal */}
       <VoiceDrawer
+        ref={voiceDrawerRef}
         isOpen={isVoiceDrawerOpen}
         onClose={() => setIsVoiceDrawerOpen(false)}
         initialTranscript={fastTrackIdea}
