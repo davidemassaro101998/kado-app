@@ -50,7 +50,7 @@ async function generateIcons() {
       width: 1200,
       height: 630,
       channels: 4,
-      background: { r: 36, g: 66, b: 95, alpha: 1 } // Navy Blue #24425F
+      background: { r: 230, g: 51, b: 84, alpha: 1 } // brand-coral-dark #E63354
     }
   })
     .composite([
