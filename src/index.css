@@ -179,6 +179,14 @@
   }
 }
 
+@keyframes hero-mic-pulse {
+  0% { transform: scale(1); opacity: 0.35; }
+  75%, 100% { transform: scale(1.3); opacity: 0; }
+}
+.hero-mic-pulse-ring {
+  animation: hero-mic-pulse 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
 /* In-App Browser & Short Screen Adaptation (<660px screen height) */
 @media (max-height: 660px) {
   .compact-short-screen {

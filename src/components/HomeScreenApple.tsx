@@ -207,11 +207,13 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 pl-2.5 shrink-0 border-l border-[#E5E5EA]">
-            <div className="p-1.5 rounded-full bg-[#FF4D6D]/10 text-[#FF4D6D] group-hover:bg-[#FF4D6D] group-hover:text-white transition-all">
-              <Mic className="w-4 h-4 stroke-[2.2]" />
+          {wizardStep !== 1 && (
+            <div className="flex items-center gap-1.5 pl-2.5 shrink-0 border-l border-[#E5E5EA]">
+              <div className="p-1.5 rounded-full bg-[#FF4D6D]/10 text-[#FF4D6D] group-hover:bg-[#FF4D6D] group-hover:text-white transition-all">
+                <Mic className="w-4 h-4 stroke-[2.2]" />
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Wizard Ultra-Thin Continuous Progress Line (2px) */}
@@ -262,6 +264,25 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <p className="text-xs text-[#8E8E93] font-normal">
                   {language === "it" ? "Seleziona il destinatario per personalizzare" : "Select recipient to customize"}
                 </p>
+              </div>
+
+              {/* Hero Mic: primary voice entry point for step 1 */}
+              <div className="flex flex-col items-center gap-1.5 pb-1 pt-1">
+                <button
+                  onClick={() => {
+                    triggerHaptic();
+                    setIsVoiceDrawerOpen(true);
+                  }}
+                  aria-label={language === "it" ? "Tocca e parla" : "Tap to speak"}
+                  className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
+                >
+                  <span className="absolute inset-0 rounded-full hero-mic-pulse-ring bg-[#FF4D6D]" />
+                  <span className="absolute inset-0 rounded-full bg-[#FF4D6D] shadow-[0_10px_28px_rgba(255,77,109,0.35)]" />
+                  <Mic className="relative w-8 h-8 sm:w-9 sm:h-9 text-white stroke-[2.2]" />
+                </button>
+                <span className="text-xs font-bold text-[#E63354]">
+                  {language === "it" ? "Tocca e parla" : "Tap to speak"}
+                </span>
               </div>
 
               {/* 4 Tactile Apple-Style Physical Buttons */}
