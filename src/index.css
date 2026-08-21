@@ -7,18 +7,14 @@
     --bg-main: #F2F2F7;
     --bg-header: rgba(255, 255, 255, 0.85);
     --bg-card: #FFFFFF;
-    --bg-card-selected: #007AFF;
     --text-main: #000000;
     --text-sub: #8E8E93;
     --text-selected: #FFFFFF;
     --border-card: rgba(0, 0, 0, 0.05);
-    --accent-blue: #007AFF;
 
-    /* Identita di marchio: il blu resta il colore funzionale di sistema
-       (bottoni secondari, chrome della UI) — il corallo e l'oro sono
-       gli UNICI due punti dove il marchio si fa notare: il momento
-       della rivelazione del regalo e la card raccomandata, non ovunque.
-       Corallo scelto per l'associazione calda/dono/affetto, distinto
+    /* Identita di marchio: corallo come colore dominante in tutta la UI
+       (bottoni, chrome, stati selezionati) — non piu confinato a singoli
+       momenti. Scelto per l'associazione calda/dono/affetto, distinto
        dal mare di app blu-tech che affollano i social; oro tenue solo
        per il badge "Top Qualita", mai come colore dominante. */
     --brand-coral: #FF4D6D;
@@ -27,7 +23,6 @@
 
     --text-primary: var(--text-main);
     --text-secondary: var(--text-sub);
-    --accent: var(--accent-blue);
 
     /* Font display: solo per i momenti di marchio (splash, titolo del
        risultato) — tutta la UI funzionale resta sul font di sistema,
@@ -97,30 +92,6 @@
     background-position: 0 0, 15px 15px;
   }
 
-  /* Tactile Slate Blue Soft-Touch Button */
-  .bg-slate-blue {
-    background: linear-gradient(145deg, #2C4E6F, #1C354E);
-  }
-
-  /* Ultra-smooth, elegant tactile blue primary button without ugly/harsh dark shadows */
-  .btn-tactile-blue {
-    background: linear-gradient(145deg, #325B84, #1C354E);
-    border: 1px solid rgba(223, 185, 96, 0.45);
-    box-shadow: 0 4px 12px -2px rgba(28, 53, 78, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .btn-tactile-blue:hover {
-    background: linear-gradient(145deg, #3A6693, #224160);
-    border-color: rgba(223, 185, 96, 0.75);
-    box-shadow: 0 6px 16px -2px rgba(28, 53, 78, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-
-  .btn-tactile-blue:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 6px -1px rgba(28, 53, 78, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
   /* Secondary Tactile Soft Button */
   .btn-tactile-secondary {
     background: linear-gradient(145deg, #FFFFFF, #FAF7F2);
@@ -141,13 +112,6 @@
     border: 1px solid #EBE6DC;
     box-shadow: 0 4px 14px -3px rgba(60, 50, 30, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .card-tactile-selected {
-    background: linear-gradient(145deg, #2C4E6F, #1C354E);
-    border: 1px solid #DFB960;
-    box-shadow: 0 6px 16px -3px rgba(28, 53, 78, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    color: #FFFFFF;
   }
 
   /* Pale Gold Accent Text & Border */

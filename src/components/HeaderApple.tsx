@@ -37,7 +37,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
           >
             <Ribbon3D size="sm" />
             <span className="font-extrabold text-base sm:text-lg tracking-tight text-[#000000]">
-              Kado <span className="text-[#007AFF] font-black">AI</span>
+              Kado <span className="text-[#FF4D6D] font-black">AI</span>
             </span>
           </button>
 
@@ -81,7 +81,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
           <div className="w-full max-w-sm rounded-[24px] bg-white border border-[#E5E5EA] p-5 shadow-2xl relative max-h-[85vh] flex flex-col my-auto text-[#000000]">
             <div className="flex items-center justify-between mb-3 shrink-0">
               <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-[#007AFF] text-white shadow-xs">
+                <div className="p-2 rounded-xl bg-[#FF4D6D] text-white shadow-xs">
                   <Languages className="w-4 h-4" />
                 </div>
                 <h3 className="text-base font-extrabold text-[#000000]">{t.selectLanguageRegion}</h3>
@@ -109,7 +109,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                     onClick={() => onSelectLanguage("en")}
                     className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       language === "en"
-                        ? "bg-[#007AFF] text-white border-[#007AFF] shadow-xs"
+                        ? "bg-[#FF4D6D] text-white border-[#FF4D6D] shadow-xs"
                         : "bg-white text-[#000000] border-[#E5E5EA] hover:bg-[#E5E5EA]"
                     }`}
                   >
@@ -122,7 +122,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                     onClick={() => onSelectLanguage("it")}
                     className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       language === "it"
-                        ? "bg-[#007AFF] text-white border-[#007AFF] shadow-xs"
+                        ? "bg-[#FF4D6D] text-white border-[#FF4D6D] shadow-xs"
                         : "bg-white text-[#000000] border-[#E5E5EA] hover:bg-[#E5E5EA]"
                     }`}
                   >
@@ -153,7 +153,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                         }}
                         className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                           isSelected
-                            ? "bg-[#007AFF] text-white font-bold shadow-xs"
+                            ? "bg-[#FF4D6D] text-white font-bold shadow-xs"
                             : "bg-white text-[#000000] hover:bg-[#E5E5EA] border border-[#E5E5EA]"
                         }`}
                       >

@@ -53,17 +53,17 @@ export const Ribbon3D: React.FC<Ribbon3DProps> = ({ size = "sm", animateFloating
             className="w-full h-full overflow-visible"
           >
             <defs>
-              {/* Box Top Metal Gradient */}
+              {/* Box Top Gradient */}
               <linearGradient id="boxLidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#3A638C" />
-                <stop offset="50%" stopColor="#2A4C6F" />
-                <stop offset="100%" stopColor="#1B334E" />
+                <stop offset="0%" stopColor="#FF8FA3" />
+                <stop offset="50%" stopColor="#FF4D6D" />
+                <stop offset="100%" stopColor="#E63354" />
               </linearGradient>
 
-              {/* Box Base Metal Gradient */}
+              {/* Box Base Gradient */}
               <linearGradient id="boxBaseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#25476B" />
-                <stop offset="100%" stopColor="#13273D" />
+                <stop offset="0%" stopColor="#E63354" />
+                <stop offset="100%" stopColor="#A81030" />
               </linearGradient>
 
               {/* Polished Gold Ribbon Gradient */}
@@ -93,7 +93,7 @@ export const Ribbon3D: React.FC<Ribbon3DProps> = ({ size = "sm", animateFloating
               height="52"
               rx="12"
               fill="url(#boxBaseGrad)"
-              stroke="#13273D"
+              stroke="#A81030"
               strokeWidth="2"
             />
 
@@ -159,8 +159,8 @@ export const Ribbon3D: React.FC<Ribbon3DProps> = ({ size = "sm", animateFloating
       >
         <defs>
           <linearGradient id="lidGradSm" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#325B84" />
-            <stop offset="100%" stopColor="#1C354E" />
+            <stop offset="0%" stopColor="#FF4D6D" />
+            <stop offset="100%" stopColor="#E63354" />
           </linearGradient>
           <linearGradient id="goldGradSm" x1="0%" y1="100%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#B38A36" />

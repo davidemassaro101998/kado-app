@@ -578,8 +578,15 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath, { maxAge: "1d" }));
+    // Hashed bundle filenames change on every build, so they're safe to cache
+    // for a long time. Everything else -- and index.html especially, since
+    // it's what references those hashed filenames -- must not be cached, or
+    // browsers can keep serving a stale app shell for up to a day after a
+    // real deploy regardless of what the service worker does.
+    app.use("/assets", express.static(path.join(distPath, "assets"), { maxAge: "1y", immutable: true }));
+    app.use(express.static(distPath, { maxAge: 0, index: false }));
     app.get("*", (req, res) => {
+      res.set("Cache-Control", "no-cache");
       res.sendFile(path.join(distPath, "index.html"));
     });
   }

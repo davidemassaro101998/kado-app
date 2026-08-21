@@ -71,13 +71,13 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
             className="relative flex items-center justify-center w-10 h-10"
           >
             {/* Soft pulsing outer glow halo */}
-            <div className="absolute inset-0 rounded-full bg-[#007AFF]/20 blur-md animate-pulse" />
-            
+            <div className="absolute inset-0 rounded-full blur-md animate-pulse" style={{ backgroundColor: "color-mix(in srgb, var(--brand-coral) 20%, transparent)" }} />
+
             {/* Cinematic spinning gradient ring */}
-            <div className="w-7 h-7 rounded-full border-[2.5px] border-[#E5E5EA] border-t-[#007AFF] border-r-[#007AFF]/60 animate-spin" />
-            
+            <div className="w-7 h-7 rounded-full border-[2.5px] border-[#E5E5EA] animate-spin" style={{ borderTopColor: "var(--brand-coral)", borderRightColor: "color-mix(in srgb, var(--brand-coral) 60%, transparent)" }} />
+
             {/* Core dot */}
-            <div className="absolute w-2 h-2 rounded-full bg-[#007AFF] shadow-xs" />
+            <div className="absolute w-2 h-2 rounded-full shadow-xs" style={{ backgroundColor: "var(--brand-coral)" }} />
           </motion.div>
         )}
       </div>
