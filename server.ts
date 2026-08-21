@@ -8,7 +8,7 @@ import { createServer } from "http";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 const httpServer = createServer(app);
 
 app.use(express.json());

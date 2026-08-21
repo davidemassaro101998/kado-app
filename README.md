@@ -1,20 +1,35 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Kado AI
 
-# Run and deploy your AI Studio app
+Trova il regalo perfetto in 3 tap: l'utente sceglie destinatario, vibe e
+budget (o lo dice a voce), Gemini propone 3 idee regalo reali con link
+d'acquisto su Amazon. Parte della famiglia [DGM Apps](https://github.com/davidemassaro101998/dgm-apps-site),
+insieme a [Bricolo AI](https://github.com/davidemassaro101998/bricolo-app) e
+[Forma AI](https://github.com/davidemassaro101998/forma-app).
 
-This contains everything you need to run your app locally.
+## Stack
 
-View your app in AI Studio: https://ai.studio/apps/e6cc6b3a-b228-4d16-a8e5-3d1c8dc21b61
+React 19 + Vite + TypeScript, Express (server-side Gemini calls, rate
+limiting per IP, tetto di spesa giornaliero), PWA installabile (manifest,
+service worker, icone), 5 lingue (IT/EN/ES/FR/DE).
 
-## Run Locally
+## Sviluppo locale
 
-**Prerequisites:**  Node.js
+```bash
+npm install
+cp .env.example .env.local   # imposta GEMINI_API_KEY
+npm run dev                  # http://localhost:3000
+npm run lint                 # tsc --noEmit
+npm run build && npm start   # build + avvio in modalità produzione
+```
 
+## Deploy
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Il server legge la porta da `process.env.PORT` (fallback 3000), compatibile
+con Railway/Render/qualsiasi PaaS Node. Variabili d'ambiente richieste in
+produzione: `GEMINI_API_KEY`.
+
+## Monetizzazione
+
+I link Amazon in `src/data/countries.ts` (`buildAmazonUrl`) usano i tag di
+affiliazione Amazon Associates per paese — verificare che siano i tag reali
+registrati per questa app prima del lancio.
