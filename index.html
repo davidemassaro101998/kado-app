@@ -36,6 +36,25 @@
           localStorage.setItem('kado_theme', 'light');
         } catch (e) {}
       })();
+      (function() {
+        /* Android Chrome's dynamic toolbar and gesture/3-button nav bar are
+           not always reflected by 100dvh in every WebView/PWA build, which
+           leaves content squished under the system bar and forces an
+           unwanted internal scroll. Measure the real visible height (via
+           visualViewport when available, since it tracks the system UI
+           live) and expose it as --app-height, re-run on every resize. */
+        var root = document.documentElement;
+        function setAppHeight() {
+          var h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+          root.style.setProperty('--app-height', h + 'px');
+        }
+        setAppHeight();
+        window.addEventListener('resize', setAppHeight);
+        window.addEventListener('orientationchange', setAppHeight);
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener('resize', setAppHeight);
+        }
+      })();
     </script>
   </head>
   <body>

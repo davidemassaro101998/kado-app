@@ -37,7 +37,11 @@
   }
 
   html, body, #root, #app-root {
-    height: 100dvh;
+    /* --app-height is set in JS from visualViewport (index.html) so
+       Android's dynamic toolbar/nav bar can't leave dvh stale and
+       squish content into an internal scroll; dvh is just the
+       pre-hydration fallback. */
+    height: var(--app-height, 100dvh);
     width: 100vw;
     overflow: hidden;
     position: fixed;
