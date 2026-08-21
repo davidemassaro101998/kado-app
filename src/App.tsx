@@ -7,6 +7,7 @@ import { ResultsDeckApple } from "./components/ResultsDeckApple";
 import { SecurityShieldAndPwa } from "./components/SecurityShieldAndPwa";
 import { OfflineScreenApple } from "./components/OfflineScreenApple";
 import { SplashScreenApple } from "./components/SplashScreenApple";
+import { OnboardingHelpModal } from "./components/OnboardingHelpModal";
 import { SettingsDrawer } from "./components/SettingsDrawer";
 import { LegalModal, LegalDocType } from "./components/LegalModal";
 import { CookieBanner } from "./components/CookieBanner";
@@ -37,6 +38,16 @@ export default function App() {
   }, []);
 
   const [showSplash, setShowSplash] = useState(true);
+  // First-ever launch only -- an onboarding tip that reappeared on every
+  // open (including background resume) would be ignored at best and
+  // actively confusing once mic permission is already granted.
+  const [showOnboardingHelp, setShowOnboardingHelp] = useState(() => {
+    try {
+      return !localStorage.getItem("kado_onboarding_seen");
+    } catch (e) {
+      return false;
+    }
+  });
   const [screen, setScreen] = useState<ScreenType>(() => {
     if (savedSession?.screen === "results" && Array.isArray(savedSession?.gifts) && savedSession.gifts.length > 0) {
       return "results";
@@ -290,6 +301,12 @@ export default function App() {
     }
   }, []);
   const handleHideSplash = useCallback(() => setShowSplash(false), []);
+  const handleDismissOnboardingHelp = useCallback(() => {
+    setShowOnboardingHelp(false);
+    try {
+      localStorage.setItem("kado_onboarding_seen", "1");
+    } catch (e) {}
+  }, []);
 
   return (
     <div id="app-root" className="app-container fixed inset-0 h-[100dvh] w-[100vw] overflow-hidden bg-[#F2F2F7] text-[#000000] select-none flex flex-col font-sans gpu-layer">
@@ -298,6 +315,12 @@ export default function App() {
           <SplashScreenApple onComplete={handleHideSplash} />
         )}
       </AnimatePresence>
+
+      <OnboardingHelpModal
+        isOpen={!showSplash && showOnboardingHelp}
+        onDismiss={handleDismissOnboardingHelp}
+        language={language}
+      />
 
       {/* Security & PWA Hardening Overlay Engine */}
       <SecurityShieldAndPwa language={language} />

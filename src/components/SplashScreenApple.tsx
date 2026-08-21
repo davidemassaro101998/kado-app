@@ -29,7 +29,11 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
   return (
     <motion.div
       key="splash"
-      initial={{ opacity: 0 }}
+      // Starts fully opaque (not faded in from 0) -- the header/home screen
+      // underneath mount and paint immediately on first render, so a fade-in
+      // here left a brief window where they were visible through the
+      // still-transparent splash before it caught up to full opacity.
+      initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
