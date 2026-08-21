@@ -37,7 +37,7 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed inset-0 z-50 bg-[#F2F2F7] flex flex-col items-center justify-between py-12 px-6 select-none font-sans gpu-layer"
+      className="fixed inset-0 z-50 bg-tactile-linen flex flex-col items-center justify-between py-12 px-6 select-none font-sans gpu-layer"
     >
       <div className="flex-1" />
 
@@ -48,7 +48,7 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="flex flex-col items-center gap-4 text-center"
       >
-        <div className="w-20 h-20 rounded-[28px] bg-white border border-[#E5E5EA] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center p-3">
+        <div className="card-tactile w-20 h-20 rounded-[28px] flex items-center justify-center p-3">
           <Ribbon3D size="lg" />
         </div>
 
@@ -78,7 +78,7 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
             <div className="absolute inset-0 rounded-full blur-md animate-pulse" style={{ backgroundColor: "color-mix(in srgb, var(--brand-coral) 20%, transparent)" }} />
 
             {/* Cinematic spinning gradient ring */}
-            <div className="w-7 h-7 rounded-full border-[2.5px] border-[#E5E5EA] animate-spin" style={{ borderTopColor: "var(--brand-coral)", borderRightColor: "color-mix(in srgb, var(--brand-coral) 60%, transparent)" }} />
+            <div className="w-7 h-7 rounded-full border-[2.5px] border-[#EBE6DC] animate-spin" style={{ borderTopColor: "var(--brand-coral)", borderRightColor: "color-mix(in srgb, var(--brand-coral) 60%, transparent)" }} />
 
             {/* Core dot */}
             <div className="absolute w-2 h-2 rounded-full shadow-xs" style={{ backgroundColor: "var(--brand-coral)" }} />

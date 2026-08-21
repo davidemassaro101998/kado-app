@@ -28,7 +28,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
 
   return (
     <>
-      <header className="w-full shrink-0 border-b border-[#E5E5EA] bg-white/90 backdrop-blur-xl z-30 pt-[max(12px,env(safe-area-inset-top,0px))] pb-2.5 px-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))] transition-all min-h-[52px] flex items-center justify-between gpu-layer">
+      <header className="w-full shrink-0 border-b border-[#EBE6DC] bg-[#FAF7F2]/90 backdrop-blur-xl z-30 pt-[max(12px,env(safe-area-inset-top,0px))] pb-2.5 px-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))] transition-all min-h-[52px] flex items-center justify-between gpu-layer">
         <div className="w-full max-w-lg sm:max-w-2xl mx-auto flex items-center justify-between">
           {/* Brand Logo */}
           <button
@@ -46,14 +46,14 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
             {/* Country & Language Picker Pill */}
             <button
               onClick={() => setShowGeoModal(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F2F2F7] hover:bg-[#E5E5EA] active:scale-95 border border-[#E5E5EA] text-[#000000] text-xs font-semibold shadow-2xs transition-all cursor-pointer h-[34px]"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F5F1EA] hover:bg-[#EFECE6] active:scale-95 border border-[#E0D9CC] text-[#000000] text-xs font-semibold shadow-2xs transition-all cursor-pointer h-[34px]"
             >
               <FlagIcon code={language} className="w-4 h-3" />
               <span className="font-extrabold text-[#000000] uppercase">
                 {language.toUpperCase()}
               </span>
               {currentCountry.code.toLowerCase() !== language.toLowerCase() && (
-                <span className="text-[10px] text-[#8E8E93] font-extrabold uppercase border-l border-[#E5E5EA] pl-1.5 flex items-center gap-1">
+                <span className="text-[10px] text-[#8E8E93] font-extrabold uppercase border-l border-[#EBE6DC] pl-1.5 flex items-center gap-1">
                   <FlagIcon code={currentCountry.code} className="w-3.5 h-2.5" />
                   {currentCountry.code}
                 </span>
@@ -66,7 +66,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
               <button
                 onClick={onOpenSettings}
                 aria-label="Settings"
-                className="flex items-center justify-center w-[34px] h-[34px] rounded-full bg-[#F2F2F7] hover:bg-[#E5E5EA] active:scale-95 border border-[#E5E5EA] text-[#000000] shadow-2xs transition-all cursor-pointer"
+                className="flex items-center justify-center w-[34px] h-[34px] rounded-full bg-[#F5F1EA] hover:bg-[#EFECE6] active:scale-95 border border-[#E0D9CC] text-[#000000] shadow-2xs transition-all cursor-pointer"
               >
                 <Settings className="w-4 h-4 text-[#000000]" />
               </button>
@@ -78,7 +78,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
       {/* Language & Region Modal */}
       {showGeoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-sm rounded-[24px] bg-white border border-[#E5E5EA] p-5 shadow-2xl relative max-h-[85vh] flex flex-col my-auto text-[#000000]">
+          <div className="w-full max-w-sm rounded-[24px] bg-white border border-[#EBE6DC] p-5 shadow-2xl relative max-h-[85vh] flex flex-col my-auto text-[#000000]">
             <div className="flex items-center justify-between mb-3 shrink-0">
               <div className="flex items-center gap-2">
                 <div className="p-2 rounded-xl bg-[#FF4D6D] text-white shadow-xs">
@@ -88,7 +88,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
               </div>
               <button
                 onClick={() => setShowGeoModal(false)}
-                className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] transition-colors cursor-pointer"
+                className="p-1.5 rounded-full hover:bg-[#F5F1EA] text-[#8E8E93] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -100,7 +100,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
 
             <div className="space-y-4 overflow-y-auto pr-1 flex-1">
               {/* Language Selector */}
-              <div className="p-3 rounded-2xl bg-[#F2F2F7] border border-[#E5E5EA] space-y-2">
+              <div className="p-3 rounded-2xl bg-[#F5F1EA] border border-[#EBE6DC] space-y-2">
                 <span className="text-xs font-bold text-[#000000] uppercase tracking-wider block">
                   {t.language}
                 </span>
@@ -110,7 +110,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                     className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       language === "en"
                         ? "bg-[#FF4D6D] text-white border-[#FF4D6D] shadow-xs"
-                        : "bg-white text-[#000000] border-[#E5E5EA] hover:bg-[#E5E5EA]"
+                        : "bg-white text-[#000000] border-[#EBE6DC] hover:bg-[#EBE6DC]"
                     }`}
                   >
                     <FlagIcon code="GB" className="w-4 h-3" />
@@ -123,7 +123,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                     className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       language === "it"
                         ? "bg-[#FF4D6D] text-white border-[#FF4D6D] shadow-xs"
-                        : "bg-white text-[#000000] border-[#E5E5EA] hover:bg-[#E5E5EA]"
+                        : "bg-white text-[#000000] border-[#EBE6DC] hover:bg-[#EBE6DC]"
                     }`}
                   >
                     <FlagIcon code="IT" className="w-4 h-3" />
@@ -134,7 +134,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
               </div>
 
               {/* Store Region */}
-              <div className="p-3 rounded-2xl bg-[#F2F2F7] border border-[#E5E5EA] space-y-2">
+              <div className="p-3 rounded-2xl bg-[#F5F1EA] border border-[#EBE6DC] space-y-2">
                 <span className="text-xs font-bold text-[#000000] uppercase tracking-wider block">
                   {t.storeRegion}
                 </span>
@@ -154,7 +154,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
                         className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                           isSelected
                             ? "bg-[#FF4D6D] text-white font-bold shadow-xs"
-                            : "bg-white text-[#000000] hover:bg-[#E5E5EA] border border-[#E5E5EA]"
+                            : "bg-white text-[#000000] hover:bg-[#EBE6DC] border border-[#EBE6DC]"
                         }`}
                       >
                         <div className="flex items-center gap-3">

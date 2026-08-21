@@ -121,13 +121,13 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
   }, [handleNext, handlePrev]);
 
   return (
-    <div className="relative w-full h-full bg-[#F2F2F7] flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top,0px))] pb-[max(8px,env(safe-area-inset-bottom,0px))] px-[max(12px,env(safe-area-inset-left,0px))] pr-[max(12px,env(safe-area-inset-right,0px))] select-none max-w-lg sm:max-w-xl md:max-w-2xl mx-auto overflow-hidden font-sans gpu-layer">
+    <div className="relative w-full h-full bg-tactile-linen flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top,0px))] pb-[max(8px,env(safe-area-inset-bottom,0px))] px-[max(12px,env(safe-area-inset-left,0px))] pr-[max(12px,env(safe-area-inset-right,0px))] select-none max-w-lg sm:max-w-xl md:max-w-2xl mx-auto overflow-hidden font-sans gpu-layer">
       {/* Top Header Navigation */}
-      <div className="flex items-center justify-between shrink-0 pt-0.5 pb-2 border-b border-[#E5E5EA]">
+      <div className="flex items-center justify-between shrink-0 pt-0.5 pb-2 border-b border-[#EBE6DC]">
         <div className="flex items-center gap-2 min-w-0">
           <button
             onClick={onStartOver}
-            className="p-1.5 sm:p-2 rounded-full bg-white border border-[#E5E5EA] text-[#000000] hover:bg-[#E5E5EA] active:scale-95 transition-transform cursor-pointer shadow-2xs shrink-0 gpu-layer"
+            className="p-1.5 sm:p-2 rounded-full bg-white border border-[#EBE6DC] text-[#000000] hover:bg-[#EBE6DC] active:scale-95 transition-transform cursor-pointer shadow-2xs shrink-0 gpu-layer"
             aria-label="Back"
           >
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#000000]" />
@@ -145,7 +145,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
         <button
           onClick={onStartOver}
-          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#E5E5EA] text-[#FF4D6D] hover:bg-[#E5E5EA] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1 gpu-layer"
+          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#EBE6DC] text-[#FF4D6D] hover:bg-[#EBE6DC] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1 gpu-layer"
         >
           {language === "it" ? "Nuova Ricerca" : "New Search"}
         </button>
@@ -163,7 +163,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 className={`h-1.5 sm:h-2 rounded-full transition-all duration-200 cursor-pointer ${
                   idx === activeIndex
                     ? "w-6 sm:w-8 bg-[#FF4D6D]"
-                    : "w-1.5 sm:w-2 bg-[#E5E5EA] hover:bg-[#8E8E93]"
+                    : "w-1.5 sm:w-2 bg-[#EBE6DC] hover:bg-[#8E8E93]"
                 }`}
                 aria-label={`Option ${idx + 1}`}
               />
@@ -173,7 +173,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           <div className="flex items-center gap-1">
             <button
               onClick={handlePrev}
-              className="p-1.5 rounded-full bg-white border border-[#E5E5EA] text-[#000000] hover:bg-[#E5E5EA] active:scale-90 transition-transform cursor-pointer shadow-2xs flex items-center justify-center"
+              className="p-1.5 rounded-full bg-white border border-[#EBE6DC] text-[#000000] hover:bg-[#EBE6DC] active:scale-90 transition-transform cursor-pointer shadow-2xs flex items-center justify-center"
               title={language === "it" ? "Precedente" : "Previous"}
               aria-label="Previous option"
             >
@@ -186,7 +186,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
             <button
               onClick={handleNext}
-              className="p-1.5 rounded-full bg-white border border-[#E5E5EA] text-[#000000] hover:bg-[#E5E5EA] active:scale-90 transition-transform cursor-pointer shadow-2xs flex items-center justify-center"
+              className="p-1.5 rounded-full bg-white border border-[#EBE6DC] text-[#000000] hover:bg-[#EBE6DC] active:scale-90 transition-transform cursor-pointer shadow-2xs flex items-center justify-center"
               title={language === "it" ? "Successivo" : "Next"}
               aria-label="Next option"
             >
@@ -221,7 +221,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 style={{
                   touchAction: "pan-y",
                   willChange: "transform, opacity",
-                  border: isPrimary ? "2px solid var(--brand-coral)" : "1px solid #E5E5EA",
+                  border: isPrimary ? "2px solid var(--brand-coral)" : "1px solid #EBE6DC",
                   boxShadow: isPrimary
                     ? "0 10px 32px rgba(255,77,109,0.18)"
                     : "0 6px 24px rgba(0,0,0,0.05)",
@@ -251,7 +251,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 </div>
 
                 {/* 2. Amazon Image Stage (Compact & Modern) */}
-                <div className="relative w-full h-[125px] sm:h-[145px] rounded-[16px] sm:rounded-[20px] overflow-hidden bg-[#FAFAFC] border border-[#E5E5EA] flex items-center justify-center p-2 shrink-0">
+                <div className="relative w-full h-[125px] sm:h-[145px] rounded-[16px] sm:rounded-[20px] overflow-hidden bg-[#FAFAFC] border border-[#EBE6DC] flex items-center justify-center p-2 shrink-0">
                   <img
                     src={currentGift.imageUrl}
                     alt={currentGift.title}
@@ -261,7 +261,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                   />
                   
                   {/* Price Tag Pill */}
-                  <div className="absolute bottom-2 right-2 bg-white/95 backdrop-blur-xs text-[#000000] text-xs sm:text-sm font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#E5E5EA]">
+                  <div className="absolute bottom-2 right-2 bg-white/95 backdrop-blur-xs text-[#000000] text-xs sm:text-sm font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#EBE6DC]">
                     {currentGift.price}
                   </div>
                 </div>
@@ -293,7 +293,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 </div>
 
                 {/* 4. AI Reason Box */}
-                <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#F2F2F7] border border-[#E5E5EA]">
+                <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#F5F1EA] border border-[#EBE6DC]">
                   <p className="text-[11px] sm:text-xs text-[#000000] font-normal leading-relaxed">
                     💡 <span className="font-bold text-[#000000]">Perché è perfetto:</span> {currentGift.reason}
                   </p>
@@ -321,7 +321,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#FF4D6D] hover:bg-[#F2F2F7] active:scale-[0.98] text-[#FF4D6D] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-all uppercase tracking-wider gpu-layer"
+                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#FF4D6D] hover:bg-[#F5F1EA] active:scale-[0.98] text-[#FF4D6D] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-all uppercase tracking-wider gpu-layer"
                   >
                     <ShoppingBag className="w-4 h-4 text-[#FF4D6D] shrink-0" />
                     <span className="truncate">{language === "it" ? "VEDI NELLO STORE" : "SEE IN STORE"}</span>
@@ -348,11 +348,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-90 text-white font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all uppercase tracking-wider border-2 gpu-layer"
-                    style={{
-                      backgroundColor: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
-                      borderColor: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
-                    }}
+                    className="surface-coral-tactile py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-105 text-white font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all uppercase tracking-wider border-2 border-transparent gpu-layer"
                   >
                     <ShoppingCart className="w-4 h-4 text-white shrink-0" />
                     <span className="truncate">{language === "it" ? "METTI IN CARRELLO" : "ADD TO CART"}</span>
@@ -365,12 +361,12 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
       </div>
 
       {/* Permanently Fixed Bottom Action Buttons */}
-      <div className="shrink-0 pt-1.5 border-t border-[#E5E5EA] space-y-1">
+      <div className="shrink-0 pt-1.5 border-t border-[#EBE6DC] space-y-1">
         <div className="grid grid-cols-2 gap-2">
           {/* 1. [💬 Copia Biglietto] */}
           <button
             onClick={handleCopyWhatsApp}
-            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white border border-[#E5E5EA] hover:border-[#FF4D6D] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs active:scale-[0.98] gpu-layer"
+            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white border border-[#EBE6DC] hover:border-[#FF4D6D] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs active:scale-[0.98] gpu-layer"
           >
             <MessageCircle className="w-4 h-4 text-[#FF4D6D] shrink-0" />
             <span className="truncate">
@@ -412,7 +408,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 onClick={() => {
                   setShowReminderForm(true);
                 }}
-                className="w-full py-2 px-3 rounded-2xl bg-white border border-dashed border-[#E5E5EA] hover:border-[var(--brand-coral)] text-[11px] sm:text-xs font-semibold text-[#8E8E93] hover:text-[var(--brand-coral-dark)] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="w-full py-2 px-3 rounded-2xl bg-white border border-dashed border-[#EBE6DC] hover:border-[var(--brand-coral)] text-[11px] sm:text-xs font-semibold text-[#8E8E93] hover:text-[var(--brand-coral-dark)] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
               >
                 <CalendarHeart className="w-3.5 h-3.5" style={{ color: "var(--brand-coral)" }} />
                 {language === "it"
@@ -427,19 +423,19 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     value={reminderName}
                     onChange={(e) => setReminderName(e.target.value)}
                     placeholder={language === "it" ? "Nome (facoltativo)" : "Name (optional)"}
-                    className="flex-1 min-w-0 py-2 px-2.5 rounded-xl border border-[#E5E5EA] text-xs text-[#000000] outline-none focus:border-[var(--brand-coral)]"
+                    className="flex-1 min-w-0 py-2 px-2.5 rounded-xl border border-[#EBE6DC] text-xs text-[#000000] outline-none focus:border-[var(--brand-coral)]"
                   />
                   <input
                     type="date"
                     value={reminderDate}
                     onChange={(e) => setReminderDate(e.target.value)}
-                    className="py-2 px-2.5 rounded-xl border border-[#E5E5EA] text-xs text-[#000000] outline-none focus:border-[var(--brand-coral)]"
+                    className="py-2 px-2.5 rounded-xl border border-[#EBE6DC] text-xs text-[#000000] outline-none focus:border-[var(--brand-coral)]"
                   />
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setShowReminderForm(false)}
-                    className="flex-1 py-2 rounded-xl bg-[#F2F2F7] text-[#8E8E93] text-xs font-bold cursor-pointer"
+                    className="flex-1 py-2 rounded-xl bg-[#F5F1EA] text-[#8E8E93] text-xs font-bold cursor-pointer"
                   >
                     {language === "it" ? "Annulla" : "Cancel"}
                   </button>

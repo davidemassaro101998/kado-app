@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { Sparkles, PackageCheck, Gift, Check } from "lucide-react";
+import { Sparkles, PackageCheck, Check } from "lucide-react";
 import { Language, TRANSLATIONS } from "../data/translations";
+import { Ribbon3D } from "./Ribbon3D";
 
 interface LoadingApple3DProps {
   language?: Language;
@@ -29,7 +30,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 select-none bg-[#F2F2F7] relative overflow-y-auto">
+    <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 select-none bg-tactile-linen relative overflow-y-auto">
       {/* Background Soft Blue Ambient Depth */}
       <div className="absolute w-80 h-80 bg-[#FF4D6D]/10 rounded-full blur-3xl -top-16 -left-16 pointer-events-none" />
       <div className="absolute w-80 h-80 bg-[#000000]/5 rounded-full blur-3xl -bottom-16 -right-16 pointer-events-none" />
@@ -50,25 +51,12 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
           className="absolute inset-2 rounded-full border border-black/10"
         />
 
-        {/* Floating Gift Box Assembly Vector Animation */}
+        {/* Floating Gift Box: the same signature 3D ribbon mark used on the
+            splash screen and header, so the brand's one distinctive visual
+            stays consistent through the whole flow instead of switching to
+            a generic icon during the longest-dwell-time screen. */}
         <div className="relative z-10 w-[64%] h-[64%] flex items-center justify-center">
-          <motion.div
-            animate={{
-              y: [-4, 4, -4],
-              scale: [0.98, 1.02, 0.98],
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[72%] h-[72%] rounded-2xl bg-white border border-[#FF4D6D] shadow-xl flex items-center justify-center relative overflow-hidden"
-          >
-            {/* Shimmer light pass */}
-            <motion.div
-              animate={{ x: ["-100%", "200%"] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", repeatDelay: 1 }}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#FF4D6D]/10 to-transparent -skew-x-12"
-            />
-
-            <Gift className="w-[45%] h-[45%] text-[#FF4D6D]" />
-          </motion.div>
+          <Ribbon3D animateFloating className="w-[78%] h-[78%]" />
 
           {/* Orbiting Sparkles */}
           <motion.div
@@ -122,7 +110,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
                 isCurrent
                   ? "bg-white border-[#FF4D6D] text-[#000000] shadow-[0_4px_12px_rgba(0,0,0,0.06)] font-extrabold"
                   : isDone
-                  ? "bg-white border-[#E5E5EA] text-[#000000] shadow-2xs"
+                  ? "bg-white border-[#EBE6DC] text-[#000000] shadow-2xs"
                   : "bg-white/60 border-transparent text-[#8E8E93]"
               }`}
             >
@@ -132,7 +120,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
                     ? "bg-[#34C759] text-white font-black"
                     : isCurrent
                     ? "bg-[#FF4D6D] text-white font-extrabold"
-                    : "bg-[#E5E5EA] text-[#8E8E93]"
+                    : "bg-[#EBE6DC] text-[#8E8E93]"
                 }`}
               >
                 {isDone ? <Check className="w-3 h-3 text-white stroke-[3]" /> : idx + 1}

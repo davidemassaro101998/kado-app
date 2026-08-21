@@ -308,7 +308,7 @@ export default function App() {
   }, []);
 
   return (
-    <div id="app-root" className="app-container fixed inset-0 h-[var(--app-height,100dvh)] w-[100vw] overflow-hidden bg-[#F2F2F7] text-[#000000] select-none flex flex-col font-sans gpu-layer">
+    <div id="app-root" className="app-container fixed inset-0 h-[var(--app-height,100dvh)] w-[100vw] overflow-hidden bg-[#FAF7F2] text-[#000000] select-none flex flex-col font-sans gpu-layer">
       <AnimatePresence>
         {showSplash && (
           <SplashScreenApple onComplete={handleHideSplash} />

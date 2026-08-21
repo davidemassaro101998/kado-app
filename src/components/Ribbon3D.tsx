@@ -4,10 +4,14 @@ import { motion } from "motion/react";
 interface Ribbon3DProps {
   size?: "sm" | "md" | "lg" | "xl";
   animateFloating?: boolean;
+  /** Overrides the fixed size classes for `size` -- for embedding inside a
+   *  container that's already fluidly sized (e.g. a clamp()-based wrapper)
+   *  where a fixed pixel size would overflow on short viewports. */
+  className?: string;
 }
 
-export const Ribbon3D: React.FC<Ribbon3DProps> = ({ size = "sm", animateFloating = false }) => {
-  const dimensions = {
+export const Ribbon3D: React.FC<Ribbon3DProps> = ({ size = "sm", animateFloating = false, className }) => {
+  const dimensions = className ?? {
     sm: "w-8 h-8",
     md: "w-14 h-14",
     lg: "w-24 h-24",
