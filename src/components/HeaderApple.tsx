@@ -28,7 +28,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
 
   return (
     <>
-      <header className="w-full shrink-0 border-b border-[#EBE6DC] bg-[#FAF7F2]/90 backdrop-blur-xl z-30 pt-[max(12px,env(safe-area-inset-top,0px))] pb-2.5 px-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))] transition-all min-h-[52px] flex items-center justify-between gpu-layer">
+      <header className="w-full shrink-0 border-b border-[#EBE6DC] bg-[#FAF7F2]/90 backdrop-blur-xl z-30 pt-[max(12px,env(safe-area-inset-top,0px))] pb-2.5 px-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))] min-h-[52px] flex items-center justify-between">
         <div className="w-full max-w-lg sm:max-w-2xl mx-auto flex items-center justify-between">
           {/* Brand Logo */}
           <button
@@ -46,7 +46,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
             {/* Country & Language Picker Pill */}
             <button
               onClick={() => setShowGeoModal(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F5F1EA] hover:bg-[#EFECE6] active:scale-95 border border-[#E0D9CC] text-[#000000] text-xs font-semibold shadow-2xs transition-all cursor-pointer h-[34px]"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F5F1EA] hover:bg-[#EFECE6] active:scale-95 border border-[#E0D9CC] text-[#000000] text-xs font-semibold shadow-2xs transition-transform cursor-pointer h-[34px]"
             >
               <FlagIcon code={language} className="w-4 h-3" />
               <span className="font-extrabold text-[#000000] uppercase">
@@ -66,7 +66,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
               <button
                 onClick={onOpenSettings}
                 aria-label="Settings"
-                className="flex items-center justify-center w-[34px] h-[34px] rounded-full bg-[#F5F1EA] hover:bg-[#EFECE6] active:scale-95 border border-[#E0D9CC] text-[#000000] shadow-2xs transition-all cursor-pointer"
+                className="flex items-center justify-center w-[34px] h-[34px] rounded-full bg-[#F5F1EA] hover:bg-[#EFECE6] active:scale-95 border border-[#E0D9CC] text-[#000000] shadow-2xs transition-transform cursor-pointer"
               >
                 <Settings className="w-4 h-4 text-[#000000]" />
               </button>

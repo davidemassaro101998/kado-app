@@ -188,7 +188,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
   };
 
   return (
-    <div className="relative w-full flex-1 h-full bg-tactile-linen flex flex-col justify-between overflow-hidden font-sans select-none px-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))] max-w-lg sm:max-w-xl mx-auto pt-2 pb-[max(16px,env(safe-area-inset-bottom,0px))] gpu-layer">
+    <div className="relative w-full flex-1 h-full bg-tactile-linen flex flex-col justify-between overflow-hidden font-sans select-none px-[max(16px,env(safe-area-inset-left,0px))] pr-[max(16px,env(safe-area-inset-right,0px))] max-w-lg sm:max-w-xl mx-auto pt-2 pb-[max(16px,env(safe-area-inset-bottom,0px))]">
       
       {/* ================= 1. BARRA UNICA FAST-TRACK SOS (Apple Glassmorphism) ================= */}
       <div className="shrink-0 pt-0.5">
@@ -198,7 +198,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
             setIsVoiceDrawerOpen(true);
             voiceDrawerRef.current?.startListening();
           }}
-          className="w-full flex items-center justify-between py-2.5 px-3.5 sm:py-3 sm:px-4 rounded-[18px] bg-white/80 backdrop-blur-md border border-[#E0D9CC] shadow-[0_4px_20px_rgba(60,50,30,0.05)] cursor-pointer active:scale-[0.99] transition-all group"
+          className="w-full flex items-center justify-between py-2.5 px-3.5 sm:py-3 sm:px-4 rounded-[18px] bg-white/80 backdrop-blur-md border border-[#E0D9CC] shadow-[0_4px_20px_rgba(60,50,30,0.05)] cursor-pointer active:scale-[0.99] transition-transform group"
         >
           <div className="flex items-center gap-2.5 flex-1 min-w-0">
             <Search className="w-4 h-4 text-[#8E8E93] group-hover:text-[#FF4D6D] transition-colors shrink-0" />
@@ -211,7 +211,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
           {wizardStep !== 1 && (
             <div className="flex items-center gap-1.5 pl-2.5 shrink-0 border-l border-[#EBE6DC]">
-              <div className="p-1.5 rounded-full bg-[#FF4D6D]/10 text-[#FF4D6D] group-hover:bg-[#FF4D6D] group-hover:text-white transition-all">
+              <div className="p-1.5 rounded-full bg-[#FF4D6D]/10 text-[#FF4D6D] group-hover:bg-[#FF4D6D] group-hover:text-white transition-colors">
                 <Mic className="w-4 h-4 stroke-[2.2]" />
               </div>
             </div>
@@ -231,7 +231,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
           <div className="flex items-center justify-between py-1.5 px-0.5 border-b border-[#EBE6DC]/80 mt-1">
             <button
               onClick={handleGoBack}
-              className="flex items-center gap-1.5 text-xs font-bold text-[#FF4D6D] hover:text-[#E63354] active:scale-95 transition-all py-0.5 px-1 cursor-pointer"
+              className="flex items-center gap-1.5 text-xs font-bold text-[#FF4D6D] hover:text-[#E63354] active:scale-95 transition-transform py-0.5 px-1 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
               <span>{language === "it" ? "Indietro" : "Back"}</span>
@@ -297,7 +297,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                     <button
                       key={opt.label}
                       onClick={() => handleSelectRecipient(opt.label)}
-                      className={`h-[95px] sm:h-[110px] p-3 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 cursor-pointer transition-all duration-150 active:scale-[0.97] ${
+                      className={`h-[95px] sm:h-[110px] p-3 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
                           ? "surface-coral-tactile text-white border-transparent shadow-[0_8px_24px_rgba(255,77,109,0.3)]"
                           : "card-tactile text-[#000000] hover:border-[#C5A059]"
@@ -323,7 +323,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full flex-1 flex flex-col justify-center space-y-3 py-1 gpu-layer"
+              className="w-full flex-1 flex flex-col justify-center space-y-3 py-1"
             >
               <div className="text-center space-y-0.5">
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
@@ -343,7 +343,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                     <button
                       key={opt.label}
                       onClick={() => handleSelectVibe(opt.label)}
-                      className={`h-[95px] sm:h-[110px] p-2.5 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer transition-all duration-150 active:scale-[0.97] ${
+                      className={`h-[95px] sm:h-[110px] p-2.5 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
                           ? "surface-coral-tactile text-white border-transparent shadow-[0_6px_20px_rgba(255,77,109,0.28)]"
                           : "card-tactile text-[#000000] hover:border-[#C5A059]"
@@ -369,7 +369,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full flex flex-col justify-center space-y-3 sm:space-y-3.5 my-auto gpu-layer"
+              className="w-full flex flex-col justify-center space-y-3 sm:space-y-3.5 my-auto"
             >
               <div className="text-center space-y-1">
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
@@ -392,7 +392,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                         setCustomBudgetInput("");
                         setBudget(b);
                       }}
-                      className={`py-3.5 px-4 sm:py-4 rounded-[22px] border flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-150 active:scale-[0.97] ${
+                      className={`py-3.5 px-4 sm:py-4 rounded-[22px] border flex flex-col items-center justify-center text-center cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
                           ? "surface-coral-tactile text-white border-transparent shadow-[0_8px_24px_rgba(255,77,109,0.3)]"
                           : "card-tactile text-[#000000] hover:border-[#C5A059]"
@@ -406,7 +406,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
               {/* Card 2: Custom Budget Card */}
               <div
-                className={`p-3.5 rounded-[22px] bg-white shadow-[0_4px_14px_-3px_rgba(60,50,30,0.04),0_2px_6px_-1px_rgba(0,0,0,0.02)] space-y-1.5 transition-all border ${
+                className={`p-3.5 rounded-[22px] bg-white shadow-[0_4px_14px_-3px_rgba(60,50,30,0.04),0_2px_6px_-1px_rgba(0,0,0,0.02)] space-y-1.5 transition-colors border ${
                   isCustomBudgetFocused || customBudgetInput
                     ? "border-2 border-[#FF4D6D]"
                     : "border-[#EBE6DC]"
@@ -511,7 +511,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
         <div className="shrink-0 pb-3 pt-2 w-full">
           <button
             onClick={handleFinalSubmit}
-            className="surface-coral-tactile w-full py-4 rounded-[22px] hover:brightness-105 active:scale-[0.97] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_24px_rgba(255,77,109,0.3)] transition-all uppercase tracking-wide border border-transparent"
+            className="surface-coral-tactile w-full py-4 rounded-[22px] hover:brightness-105 active:scale-[0.97] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_24px_rgba(255,77,109,0.3)] transition-transform uppercase tracking-wide border border-transparent"
           >
             <Sparkles className="w-5 h-5 fill-current text-current" />
             <span>

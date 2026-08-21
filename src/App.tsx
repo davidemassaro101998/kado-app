@@ -308,7 +308,7 @@ export default function App() {
   }, []);
 
   return (
-    <div id="app-root" className="app-container fixed inset-0 h-[var(--app-height,100dvh)] w-[100vw] overflow-hidden bg-[#FAF7F2] text-[#000000] select-none flex flex-col font-sans gpu-layer">
+    <div id="app-root" className="app-container fixed inset-0 h-[var(--app-height,100dvh)] w-[100vw] overflow-hidden bg-[#FAF7F2] text-[#000000] select-none flex flex-col font-sans">
       <AnimatePresence>
         {showSplash && (
           <SplashScreenApple onComplete={handleHideSplash} />
@@ -352,7 +352,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-full h-full flex flex-col gpu-layer"
+              className="w-full h-full flex flex-col"
             >
               <HomeScreenApple
                 language={language}
@@ -368,7 +368,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-full h-full flex flex-col gpu-layer"
+              className="w-full h-full flex flex-col"
             >
               <LoadingApple3D language={language} subtitle={loadingSubtitle} />
             </motion.div>
@@ -381,7 +381,7 @@ export default function App() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="w-full h-full flex flex-col gpu-layer"
+              className="w-full h-full flex flex-col"
             >
               <ResultsDeckApple
                 gifts={gifts}

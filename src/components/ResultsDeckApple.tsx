@@ -121,13 +121,13 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
   }, [handleNext, handlePrev]);
 
   return (
-    <div className="relative w-full h-full bg-tactile-linen flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top,0px))] pb-[max(8px,env(safe-area-inset-bottom,0px))] px-[max(12px,env(safe-area-inset-left,0px))] pr-[max(12px,env(safe-area-inset-right,0px))] select-none max-w-lg sm:max-w-xl md:max-w-2xl mx-auto overflow-hidden font-sans gpu-layer">
+    <div className="relative w-full h-full bg-tactile-linen flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top,0px))] pb-[max(8px,env(safe-area-inset-bottom,0px))] px-[max(12px,env(safe-area-inset-left,0px))] pr-[max(12px,env(safe-area-inset-right,0px))] select-none max-w-lg sm:max-w-xl md:max-w-2xl mx-auto overflow-hidden font-sans">
       {/* Top Header Navigation */}
       <div className="flex items-center justify-between shrink-0 pt-0.5 pb-2 border-b border-[#EBE6DC]">
         <div className="flex items-center gap-2 min-w-0">
           <button
             onClick={onStartOver}
-            className="p-1.5 sm:p-2 rounded-full bg-white border border-[#EBE6DC] text-[#000000] hover:bg-[#EBE6DC] active:scale-95 transition-transform cursor-pointer shadow-2xs shrink-0 gpu-layer"
+            className="p-1.5 sm:p-2 rounded-full bg-white border border-[#EBE6DC] text-[#000000] hover:bg-[#EBE6DC] active:scale-95 transition-transform cursor-pointer shadow-2xs shrink-0"
             aria-label="Back"
           >
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#000000]" />
@@ -145,7 +145,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
         <button
           onClick={onStartOver}
-          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#EBE6DC] text-[#FF4D6D] hover:bg-[#EBE6DC] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1 gpu-layer"
+          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#EBE6DC] text-[#FF4D6D] hover:bg-[#EBE6DC] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1"
         >
           {language === "it" ? "Nuova Ricerca" : "New Search"}
         </button>
@@ -257,7 +257,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     alt={currentGift.title}
                     loading="eager"
                     decoding="async"
-                    className="max-h-full max-w-full object-contain pointer-events-none gpu-layer"
+                    className="max-h-full max-w-full object-contain pointer-events-none"
                   />
                   
                   {/* Price Tag Pill */}
@@ -321,7 +321,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#FF4D6D] hover:bg-[#F5F1EA] active:scale-[0.98] text-[#FF4D6D] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-all uppercase tracking-wider gpu-layer"
+                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#FF4D6D] hover:bg-[#F5F1EA] active:scale-[0.98] text-[#FF4D6D] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-transform uppercase tracking-wider"
                   >
                     <ShoppingBag className="w-4 h-4 text-[#FF4D6D] shrink-0" />
                     <span className="truncate">{language === "it" ? "VEDI NELLO STORE" : "SEE IN STORE"}</span>
@@ -348,7 +348,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="surface-coral-tactile py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-105 text-white font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-all uppercase tracking-wider border-2 border-transparent gpu-layer"
+                    className="surface-coral-tactile py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-105 text-white font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-transform uppercase tracking-wider border-2 border-transparent"
                   >
                     <ShoppingCart className="w-4 h-4 text-white shrink-0" />
                     <span className="truncate">{language === "it" ? "METTI IN CARRELLO" : "ADD TO CART"}</span>
@@ -366,7 +366,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           {/* 1. [💬 Copia Biglietto] */}
           <button
             onClick={handleCopyWhatsApp}
-            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white border border-[#EBE6DC] hover:border-[#FF4D6D] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs active:scale-[0.98] gpu-layer"
+            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white border border-[#EBE6DC] hover:border-[#FF4D6D] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer shadow-2xs active:scale-[0.98]"
           >
             <MessageCircle className="w-4 h-4 text-[#FF4D6D] shrink-0" />
             <span className="truncate">
@@ -386,7 +386,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
               senza competere con il CTA primario "Metti in carrello". */}
           <button
             onClick={onRegenerate}
-            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white hover:bg-[#FFF0F2] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer active:scale-[0.98] gpu-layer border-2"
+            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white hover:bg-[#FFF0F2] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer active:scale-[0.98] border-2"
             style={{ borderColor: "var(--brand-coral)" }}
           >
             <RotateCcw className="w-4 h-4 shrink-0" style={{ color: "var(--brand-coral)" }} />

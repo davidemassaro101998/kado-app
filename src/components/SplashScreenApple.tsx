@@ -37,7 +37,7 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="fixed inset-0 z-50 bg-tactile-linen flex flex-col items-center justify-between py-12 px-6 select-none font-sans gpu-layer"
+      className="fixed inset-0 z-50 bg-tactile-linen flex flex-col items-center justify-between py-12 px-6 select-none font-sans"
     >
       <div className="flex-1" />
 
