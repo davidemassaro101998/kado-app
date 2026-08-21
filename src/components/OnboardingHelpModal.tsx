@@ -60,6 +60,11 @@ export const OnboardingHelpModal: React.FC<OnboardingHelpModalProps> = ({
               <h2 className="text-lg font-bold text-[#000000]">
                 {language === "it" ? "Benvenuto su Kado AI" : "Welcome to Kado AI"}
               </h2>
+              <p className="text-sm text-[#000000] leading-relaxed font-medium">
+                {language === "it"
+                  ? "L'AI ti trova il regalo perfetto su Amazon in 3 tap: dì o scegli per chi è, che stile ha e il budget."
+                  : "AI finds the perfect gift on Amazon in 3 taps: say or pick who it's for, their style, and your budget."}
+              </p>
               <p className="text-sm text-[#8E8E93] leading-relaxed">
                 {language === "it"
                   ? "Tocca il microfono e descrivi a voce chi è il destinatario: se al primo utilizzo il telefono chiede il permesso al microfono, tocca \"Consenti\" per usare la ricerca vocale."

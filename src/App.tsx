@@ -10,7 +10,6 @@ import { SplashScreenApple } from "./components/SplashScreenApple";
 import { OnboardingHelpModal } from "./components/OnboardingHelpModal";
 import { SettingsDrawer } from "./components/SettingsDrawer";
 import { LegalModal, LegalDocType } from "./components/LegalModal";
-import { CookieBanner } from "./components/CookieBanner";
 import {
   ScreenType,
   QuizState,
@@ -423,12 +422,6 @@ export default function App() {
           onClose={handleCloseLegalModal}
         />
       )}
-
-      {/* GDPR Cookie Consent Banner (CookieBanner gestisce il proprio stato di accettazione internamente via localStorage) */}
-      <CookieBanner
-        language={language}
-        onOpenPrivacy={handleOpenPrivacy}
-      />
     </div>
   );
 }
