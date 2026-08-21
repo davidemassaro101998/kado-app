@@ -1,6 +1,6 @@
 // Kado AI - PWA Service Worker for Smart Web Push Notifications
 
-const CACHE_NAME = 'kado-ai-v1';
+const CACHE_NAME = 'kado-ai-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -36,10 +36,35 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event: Stale-While-Revalidate for Static Assets, Network First for API
+// Fetch Event: Network-First for the app shell (HTML/JS/CSS) so updates show
+// immediately instead of waiting a launch behind; Stale-While-Revalidate for
+// everything else (icons, images).
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   if (event.request.url.includes('/api/')) return;
+
+  const isAppShell =
+    event.request.mode === 'navigate' ||
+    event.request.destination === 'script' ||
+    event.request.destination === 'style' ||
+    event.request.headers.get('accept')?.includes('text/html');
+
+  if (isAppShell) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse.clone()));
+          }
+          return networkResponse;
+        })
+        .catch(async () => {
+          const cached = await caches.match(event.request);
+          return cached || caches.match('/index.html');
+        })
+    );
+    return;
+  }
 
   // Stale-While-Revalidate caching pattern
   event.respondWith(
