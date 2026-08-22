@@ -1,5 +1,6 @@
 import { GiftItem, QuizState, CountryConfig } from "../types";
 import { Language } from "./translations";
+import { BUDGET_BANDS } from "./budgetBands";
 
 export interface BudgetRange {
   min: number;
@@ -9,39 +10,44 @@ export interface BudgetRange {
 
 export function parseBudgetRange(budgetRaw: string): BudgetRange {
   if (!budgetRaw) {
-    return { min: 25, max: 50, label: "25-50€" };
+    return { min: 25, max: 50, label: "25-50" };
   }
 
-  const clean = budgetRaw.replace(/\s+/g, "").replace(/\$/g, "").replace(/€/g, "");
+  // Strip everything except digits, '.', '<', '>' and '-' -- was previously
+  // only stripping '$' and '€' by name, so any other currency symbol (¥, ₹,
+  // £, R$, zł, kr, د.إ, A$, CA$, S$...) fell through to the numeric parse
+  // below and broke it. Symbol-agnostic now, works for any currency.
+  const clean = budgetRaw.replace(/\s+/g, "").replace(/[^\d.<>-]/g, "");
 
-  // Check for <25 or <30
-  if (clean.includes("<25") || clean.includes("<30") || clean.startsWith("<")) {
+  // Check for "<X"
+  if (clean.startsWith("<")) {
     const val = parseInt(clean.replace("<", ""), 10) || 25;
-    return { min: 10, max: Math.min(val, 25), label: `<${val}€` };
+    return { min: Math.round(val * 0.4), max: val, label: `<${val}` };
   }
 
-  // Check for >100
-  if (clean.includes(">100") || clean.startsWith(">")) {
-    return { min: 100, max: 300, label: ">100€" };
+  // Check for ">X"
+  if (clean.startsWith(">")) {
+    const val = parseInt(clean.replace(">", ""), 10) || 100;
+    return { min: val, max: val * 3, label: `>${val}` };
   }
 
   // Check for range like 25-50 or 50-100
   if (clean.includes("-")) {
     const parts = clean.split("-").map((p) => parseInt(p, 10)).filter((n) => !isNaN(n));
     if (parts.length >= 2) {
-      return { min: parts[0], max: parts[1], label: `${parts[0]}-${parts[1]}€` };
+      return { min: parts[0], max: parts[1], label: `${parts[0]}-${parts[1]}` };
     }
   }
 
   // Exact custom number (e.g. "18", "35", "150")
   const num = parseInt(clean, 10);
   if (!isNaN(num) && num > 0) {
-    const minVal = Math.max(5, Math.floor(num * 0.75));
-    return { min: minVal, max: num, label: `${num}€` };
+    const minVal = Math.max(1, Math.floor(num * 0.75));
+    return { min: minVal, max: num, label: `${num}` };
   }
 
   // Fallback default
-  return { min: 25, max: 50, label: "25-50€" };
+  return { min: 25, max: 50, label: "25-50" };
 }
 
 export function generateSmartFallbackGifts(
@@ -181,8 +187,14 @@ export function generateSmartFallbackGifts(
   const isRelaxVibe = vibeLower.includes("relax") || vibeLower.includes("cozy") || vibeLower.includes("casa") || vibeLower.includes("home") || vibeLower.includes("wellness");
   const isTravelVibe = vibeLower.includes("viaggi") || vibeLower.includes("travel") || vibeLower.includes("outdoors");
 
-  // Tier 1: Budget under 25€ (e.g., <25€)
-  if (budgetRange.max <= 25) {
+  // Tier thresholds scale with the selected currency (25/50/100 only makes
+  // sense in EUR/USD-ish currencies -- comparing a JPY budget of "3000-6000"
+  // against those fixed numbers would always fall through to the top tier
+  // no matter which tier the visitor actually picked).
+  const [tierT1, tierT2, tierT3] = (BUDGET_BANDS[country.currency] || BUDGET_BANDS.EUR).thresholds;
+
+  // Tier 1: Budget under the currency's first threshold (e.g. <25€, <¥3000)
+  if (budgetRange.max <= tierT1) {
     let card1: Omit<GiftItem, "id"> = {
       title: "Anker Mini Power Bank Magnetico 5000mAh",
       price: getPrice(0.75), // ~19€
@@ -259,8 +271,8 @@ export function generateSmartFallbackGifts(
     }));
   }
 
-  // Tier 2: Budget 25 - 50€
-  if (budgetRange.max <= 50) {
+  // Tier 2
+  if (budgetRange.max <= tierT2) {
     let card1: Omit<GiftItem, "id"> = {
       title: "Anker MagGo Power Bank Wireless Magnético 10000mAh",
       price: getPrice(0.55), // ~39€
@@ -354,8 +366,8 @@ export function generateSmartFallbackGifts(
     }));
   }
 
-  // Tier 3: Budget 50 - 100€
-  if (budgetRange.max <= 100) {
+  // Tier 3
+  if (budgetRange.max <= tierT3) {
     const card1: Omit<GiftItem, "id"> = {
       title: "Ember Temperature Control Smart Mug Mini 2",
       price: getPrice(0.75), // ~88€

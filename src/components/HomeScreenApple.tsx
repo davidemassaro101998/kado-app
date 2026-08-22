@@ -18,8 +18,9 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { QuizState, FormatPillType } from "../types";
+import { QuizState, FormatPillType, CountryConfig } from "../types";
 import { Language } from "../data/translations";
+import { getBudgetOptions, getDefaultBudget, formatCustomBudget } from "../data/budgetBands";
 import {
   trackPageViewHome,
   trackWizardStep1,
@@ -31,11 +32,13 @@ import { VoiceDrawer, VoiceDrawerHandle } from "./VoiceDrawer";
 interface HomeScreenAppleProps {
   onGenerateGifts: (quizData: QuizState) => void;
   language?: Language;
+  country: CountryConfig;
 }
 
 export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
   onGenerateGifts,
   language = "it",
+  country,
 }) => {
   // Page View Analytics
   useEffect(() => {
@@ -60,7 +63,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
   // Form State
   const [recipient, setRecipient] = useState<string>(() => savedHomeForm?.recipient || "Partner");
   const [vibe, setVibe] = useState<string>(() => savedHomeForm?.vibe || "Tech");
-  const [budget, setBudget] = useState<string>(() => savedHomeForm?.budget || "25 - 50€");
+  const [budget, setBudget] = useState<string>(() => savedHomeForm?.budget || getDefaultBudget(country.currency, country.symbol));
   const [customBudgetInput, setCustomBudgetInput] = useState<string>(() => savedHomeForm?.customBudgetInput || "");
   const [isCustomBudgetFocused, setIsCustomBudgetFocused] = useState<boolean>(false);
   const [formatPill, setFormatPill] = useState<FormatPillType>(() => savedHomeForm?.formatPill || "Tutto");
@@ -174,7 +177,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
         { label: "Fun", icon: PartyPopper },
       ];
 
-  const budgetOptions = ["< 25€", "25 - 50€", "50 - 100€", "100€+"];
+  const budgetOptions = getBudgetOptions(country.currency, country.symbol);
 
   // Framer Motion Spring Variants for Wizard Steps
   const stepVariants: Variants = {
@@ -445,7 +448,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       isCustomBudgetFocused || customBudgetInput ? "text-[#FF4D6D]" : "text-[#8E8E93]"
                     }`}
                   >
-                    €
+                    {country.symbol}
                   </span>
                   <input
                     type="number"
@@ -457,9 +460,9 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       const val = e.target.value;
                       setCustomBudgetInput(val);
                       if (val) {
-                        setBudget(`${val}€`);
+                        setBudget(formatCustomBudget(val, country.currency, country.symbol));
                       } else {
-                        setBudget("25 - 50€");
+                        setBudget(getDefaultBudget(country.currency, country.symbol));
                       }
                     }}
                     placeholder={language === "it" ? "Cifra esatta (es. 18)" : "Exact amount (e.g. 18)"}
@@ -471,7 +474,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       onClick={() => {
                         triggerHaptic();
                         setCustomBudgetInput("");
-                        setBudget("25 - 50€");
+                        setBudget(getDefaultBudget(country.currency, country.symbol));
                       }}
                       className="absolute right-2.5 p-1 rounded-full bg-[#EBE6DC] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
                       title={language === "it" ? "Cancella" : "Clear"}
