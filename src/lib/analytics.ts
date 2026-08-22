@@ -57,7 +57,3 @@ export const trackClickAmazonAffiliate = (gift: { asin?: string; title: string; 
     price: gift.price,
   });
 };
-
-export const trackClickWhatsappShare = (giftTitle?: string) => {
-  trackEvent("click_whatsapp_share", { gift_title: giftTitle || "" });
-};

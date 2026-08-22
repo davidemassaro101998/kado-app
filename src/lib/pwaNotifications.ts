@@ -1,7 +1,5 @@
 // Kado AI - PWA Smart Notification Infrastructure
 
-import { SavedReminder } from "../types";
-
 let swRegistration: ServiceWorkerRegistration | null = null;
 
 /**
@@ -155,77 +153,6 @@ function markAsSentToday(tag: string): void {
   } catch (e) {
     // ignore
   }
-}
-
-/**
- * Check Saved Event Reminders (14 days, 7 days, 3 days)
- */
-export function checkSavedEventNotifications(reminders: SavedReminder[]): void {
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-
-  reminders.forEach((rem) => {
-    if (!rem.date) return;
-    const parts = rem.date.split("-");
-    if (parts.length !== 3) return;
-
-    const eventDate = new Date(
-      parseInt(parts[0], 10),
-      parseInt(parts[1], 10) - 1,
-      parseInt(parts[2], 10)
-    );
-    eventDate.setHours(0, 0, 0, 0);
-
-    const diffMs = eventDate.getTime() - now.getTime();
-    const daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-
-    const name = rem.name;
-
-    // A. 14 GIORNI PRIMA
-    if (daysLeft === 14) {
-      const tag = `reminder_14d_${rem.id}`;
-      if (!hasBeenSentToday(tag)) {
-        dispatchPwaNotification({
-          title: `🎁 Tra 14 giorni è il compleanno di ${name}!`,
-          body: `Zero fretta, massima resa. Scopri ora le 3 idee perfette e approfitta della spedizione standard.`,
-          tag,
-          actions: [{ action: "find_gift", title: "Trova Regalo" }],
-          data: { url: `/?action=find_gift&recipient=${encodeURIComponent(rem.relation || name)}&name=${encodeURIComponent(name)}` },
-        });
-        markAsSentToday(tag);
-      }
-    }
-
-    // B. 7 GIORNI PRIMA
-    if (daysLeft === 7) {
-      const tag = `reminder_7d_${rem.id}`;
-      if (!hasBeenSentToday(tag)) {
-        dispatchPwaNotification({
-          title: `⏰ Manca solo 1 settimana per ${name}!`,
-          body: `Non ridurti all'ultimo secondo. L'AI ha selezionato 3 regali con 5 stelle su Amazon per lui.`,
-          tag,
-          actions: [{ action: "find_gift", title: "Vedi le 3 Idee" }],
-          data: { url: `/?action=find_gift&recipient=${encodeURIComponent(rem.relation || name)}&name=${encodeURIComponent(name)}` },
-        });
-        markAsSentToday(tag);
-      }
-    }
-
-    // C. 3 GIORNI PRIMA (SOS LAST MINUTE)
-    if (daysLeft === 3) {
-      const tag = `reminder_3d_${rem.id}`;
-      if (!hasBeenSentToday(tag)) {
-        dispatchPwaNotification({
-          title: `🚨 SOS Regalo per ${name}!`,
-          body: `Mancano 3 giorni! Ordina oggi con Amazon Prime per farlo arrivare in tempo senza fare brutta figura.`,
-          tag,
-          actions: [{ action: "find_gift", title: "Risolvi in 3 Tap" }],
-          data: { url: `/?action=find_gift&recipient=${encodeURIComponent(rem.relation || name)}&name=${encodeURIComponent(name)}` },
-        });
-        markAsSentToday(tag);
-      }
-    }
-  });
 }
 
 /**

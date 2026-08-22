@@ -9,18 +9,13 @@ import {
   RotateCcw,
   ShoppingBag,
   ShoppingCart,
-  MessageCircle,
   Star,
-  Check,
   Sparkles,
   Zap,
   ArrowLeft,
-  X,
-  CalendarHeart,
 } from "lucide-react";
 import { Language } from "../data/translations";
-import { trackClickAmazonAffiliate, trackClickWhatsappShare } from "../lib/analytics";
-import { addReminder } from "../lib/reminders";
+import { trackClickAmazonAffiliate } from "../lib/analytics";
 
 interface ResultsDeckAppleProps {
   gifts: GiftItem[];
@@ -46,29 +41,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
   const [activeIndex, setActiveIndex] = useState<number>(() => {
     return initialActiveIndex < gifts.length ? initialActiveIndex : 0;
   });
-  const [copiedWs, setCopiedWs] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
-
-  // Salva l'occasione DOPO che il valore e gia stato dato (mai prima —
-  // e la regola che evita che il concetto di calendario diventi
-  // frizione): un tap opzionale, nessun campo obbligatorio oltre alla
-  // data. Alimenta il motore di promemoria 14/7/3 giorni gia costruito
-  // in pwaNotifications.ts.
-  const [showReminderForm, setShowReminderForm] = useState(false);
-  const [reminderSaved, setReminderSaved] = useState(false);
-  const [reminderName, setReminderName] = useState("");
-  const [reminderDate, setReminderDate] = useState("");
-
-  const handleSaveReminder = useCallback(() => {
-    if (!reminderDate) return;
-    addReminder({
-      name: reminderName.trim() || quizState.recipient,
-      relation: quizState.recipient,
-      date: reminderDate,
-    });
-    setReminderSaved(true);
-    setShowReminderForm(false);
-  }, [reminderDate, reminderName, quizState.recipient]);
 
   const currentGift = gifts[activeIndex] || gifts[0];
   // La prima carta (server.ts la genera sempre come "Più Scelto") è la
@@ -95,21 +68,6 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
     const prevIdx = (activeIndex - 1 + gifts.length) % gifts.length;
     handleSelectIndex(prevIdx);
   }, [activeIndex, gifts.length, handleSelectIndex]);
-
-  // WhatsApp Greeting Card Text
-  const wsText = language === "it"
-    ? `Tanti auguri! 🎉 Ho trovato un regalo speciale per te: ${currentGift?.title} (${currentGift?.price})! Guarda qui su Amazon: ${buildAmazonUrl(currentGift?.amazonSearchQuery || "", country, currentGift)}`
-    : `Happy Birthday! 🎉 I found a special gift for you: ${currentGift?.title} (${currentGift?.price})! Check it out: ${buildAmazonUrl(currentGift?.amazonSearchQuery || "", country, currentGift)}`;
-
-  const handleCopyWhatsApp = useCallback(() => {
-    trackClickWhatsappShare(currentGift?.title);
-    navigator.clipboard.writeText(wsText);
-    setCopiedWs(true);
-    setTimeout(() => setCopiedWs(false), 2500);
-
-    const encoded = encodeURIComponent(wsText);
-    window.open(`https://wa.me/?text=${encoded}`, "_blank");
-  }, [currentGift?.title, wsText]);
 
   const handleDragEnd = useCallback((_: any, info: any) => {
     const swipeThreshold = 35;
@@ -295,7 +253,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 {/* 4. AI Reason Box */}
                 <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#F5F1EA] border border-[#EBE6DC]">
                   <p className="text-[11px] sm:text-xs text-[#000000] font-normal leading-relaxed">
-                    💡 <span className="font-bold text-[#000000]">Perché è perfetto:</span> {currentGift.reason}
+                    💡 <span className="font-bold text-[#000000]">{language === "it" ? "Perché è perfetto:" : "Why it's perfect:"}</span> {currentGift.reason}
                   </p>
                 </div>
 
@@ -362,101 +320,20 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
       {/* Permanently Fixed Bottom Action Buttons */}
       <div className="shrink-0 pt-1.5 border-t border-[#EBE6DC] space-y-1">
-        <div className="grid grid-cols-2 gap-2">
-          {/* 1. [💬 Copia Biglietto] */}
-          <button
-            onClick={handleCopyWhatsApp}
-            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white border border-[#EBE6DC] hover:border-[#FF4D6D] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer shadow-2xs active:scale-[0.98]"
-          >
-            <MessageCircle className="w-4 h-4 text-[#FF4D6D] shrink-0" />
-            <span className="truncate">
-              {copiedWs
-                ? (language === "it" ? "Copiato & Aperto!" : "Copied & Opened!")
-                : (language === "it" ? "Copia Biglietto" : "Copy Ticket")}
-            </span>
-            {copiedWs && <Check className="w-4 h-4 text-[#FF4D6D] shrink-0" />}
-          </button>
-
-          {/* 2. [⚡️ Altre 3 Idee] Direct Regenerate — meccanismo a
-              ricompensa variabile (stesso principio dello swipe di
-              Tinder: input semplice, esito non del tutto prevedibile),
-              probabilmente la leva di engagement con più potenziale
-              nell'app. Prima era grigia in fondo, quasi invisibile —
-              ora ha un bordo dell'accento di marchio per farsi notare
-              senza competere con il CTA primario "Metti in carrello". */}
-          <button
-            onClick={onRegenerate}
-            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-white hover:bg-[#FFF0F2] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer active:scale-[0.98] border-2"
-            style={{ borderColor: "var(--brand-coral)" }}
-          >
-            <RotateCcw className="w-4 h-4 shrink-0" style={{ color: "var(--brand-coral)" }} />
-            <span className="truncate">
-              {language === "it" ? "Altre 3 Idee" : "3 More Ideas"}
-            </span>
-          </button>
-        </div>
-
-        {/* Promemoria opzionale — appare SOLO qui, dopo che l'utente ha
-            gia ricevuto il valore (il regalo trovato), mai prima o
-            dentro il wizard. Un tap, un solo campo obbligatorio (la
-            data), nome facoltativo. Questo e cio che trasforma un uso
-            singolo in un ritorno futuro. */}
-        {!reminderSaved ? (
-          <div className="pt-0.5">
-            {!showReminderForm ? (
-              <button
-                onClick={() => {
-                  setShowReminderForm(true);
-                }}
-                className="w-full py-2 px-3 rounded-2xl bg-white border border-dashed border-[#EBE6DC] hover:border-[var(--brand-coral)] text-[11px] sm:text-xs font-semibold text-[#8E8E93] hover:text-[var(--brand-coral-dark)] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-              >
-                <CalendarHeart className="w-3.5 h-3.5" style={{ color: "var(--brand-coral)" }} />
-                {language === "it"
-                  ? "Ricordamelo anche l'anno prossimo"
-                  : "Remind me again next year"}
-              </button>
-            ) : (
-              <div className="p-3 rounded-2xl bg-white border-2 flex flex-col gap-2" style={{ borderColor: "var(--brand-coral)" }}>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={reminderName}
-                    onChange={(e) => setReminderName(e.target.value)}
-                    placeholder={language === "it" ? "Nome (facoltativo)" : "Name (optional)"}
-                    className="flex-1 min-w-0 py-2 px-2.5 rounded-xl border border-[#EBE6DC] text-xs text-[#000000] outline-none focus:border-[var(--brand-coral)]"
-                  />
-                  <input
-                    type="date"
-                    value={reminderDate}
-                    onChange={(e) => setReminderDate(e.target.value)}
-                    className="py-2 px-2.5 rounded-xl border border-[#EBE6DC] text-xs text-[#000000] outline-none focus:border-[var(--brand-coral)]"
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowReminderForm(false)}
-                    className="flex-1 py-2 rounded-xl bg-[#F5F1EA] text-[#8E8E93] text-xs font-bold cursor-pointer"
-                  >
-                    {language === "it" ? "Annulla" : "Cancel"}
-                  </button>
-                  <button
-                    onClick={handleSaveReminder}
-                    disabled={!reminderDate}
-                    className="flex-1 py-2 rounded-xl text-white text-xs font-bold cursor-pointer disabled:opacity-40"
-                    style={{ backgroundColor: "var(--brand-coral)" }}
-                  >
-                    {language === "it" ? "Salva" : "Save"}
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="pt-0.5 flex items-center justify-center gap-1.5 text-[11px] font-semibold" style={{ color: "var(--brand-coral-dark)" }}>
-            <Check className="w-3.5 h-3.5" />
-            {language === "it" ? "Promemoria salvato — te lo ricorderemo noi." : "Reminder saved — we'll remind you."}
-          </div>
-        )}
+        {/* [⚡️ Altre 3 Idee] Direct Regenerate — meccanismo a ricompensa
+            variabile (stesso principio dello swipe di Tinder: input
+            semplice, esito non del tutto prevedibile), probabilmente la
+            leva di engagement con più potenziale nell'app. */}
+        <button
+          onClick={onRegenerate}
+          className="w-full py-2.5 sm:py-3 px-2 rounded-2xl bg-white hover:bg-[#FFF0F2] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer active:scale-[0.98] border-2"
+          style={{ borderColor: "var(--brand-coral)" }}
+        >
+          <RotateCcw className="w-4 h-4 shrink-0" style={{ color: "var(--brand-coral)" }} />
+          <span className="truncate">
+            {language === "it" ? "Altre 3 Idee" : "3 More Ideas"}
+          </span>
+        </button>
 
         {/* Legal Disclaimers: Amazon Affiliate */}
         <div className="text-[9px] sm:text-[10px] text-[#8E8E93] text-center leading-tight px-1 pb-0.5">

@@ -22,9 +22,7 @@ import { Language } from "./data/translations";
 import {
   registerServiceWorker,
   checkGlobalHolidayNotifications,
-  checkSavedEventNotifications,
 } from "./lib/pwaNotifications";
-import { getReminders } from "./lib/reminders";
 
 export default function App() {
   // Restore saved app session for background/app switch persistence
@@ -97,34 +95,14 @@ export default function App() {
     }
   }, []);
 
-  // Handle Notifications Toggle
-  const handleToggleNotifications = useCallback((enabled: boolean) => {
-    setNotificationsEnabled(enabled);
-    try {
-      localStorage.setItem("kado_notifications_enabled", enabled ? "true" : "false");
-    } catch (e) {
-      // ignore
-    }
-    if (enabled && typeof window !== "undefined" && "Notification" in window && Notification.permission !== "granted") {
-      try {
-        Notification.requestPermission();
-      } catch (e) {
-        // ignore
-      }
-    }
-  }, []);
-
   // Language State
   const [language, setLanguage] = useState<Language>(() => {
     try {
       const userLang = navigator.language || "";
-      if (userLang.toLowerCase().includes("it")) {
-        return "it";
-      }
+      return userLang.toLowerCase().includes("it") ? "it" : "en";
     } catch (e) {
-      // fallback
+      return "it";
     }
-    return "it";
   });
 
   // Quiz State
@@ -170,11 +148,6 @@ export default function App() {
 
     if (notificationsEnabled) {
       checkGlobalHolidayNotifications();
-      // Bug corretto: il motore di promemoria per le occasioni salvate
-      // (checkSavedEventNotifications, 14/7/3 giorni prima) esisteva
-      // gia in pwaNotifications.ts ma non veniva mai chiamato — le
-      // notifiche sui compleanni/anniversari salvati non partivano mai.
-      checkSavedEventNotifications(getReminders());
     }
 
     // Parse URL Action parameters from Notification click
@@ -407,8 +380,6 @@ export default function App() {
         onSelectTheme={setTheme}
         hapticEnabled={hapticEnabled}
         onToggleHaptic={handleToggleHaptic}
-        notificationsEnabled={notificationsEnabled}
-        onToggleNotifications={handleToggleNotifications}
         onOpenLegalModal={handleOpenLegalModal}
         onSendFeedback={handleSendFeedback}
       />

@@ -1,6 +1,6 @@
 // Kado AI - PWA Service Worker for Smart Web Push Notifications
 
-const CACHE_NAME = 'kado-ai-v2';
+const CACHE_NAME = 'kado-ai-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
