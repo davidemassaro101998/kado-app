@@ -13,15 +13,21 @@ import {
   Sparkles,
   Zap,
   ArrowLeft,
+  Share2,
+  Check,
 } from "lucide-react";
 import { Language } from "../data/translations";
 import { trackClickAmazonAffiliate } from "../lib/analytics";
+import { shareGiftCard } from "../lib/shareCard";
 
 interface ResultsDeckAppleProps {
   gifts: GiftItem[];
   quizState: QuizState;
   country: CountryConfig;
   language?: Language;
+  /** Secondi reali impiegati dalla generazione — finisce nel badge
+   *  "TROVATO IN N SECONDI" della card condivisibile. */
+  foundInSeconds?: number | null;
   initialActiveIndex?: number;
   onActiveIndexChange?: (index: number) => void;
   onStartOver: () => void;
@@ -33,6 +39,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
   quizState,
   country,
   language = "it",
+  foundInSeconds = null,
   initialActiveIndex = 0,
   onActiveIndexChange,
   onStartOver,
@@ -42,6 +49,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
     return initialActiveIndex < gifts.length ? initialActiveIndex : 0;
   });
   const [showDrawer, setShowDrawer] = useState(false);
+  const [shareState, setShareState] = useState<"idle" | "building" | "done">("idle");
 
   const currentGift = gifts[activeIndex] || gifts[0];
   // La prima carta (server.ts la genera sempre come "Più Scelto") è la
@@ -78,24 +86,43 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
     }
   }, [handleNext, handlePrev]);
 
+  // Card condivisibile: genera l'immagine e apre lo share sheet nativo.
+  // Il link Amazon nel testo condiviso porta il tag affiliato — chi
+  // riceve la card e clicca arriva gia taggato.
+  const handleShareCard = useCallback(async () => {
+    const gift = gifts[activeIndex] || gifts[0];
+    if (!gift || shareState === "building") return;
+    setShareState("building");
+    try {
+      const url = buildAmazonUrl(gift.amazonSearchQuery, country, gift);
+      const outcome = await shareGiftCard(gift, foundInSeconds, language, url);
+      setShareState(outcome === "failed" ? "idle" : "done");
+      if (outcome !== "failed") {
+        setTimeout(() => setShareState("idle"), 2500);
+      }
+    } catch (e) {
+      setShareState("idle");
+    }
+  }, [gifts, activeIndex, shareState, country, foundInSeconds, language]);
+
   return (
     <div className="relative w-full h-full bg-tactile-linen flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top,0px))] pb-[max(8px,env(safe-area-inset-bottom,0px))] px-[max(12px,env(safe-area-inset-left,0px))] pr-[max(12px,env(safe-area-inset-right,0px))] select-none max-w-lg sm:max-w-xl md:max-w-2xl mx-auto overflow-hidden font-sans">
       {/* Top Header Navigation */}
-      <div className="flex items-center justify-between shrink-0 pt-0.5 pb-2 border-b border-[#EBE6DC]">
+      <div className="flex items-center justify-between shrink-0 pt-0.5 pb-2 border-b border-[#2B2130]">
         <div className="flex items-center gap-2 min-w-0">
           <button
             onClick={onStartOver}
-            className="p-1.5 sm:p-2 rounded-full bg-white border border-[#EBE6DC] text-[#000000] hover:bg-[#EBE6DC] active:scale-95 transition-transform cursor-pointer shadow-2xs shrink-0"
+            className="p-1.5 sm:p-2 rounded-full bg-[#17111A] border border-[#2B2130] text-[#F7F0F2] hover:bg-[#2B2130] active:scale-95 transition-transform cursor-pointer shadow-2xs shrink-0"
             aria-label="Back"
           >
-            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#000000]" />
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F7F0F2]" />
           </button>
           <div className="min-w-0">
-            <span className="text-[9px] sm:text-[10px] font-extrabold text-[#FF4D6D] uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FF4D6D] shrink-0" />
+            <span className="text-[9px] sm:text-[10px] font-extrabold text-[#FF3D7F] uppercase tracking-wider flex items-center gap-1">
+              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FF3D7F] shrink-0" />
               KADO AI • {language === "it" ? "3 SELEZIONI PERFETTE" : "3 PERFECT PICKS"}
             </span>
-            <h2 className="text-xs sm:text-sm font-extrabold text-[#000000] truncate">
+            <h2 className="text-xs sm:text-sm font-extrabold text-[#F7F0F2] truncate">
               {quizState.recipient} • {quizState.vibe} ({quizState.budget})
             </h2>
           </div>
@@ -103,7 +130,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
         <button
           onClick={onStartOver}
-          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-white border border-[#EBE6DC] text-[#FF4D6D] hover:bg-[#EBE6DC] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1"
+          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-[#17111A] border border-[#2B2130] text-[#FF3D7F] hover:bg-[#2B2130] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1"
         >
           {language === "it" ? "Nuova Ricerca" : "New Search"}
         </button>
@@ -120,8 +147,8 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 onClick={() => handleSelectIndex(idx)}
                 className={`h-1.5 sm:h-2 rounded-full transition-all duration-200 cursor-pointer ${
                   idx === activeIndex
-                    ? "w-6 sm:w-8 bg-[#FF4D6D]"
-                    : "w-1.5 sm:w-2 bg-[#EBE6DC] hover:bg-[#8E8E93]"
+                    ? "w-6 sm:w-8 bg-[#FF3D7F]"
+                    : "w-1.5 sm:w-2 bg-[#2B2130] hover:bg-[#9B8A93]"
                 }`}
                 aria-label={`Option ${idx + 1}`}
               />
@@ -131,24 +158,24 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           <div className="flex items-center gap-1">
             <button
               onClick={handlePrev}
-              className="p-1.5 rounded-full bg-white border border-[#EBE6DC] text-[#000000] hover:bg-[#EBE6DC] active:scale-90 transition-transform cursor-pointer shadow-2xs flex items-center justify-center"
+              className="p-1.5 rounded-full bg-[#17111A] border border-[#2B2130] text-[#F7F0F2] hover:bg-[#2B2130] active:scale-90 transition-transform cursor-pointer shadow-2xs flex items-center justify-center"
               title={language === "it" ? "Precedente" : "Previous"}
               aria-label="Previous option"
             >
-              <ChevronLeft className="w-4 h-4 text-[#000000]" />
+              <ChevronLeft className="w-4 h-4 text-[#F7F0F2]" />
             </button>
 
-            <span className="text-[10px] sm:text-[11px] font-extrabold text-[#8E8E93] px-1 min-w-[32px] text-center">
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-[#9B8A93] px-1 min-w-[32px] text-center">
               {activeIndex + 1} / {gifts.length || 3}
             </span>
 
             <button
               onClick={handleNext}
-              className="p-1.5 rounded-full bg-white border border-[#EBE6DC] text-[#000000] hover:bg-[#EBE6DC] active:scale-90 transition-transform cursor-pointer shadow-2xs flex items-center justify-center"
+              className="p-1.5 rounded-full bg-[#17111A] border border-[#2B2130] text-[#F7F0F2] hover:bg-[#2B2130] active:scale-90 transition-transform cursor-pointer shadow-2xs flex items-center justify-center"
               title={language === "it" ? "Successivo" : "Next"}
               aria-label="Next option"
             >
-              <ChevronRight className="w-4 h-4 text-[#000000]" />
+              <ChevronRight className="w-4 h-4 text-[#F7F0F2]" />
             </button>
           </div>
         </div>
@@ -175,13 +202,13 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     ? { type: "spring", stiffness: 340, damping: 22, mass: 0.9 }
                     : { type: "spring", stiffness: 400, damping: 30, mass: 0.8 }
                 }
-                className="w-full rounded-[22px] sm:rounded-[26px] bg-white p-3 sm:p-4 flex flex-col gap-2.5 sm:gap-3 relative overflow-hidden cursor-grab active:cursor-grabbing gpu-layer"
+                className="w-full rounded-[22px] sm:rounded-[26px] bg-[#17111A] p-3 sm:p-4 flex flex-col gap-2.5 sm:gap-3 relative overflow-hidden cursor-grab active:cursor-grabbing gpu-layer"
                 style={{
                   touchAction: "pan-y",
                   willChange: "transform, opacity",
-                  border: isPrimary ? "2px solid var(--brand-coral)" : "1px solid #EBE6DC",
+                  border: isPrimary ? "2px solid var(--brand-coral)" : "1px solid #2B2130",
                   boxShadow: isPrimary
-                    ? "0 10px 32px rgba(255,77,109,0.18)"
+                    ? "0 10px 32px rgba(255,61,127,0.18)"
                     : "0 6px 24px rgba(0,0,0,0.05)",
                 }}
               >
@@ -194,22 +221,22 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     <Zap
                       className="w-3.5 h-3.5 shrink-0"
                       style={{
-                        color: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
-                        fill: isPrimary ? "var(--brand-coral)" : "#FF4D6D",
+                        color: isPrimary ? "var(--brand-coral)" : "#FF3D7F",
+                        fill: isPrimary ? "var(--brand-coral)" : "#FF3D7F",
                       }}
                     />
                     <span>{isPrimary ? (language === "it" ? "La nostra scelta" : "Our pick") : currentGift.tag}</span>
                   </div>
 
                   {currentGift.isPrime && (
-                    <span className="text-[10px] sm:text-xs font-semibold text-[#FF4D6D] bg-[#FF4D6D]/10 px-2 py-0.5 rounded-full tracking-tight">
+                    <span className="text-[10px] sm:text-xs font-semibold text-[#FF3D7F] bg-[#FF3D7F]/10 px-2 py-0.5 rounded-full tracking-tight">
                       ✓ Prime
                     </span>
                   )}
                 </div>
 
                 {/* 2. Amazon Image Stage (Compact & Modern) */}
-                <div className="relative w-full h-[125px] sm:h-[145px] rounded-[16px] sm:rounded-[20px] overflow-hidden bg-[#FAFAFC] border border-[#EBE6DC] flex items-center justify-center p-2 shrink-0">
+                <div className="relative w-full h-[125px] sm:h-[145px] rounded-[16px] sm:rounded-[20px] overflow-hidden bg-[#FAFAFC] border border-[#2B2130] flex items-center justify-center p-2 shrink-0">
                   <img
                     src={currentGift.imageUrl}
                     alt={currentGift.title}
@@ -223,7 +250,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                       compositing a backdrop-filter blur under a moving element is
                       expensive -- at 95% opacity the blur was visually imperceptible
                       anyway, so a plain solid fill costs nothing to look at. */}
-                  <div className="absolute bottom-2 right-2 bg-white text-[#000000] text-xs sm:text-sm font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#EBE6DC]">
+                  <div className="absolute bottom-2 right-2 bg-[#17111A] text-[#F7F0F2] text-xs sm:text-sm font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#2B2130]">
                     {currentGift.price}
                   </div>
                 </div>
@@ -231,7 +258,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 {/* 3. Title & Rating Info */}
                 <div className="space-y-1">
                   <h3
-                    className="text-sm sm:text-base text-[#000000] line-clamp-2 leading-snug"
+                    className="text-sm sm:text-base text-[#F7F0F2] line-clamp-2 leading-snug"
                     style={
                       isPrimary
                         ? { fontFamily: "var(--font-display)", fontWeight: 600 }
@@ -241,23 +268,23 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     {currentGift.title}
                   </h3>
 
-                  <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-[#000000] font-semibold">
-                    <div className="flex items-center text-[#000000]">
-                      <Star className="w-3.5 h-3.5 fill-[#000000] text-[#000000]" />
-                      <span className="ml-0.5 font-bold">
+                  <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-[#F7F0F2] font-semibold">
+                    <div className="flex items-center text-[#FFB24D]">
+                      <Star className="w-3.5 h-3.5 fill-[#FFB24D] text-[#FFB24D]" />
+                      <span className="ml-0.5 font-bold text-[#F7F0F2]">
                         {currentGift.rating ? currentGift.rating.toFixed(1) : "4.8"}
                       </span>
                     </div>
-                    <span className="text-[#8E8E93] font-normal text-[10px] sm:text-[11px]">
+                    <span className="text-[#9B8A93] font-normal text-[10px] sm:text-[11px]">
                       ({currentGift.reviewsCount ? currentGift.reviewsCount.toLocaleString() : "1.240"} {language === "it" ? "recensioni" : "reviews"})
                     </span>
                   </div>
                 </div>
 
                 {/* 4. AI Reason Box */}
-                <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#F5F1EA] border border-[#EBE6DC]">
-                  <p className="text-[11px] sm:text-xs text-[#000000] font-normal leading-relaxed">
-                    💡 <span className="font-bold text-[#000000]">{language === "it" ? "Perché è perfetto:" : "Why it's perfect:"}</span> {currentGift.reason}
+                <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#1C1520] border border-[#2B2130]">
+                  <p className="text-[11px] sm:text-xs text-[#D9CDD2] font-normal leading-relaxed">
+                    <span className="font-bold text-[#FFB24D]">{language === "it" ? "Perché è perfetto:" : "Why it's perfect:"}</span> {currentGift.reason}
                   </p>
                 </div>
 
@@ -283,11 +310,11 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-white border-2 border-[#FF4D6D] hover:bg-[#F5F1EA] active:scale-[0.98] text-[#FF4D6D] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-transform uppercase tracking-wider"
+                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-[#17111A] border-2 border-[#FF3D7F] hover:bg-[#1C1520] active:scale-[0.98] text-[#FF3D7F] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-transform uppercase tracking-wider"
                   >
-                    <ShoppingBag className="w-4 h-4 text-[#FF4D6D] shrink-0" />
+                    <ShoppingBag className="w-4 h-4 text-[#FF3D7F] shrink-0" />
                     <span className="truncate">{language === "it" ? "VEDI NELLO STORE" : "SEE IN STORE"}</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#FF4D6D] shrink-0 hidden sm:inline" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#FF3D7F] shrink-0 hidden sm:inline" />
                   </a>
 
                   <a
@@ -323,24 +350,48 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
       </div>
 
       {/* Permanently Fixed Bottom Action Buttons */}
-      <div className="shrink-0 pt-1.5 border-t border-[#EBE6DC] space-y-1">
-        {/* [⚡️ Altre 3 Idee] Direct Regenerate — meccanismo a ricompensa
+      <div className="shrink-0 pt-1.5 border-t border-[#2B2130] space-y-1">
+        {/* [Altre 3 Idee] Direct Regenerate — meccanismo a ricompensa
             variabile (stesso principio dello swipe di Tinder: input
             semplice, esito non del tutto prevedibile), probabilmente la
-            leva di engagement con più potenziale nell'app. */}
-        <button
-          onClick={onRegenerate}
-          className="w-full py-2.5 sm:py-3 px-2 rounded-2xl bg-white hover:bg-[#FFF0F2] text-[#000000] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer active:scale-[0.98] border-2"
-          style={{ borderColor: "var(--brand-coral)" }}
-        >
-          <RotateCcw className="w-4 h-4 shrink-0" style={{ color: "var(--brand-coral)" }} />
-          <span className="truncate">
-            {language === "it" ? "Altre 3 Idee" : "3 More Ideas"}
-          </span>
-        </button>
+            leva di engagement con più potenziale nell'app.
+            [Condividi] — la card condivisibile: l'immagine del regalo
+            trovato con il badge del tempo, pensata per essere mandata
+            in chat. È il motore di passaparola dell'app. */}
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={onRegenerate}
+            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-[#17111A] hover:bg-[#241119] text-[#F7F0F2] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer active:scale-[0.98] border-2"
+            style={{ borderColor: "var(--brand-coral)" }}
+          >
+            <RotateCcw className="w-4 h-4 shrink-0" style={{ color: "var(--brand-coral)" }} />
+            <span className="truncate">
+              {language === "it" ? "Altre 3 Idee" : "3 More Ideas"}
+            </span>
+          </button>
+
+          <button
+            onClick={handleShareCard}
+            disabled={shareState === "building"}
+            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-[#17111A] hover:bg-[#241a12] text-[#F7F0F2] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer active:scale-[0.98] border-2 border-[#FFB24D] disabled:opacity-60"
+          >
+            {shareState === "done" ? (
+              <Check className="w-4 h-4 shrink-0 text-[#FFB24D]" />
+            ) : (
+              <Share2 className="w-4 h-4 shrink-0 text-[#FFB24D]" />
+            )}
+            <span className="truncate">
+              {shareState === "building"
+                ? language === "it" ? "Creo la card…" : "Building card…"
+                : shareState === "done"
+                ? language === "it" ? "Fatto" : "Done"
+                : language === "it" ? "Condividi" : "Share"}
+            </span>
+          </button>
+        </div>
 
         {/* Legal Disclaimers: Amazon Affiliate */}
-        <div className="text-[9px] sm:text-[10px] text-[#8E8E93] text-center leading-tight px-1 pb-0.5">
+        <div className="text-[9px] sm:text-[10px] text-[#9B8A93] text-center leading-tight px-1 pb-0.5">
           <p>
             {language === "it"
               ? "In qualità di Affiliato Amazon, Kado AI riceve un guadagno dagli acquisti idonei."

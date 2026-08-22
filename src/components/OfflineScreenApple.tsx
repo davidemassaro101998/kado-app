@@ -51,24 +51,24 @@ export const OfflineScreenApple: React.FC<OfflineScreenAppleProps> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[99999] bg-[#F2F2F7] flex flex-col items-center justify-center p-6 text-center select-none font-sans"
+        className="fixed inset-0 z-[99999] bg-[#1C1520] flex flex-col items-center justify-center p-6 text-center select-none font-sans"
       >
         <motion.div
           initial={{ scale: 0.9, y: 20 }}
           animate={{ scale: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="w-full max-w-sm bg-white border border-[#E5E5EA] rounded-[28px] p-6 shadow-[0_12px_36px_rgba(0,0,0,0.1)] flex flex-col items-center gap-4"
+          className="w-full max-w-sm bg-[#17111A] border border-[#2B2130] rounded-[28px] p-6 shadow-[0_12px_36px_rgba(0,0,0,0.1)] flex flex-col items-center gap-4"
         >
           {/* Slashed Wi-Fi Icon Badge */}
-          <div className="w-16 h-16 rounded-full bg-[#F2F2F7] border border-[#E5E5EA] flex items-center justify-center text-[#8E8E93]">
-            <WifiOff className="w-8 h-8 text-[#8E8E93] stroke-[2]" />
+          <div className="w-16 h-16 rounded-full bg-[#1C1520] border border-[#2B2130] flex items-center justify-center text-[#9B8A93]">
+            <WifiOff className="w-8 h-8 text-[#9B8A93] stroke-[2]" />
           </div>
 
           <div className="space-y-1.5 text-center">
-            <h2 className="text-lg font-extrabold tracking-tight text-[#000000]">
+            <h2 className="text-lg font-extrabold tracking-tight text-[#F7F0F2]">
               {language === "it" ? "Nessuna Connessione" : "No Connection"}
             </h2>
-            <p className="text-xs text-[#8E8E93] leading-relaxed font-normal">
+            <p className="text-xs text-[#9B8A93] leading-relaxed font-normal">
               {language === "it"
                 ? "Verifica la tua rete internet per continuare a cercare i regali."
                 : "Check your internet connection to continue searching for gifts."}
@@ -79,7 +79,7 @@ export const OfflineScreenApple: React.FC<OfflineScreenAppleProps> = ({
           <button
             onClick={handleRetry}
             disabled={isChecking}
-            className="w-full mt-2 py-3.5 px-4 rounded-[18px] bg-[#FF4D6D] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-[0.97] transition-all border border-[#FF4D6D] disabled:opacity-60"
+            className="w-full mt-2 py-3.5 px-4 rounded-[18px] bg-[#FF3D7F] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md active:scale-[0.97] transition-all border border-[#FF3D7F] disabled:opacity-60"
           >
             <RefreshCw className={`w-4 h-4 ${isChecking ? "animate-spin" : ""}`} />
             <span>

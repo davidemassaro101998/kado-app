@@ -1,40 +1,38 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&display=swap");
 
 @layer base {
   :root {
     --pwa-banner-h: 0px;
-    --bg-main: #F2F2F7;
-    --bg-header: rgba(255, 255, 255, 0.85);
-    --bg-card: #FFFFFF;
-    --text-main: #000000;
-    --text-sub: #8E8E93;
+    --bg-main: #0E0910;
+    --bg-header: rgba(14, 9, 16, 0.85);
+    --bg-card: #17111A;
+    --text-main: #F7F0F2;
+    --text-sub: #9B8A93;
     --text-selected: #FFFFFF;
-    --border-card: rgba(0, 0, 0, 0.05);
+    --border-card: rgba(255, 255, 255, 0.07);
 
-    /* Identita di marchio: corallo come colore dominante in tutta la UI
-       (bottoni, chrome, stati selezionati) — non piu confinato a singoli
-       momenti. Scelto per l'associazione calda/dono/affetto, distinto
-       dal mare di app blu-tech che affollano i social; oro tenue solo
-       per il badge "Top Qualita", mai come colore dominante. */
-    --brand-coral: #FF4D6D;
-    --brand-coral-dark: #E63354;
-    --brand-coral-gradient: linear-gradient(135deg, #FF7C93 0%, #FF4D6D 55%, #E63354 100%);
-    --brand-gold: #C9A15C;
+    /* Identita di marchio "Aura": base quasi-nera tinta magenta e un solo
+       dispositivo luminoso ripetuto ovunque — l'aura magenta-oro, il
+       bagliore che compare quando l'AI lavora. Magenta per il calore/dono,
+       oro per il momento prezioso del regalo trovato. */
+    --brand-coral: #FF3D7F;
+    --brand-coral-dark: #E02968;
+    --brand-coral-gradient: linear-gradient(135deg, #FF3D7F 0%, #FF7A5C 55%, #FFB24D 100%);
+    --brand-gold: #FFB24D;
 
     --text-primary: var(--text-main);
     --text-secondary: var(--text-sub);
 
     /* Font display: solo per i momenti di marchio (splash, titolo del
-       risultato) — tutta la UI funzionale resta sul font di sistema,
-       zero costo di caricamento, massima familiarita/velocita. */
-    --font-display: "Fraunces", ui-serif, Georgia, serif;
+       risultato, rito) — la UI funzionale resta sul font di sistema. */
+    --font-display: "Archivo", system-ui, sans-serif;
 
     --sat: env(safe-area-inset-top, 0px);
     --sab: env(safe-area-inset-bottom, 0px);
     --sal: env(safe-area-inset-left, 0px);
     --sar: env(safe-area-inset-right, 0px);
-    color-scheme: light;
+    color-scheme: dark;
   }
 
   html, body, #root, #app-root {
@@ -52,8 +50,8 @@
     bottom: 0;
     margin: 0;
     padding: 0;
-    background-color: #FAF7F2;
-    color: #000000;
+    background-color: #0E0910;
+    color: #F7F0F2;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     touch-action: manipulation;
@@ -77,7 +75,7 @@
     user-select: text !important;
     -webkit-user-select: text !important;
   }
-  
+
   /* Smooth native-like scrolling for overflow containers */
   .overflow-y-auto {
     -webkit-overflow-scrolling: touch;
@@ -89,58 +87,58 @@
 }
 
 @layer utilities {
-  /* Warm Linen / Paper Background Texture */
+  /* Base quasi-nera tinta magenta con micro-texture a puntini appena
+     percepibile (stessa tecnica della vecchia trama lino, invertita). */
   .bg-tactile-linen {
-    background-color: #FAF7F2;
-    background-image: radial-gradient(#E8E2D8 0.75px, transparent 0.75px), radial-gradient(#E8E2D8 0.75px, #FAF7F2 0.75px);
+    background-color: #0E0910;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.028) 0.75px, transparent 0.75px), radial-gradient(rgba(255, 255, 255, 0.028) 0.75px, #0E0910 0.75px);
     background-size: 30px 30px;
     background-position: 0 0, 15px 15px;
   }
 
-  /* Secondary Tactile Soft Button */
+  /* Secondary Tactile Soft Button (dark) */
   .btn-tactile-secondary {
-    background: linear-gradient(145deg, #FFFFFF, #FAF7F2);
-    border: 1px solid #E0D9CC;
-    box-shadow: 0 2px 6px -1px rgba(60, 50, 30, 0.05);
+    background: linear-gradient(145deg, #1C1520, #17111A);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.4);
     transition: all 0.2s ease;
   }
 
   .btn-tactile-secondary:hover {
-    background: #EFECE6;
-    border-color: #C5A059;
-    box-shadow: 0 4px 10px -2px rgba(60, 50, 30, 0.08);
+    background: #241A28;
+    border-color: #FFB24D;
+    box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.5);
   }
 
-  /* Soft Physical Card Shadow */
+  /* Soft Physical Card (dark surface) */
   .card-tactile {
-    background-color: #FFFFFF;
-    border: 1px solid #EBE6DC;
-    box-shadow: 0 4px 14px -3px rgba(60, 50, 30, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+    background-color: #17111A;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.5), 0 2px 6px -1px rgba(0, 0, 0, 0.3);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Pale Gold Accent Text & Border */
+  /* Gold Accent Text & Border */
   .text-pale-gold {
-    color: #C5A059;
+    color: #FFB24D;
   }
 
   .border-pale-gold {
-    border-color: #DFB960;
+    border-color: #FFB24D;
   }
 
-  /* Tactile Engraved/Embossed Icon Container */
+  /* Tactile Engraved/Embossed Icon Container (dark inset) */
   .icon-engraved {
-    background: linear-gradient(145deg, #EFECE6, #FFFFFF);
-    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.05), inset -1px -1px 2px rgba(255, 255, 255, 0.8);
+    background: linear-gradient(145deg, #1C1520, #221929);
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.5), inset -1px -1px 2px rgba(255, 255, 255, 0.05);
   }
 
-  /* Selected/primary surfaces in brand coral: a gradient (not a flat
-     fill) plus a thin bright top edge, so selected cards and the primary
-     CTA read as a lifted, physical object catching light rather than a
-     flat color swatch. */
+  /* Superfici selezionate/primarie nell'aura magenta-oro: gradiente (non
+     tinta piatta) + bordo luminoso in alto, cosi card selezionate e CTA
+     leggono come un oggetto che emana luce, non un colore piatto. */
   .surface-coral-tactile {
     background: var(--brand-coral-gradient);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -10px 16px -10px rgba(0, 0, 0, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -10px 16px -10px rgba(0, 0, 0, 0.25), 0 0 24px rgba(255, 61, 127, 0.35);
   }
 
   /* GPU Layer Acceleration & Zero Layout Thrashing Utilities */
@@ -187,9 +185,9 @@
     padding: clamp(10px, 3vw, 20px);
   }
 
-  /* Tumbler Date Picker Reel Overlay */
+  /* Tumbler Date Picker Reel Overlay (dark) */
   .wheel-fade-overlay {
-    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0) 65%, #FFFFFF 100%);
+    background: linear-gradient(180deg, #17111A 0%, rgba(23,17,26,0) 35%, rgba(23,17,26,0) 65%, #17111A 100%);
   }
 }
 

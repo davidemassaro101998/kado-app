@@ -51,17 +51,17 @@ export class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       const isIt = (this.props.language || "it") === "it";
       return (
-        <div className="fixed inset-0 z-[999] bg-[#F2F2F7] flex flex-col items-center justify-center gap-4 px-8 text-center font-sans">
-          <div className="w-16 h-16 rounded-[24px] bg-white border border-[#E5E5EA] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center text-3xl">
+        <div className="fixed inset-0 z-[999] bg-[#1C1520] flex flex-col items-center justify-center gap-4 px-8 text-center font-sans">
+          <div className="w-16 h-16 rounded-[24px] bg-[#17111A] border border-[#2B2130] shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center text-3xl">
             🎁
           </div>
           <h2
-            className="text-xl text-[#000000]"
+            className="text-xl text-[#F7F0F2]"
             style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
           >
             {isIt ? "Qualcosa è andato storto" : "Something went wrong"}
           </h2>
-          <p className="text-sm text-[#8E8E93] max-w-xs">
+          <p className="text-sm text-[#9B8A93] max-w-xs">
             {isIt
               ? "Nessun problema — le tue occasioni salvate sono al sicuro. Riprova a ripartire."
               : "No worries — your saved occasions are safe. Let's start fresh."}

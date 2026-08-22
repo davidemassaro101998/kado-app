@@ -168,14 +168,14 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className="fixed bottom-0 left-0 right-0 z-[9991] max-w-lg mx-auto bg-white/95 backdrop-blur-lg border-t border-[#E5E5EA] rounded-t-[32px] p-6 pb-[max(24px,env(safe-area-inset-bottom,0px))] shadow-[0_-12px_40px_rgba(0,0,0,0.15)] flex flex-col items-center gap-5 select-none font-sans gpu-layer"
+            className="fixed bottom-0 left-0 right-0 z-[9991] max-w-lg mx-auto bg-[#17111A]/95 backdrop-blur-lg border-t border-[#2B2130] rounded-t-[32px] p-6 pb-[max(24px,env(safe-area-inset-bottom,0px))] shadow-[0_-12px_40px_rgba(0,0,0,0.15)] flex flex-col items-center gap-5 select-none font-sans gpu-layer"
           >
             {/* Grab Handle Header */}
-            <div className="w-12 h-1.5 rounded-full bg-[#E5E5EA] shrink-0 -mt-1" />
+            <div className="w-12 h-1.5 rounded-full bg-[#2B2130] shrink-0 -mt-1" />
 
             <div className="w-full flex items-center justify-between">
-              <div className="flex items-center gap-2 text-[#FF4D6D]">
-                <Sparkles className="w-4 h-4 fill-[#FF4D6D]" />
+              <div className="flex items-center gap-2 text-[#FF3D7F]">
+                <Sparkles className="w-4 h-4 fill-[#FF3D7F]" />
                 <span className="text-xs font-bold uppercase tracking-wider">
                   {language === "it" ? "Assistente Vocale AI" : "AI Voice Assistant"}
                 </span>
@@ -184,7 +184,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                 type="button"
                 onClick={onClose}
                 aria-label={language === "it" ? "Chiudi" : "Close"}
-                className="p-1.5 rounded-full bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
+                className="p-1.5 rounded-full bg-[#1C1520] text-[#9B8A93] hover:text-[#F7F0F2] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4 stroke-[2.5]" />
               </button>
@@ -203,8 +203,8 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                 }
                 className={`relative w-20 h-20 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-95 ${
                   isListening
-                    ? "bg-[#FF4D6D] text-white shadow-[0_0_28px_rgba(255,77,109,0.5)]"
-                    : "bg-[#F2F2F7] text-[#FF4D6D] border border-[#E5E5EA]"
+                    ? "bg-[#FF3D7F] text-white shadow-[0_0_28px_rgba(255,61,127,0.5)]"
+                    : "bg-[#1C1520] text-[#FF3D7F] border border-[#2B2130]"
                 }`}
               >
                 {/* Ripple Effect ring when listening */}
@@ -212,17 +212,17 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                   <motion.span
                     animate={{ scale: [1, 1.35, 1], opacity: [0.6, 0, 0.6] }}
                     transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 rounded-full border-2 border-[#FF4D6D]"
+                    className="absolute inset-0 rounded-full border-2 border-[#FF3D7F]"
                   />
                 )}
                 {isListening ? (
                   <Mic className="w-9 h-9 text-white stroke-[2.5]" />
                 ) : (
-                  <MicOff className="w-8 h-8 text-[#8E8E93] stroke-[2]" />
+                  <MicOff className="w-8 h-8 text-[#9B8A93] stroke-[2]" />
                 )}
               </button>
 
-              {/* Dynamic Waveform Bars in Apple Blue #FF4D6D.
+              {/* Dynamic Waveform Bars in Apple Blue #FF3D7F.
                   Fixed-height bars animated via scaleY (compositor-only
                   transform) instead of animating `height` directly — the
                   latter forces a layout+paint on every frame across all 7
@@ -247,13 +247,13 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                         : { duration: 0.2 }
                     }
                     className={`w-1.5 h-[30px] rounded-full gpu-layer ${
-                      isListening ? "bg-[#FF4D6D]" : "bg-[#E5E5EA]"
+                      isListening ? "bg-[#FF3D7F]" : "bg-[#2B2130]"
                     }`}
                   />
                 ))}
               </div>
 
-              <span className="text-xs font-semibold text-[#8E8E93]">
+              <span className="text-xs font-semibold text-[#9B8A93]">
                 {isListening
                   ? language === "it"
                     ? "In ascolto... Parla liberamente"
@@ -273,7 +273,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
 
             {/* Live Transcription Area & Quick-Edit Textbox */}
             <div className="w-full space-y-2">
-              <label className="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] block text-left">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-[#9B8A93] block text-left">
                 {language === "it" ? "Trascrizione Live / Idea:" : "Live Transcript / Idea:"}
               </label>
 
@@ -287,13 +287,13 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                       ? "Es. Regalo tecnologico per papà appassionato di caffè..."
                       : "E.g. Tech gift for dad who loves coffee..."
                   }
-                  className="w-full p-3.5 rounded-[18px] bg-[#F2F2F7] text-[#000000] placeholder-[#8E8E93] text-base sm:text-lg font-bold leading-snug border border-[#E5E5EA] focus:outline-none focus:border-[#FF4D6D] transition-colors resize-none"
+                  className="w-full p-3.5 rounded-[18px] bg-[#1C1520] text-[#F7F0F2] placeholder-[#9B8A93] text-base sm:text-lg font-bold leading-snug border border-[#2B2130] focus:outline-none focus:border-[#FF3D7F] transition-colors resize-none"
                 />
                 {transcript && (
                   <button
                     type="button"
                     onClick={() => setTranscript("")}
-                    className="absolute right-3 top-3 p-1 rounded-full bg-[#E5E5EA] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
+                    className="absolute right-3 top-3 p-1 rounded-full bg-[#2B2130] text-[#9B8A93] hover:text-[#F7F0F2] transition-colors cursor-pointer"
                     title="Cancella"
                   >
                     <X className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -307,7 +307,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
               type="button"
               disabled={!transcript.trim()}
               onClick={handleSubmit}
-              className="w-full py-4 px-6 rounded-[20px] bg-[#FF4D6D] hover:bg-[#E63354] text-white font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-[0_8px_20px_rgba(255,77,109,0.3)] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed border border-[#FF4D6D] shrink-0 mt-1"
+              className="w-full py-4 px-6 rounded-[20px] bg-[#FF3D7F] hover:bg-[#E02968] text-white font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-[0_8px_20px_rgba(255,61,127,0.3)] active:scale-[0.98] transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed border border-[#FF3D7F] shrink-0 mt-1"
             >
               <Send className="w-4 h-4 fill-current stroke-[2]" />
               <span>

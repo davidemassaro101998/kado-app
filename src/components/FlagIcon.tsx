@@ -199,7 +199,7 @@ export const FlagIcon: React.FC<FlagIconProps> = ({ code, className = "w-5 h-3.5
     default:
       return wrap(
         <>
-          <rect width="30" height="20" fill="#8E8E93" />
+          <rect width="30" height="20" fill="#9B8A93" />
           <circle cx="15" cy="10" r="6" fill="none" stroke="#FFFFFF" strokeWidth="1.5" />
         </>
       );

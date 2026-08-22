@@ -224,11 +224,11 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
             setIsVoiceDrawerOpen(true);
             voiceDrawerRef.current?.startListening();
           }}
-          className="w-full flex items-center justify-between py-2.5 px-3.5 sm:py-3 sm:px-4 rounded-[18px] bg-white/80 backdrop-blur-md border border-[#E0D9CC] shadow-[0_4px_20px_rgba(60,50,30,0.05)] cursor-pointer active:scale-[0.99] transition-transform group"
+          className="w-full flex items-center justify-between py-2.5 px-3.5 sm:py-3 sm:px-4 rounded-[18px] bg-[#17111A]/85 backdrop-blur-md border border-[#2B2130] shadow-[0_4px_20px_rgba(60,50,30,0.05)] cursor-pointer active:scale-[0.99] transition-transform group"
         >
           <div className="flex items-center gap-2.5 flex-1 min-w-0">
-            <Search className="w-4 h-4 text-[#8E8E93] group-hover:text-[#FF4D6D] transition-colors shrink-0" />
-            <span className="text-xs sm:text-sm font-medium text-[#8E8E93] truncate">
+            <Search className="w-4 h-4 text-[#9B8A93] group-hover:text-[#FF3D7F] transition-colors shrink-0" />
+            <span className="text-xs sm:text-sm font-medium text-[#9B8A93] truncate">
               {language === "it"
                 ? "Hai un'idea o SOS? Parla o scrivi..."
                 : "Have an idea or SOS? Speak or type..."}
@@ -236,8 +236,8 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
           </div>
 
           {wizardStep !== 1 && (
-            <div className="flex items-center gap-1.5 pl-2.5 shrink-0 border-l border-[#EBE6DC]">
-              <div className="p-1.5 rounded-full bg-[#FF4D6D]/10 text-[#FF4D6D] group-hover:bg-[#FF4D6D] group-hover:text-white transition-colors">
+            <div className="flex items-center gap-1.5 pl-2.5 shrink-0 border-l border-[#2B2130]">
+              <div className="p-1.5 rounded-full bg-[#FF3D7F]/10 text-[#FF3D7F] group-hover:bg-[#FF3D7F] group-hover:text-white transition-colors">
                 <Mic className="w-4 h-4 stroke-[2.2]" />
               </div>
             </div>
@@ -245,24 +245,24 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
         </div>
 
         {/* Wizard Ultra-Thin Continuous Progress Line (2px) */}
-        <div className="w-full h-[2px] bg-[#EBE6DC] rounded-full overflow-hidden mt-2.5">
+        <div className="w-full h-[2px] bg-[#2B2130] rounded-full overflow-hidden mt-2.5">
           <div
-            className="h-full bg-[#FF4D6D] transition-all duration-300 ease-out"
+            className="h-full bg-[#FF3D7F] transition-all duration-300 ease-out"
             style={{ width: `${(wizardStep / 3) * 100}%` }}
           />
         </div>
 
         {/* PERMANENT STEP NAVIGATION BACK BAR FOR STEPS 2 & 3 (Never shifts position) */}
         {wizardStep > 1 && (
-          <div className="flex items-center justify-between py-1.5 px-0.5 border-b border-[#EBE6DC]/80 mt-1">
+          <div className="flex items-center justify-between py-1.5 px-0.5 border-b border-[#2B2130]/80 mt-1">
             <button
               onClick={handleGoBack}
-              className="flex items-center gap-1.5 text-xs font-bold text-[#FF4D6D] hover:text-[#E63354] active:scale-95 transition-transform py-0.5 px-1 cursor-pointer"
+              className="flex items-center gap-1.5 text-xs font-bold text-[#FF3D7F] hover:text-[#E02968] active:scale-95 transition-transform py-0.5 px-1 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
               <span>{language === "it" ? "Indietro" : "Back"}</span>
             </button>
-            <span className="text-xs font-semibold text-[#8E8E93] truncate max-w-[200px]">
+            <span className="text-xs font-semibold text-[#9B8A93] truncate max-w-[200px]">
               {wizardStep === 2 ? recipient : `${recipient} • ${vibe}`}
             </span>
           </div>
@@ -286,10 +286,10 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               className="w-full flex flex-col justify-center space-y-3 sm:space-y-4"
             >
               <div className="text-center space-y-1">
-                <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
+                <h1 className="text-clamp-title font-bold tracking-tight text-[#F7F0F2]">
                   {language === "it" ? "Per chi è il regalo?" : "Who is the gift for?"}
                 </h1>
-                <p className="text-xs text-[#8E8E93] font-normal">
+                <p className="text-xs text-[#9B8A93] font-normal">
                   {language === "it" ? "Seleziona il destinatario per personalizzare" : "Select recipient to customize"}
                 </p>
               </div>
@@ -305,11 +305,17 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                   aria-label={language === "it" ? "Tocca e parla" : "Tap to speak"}
                   className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
                 >
-                  <span className="absolute inset-0 rounded-full hero-mic-pulse-ring bg-[#FF4D6D]" />
-                  <span className="surface-coral-tactile absolute inset-0 rounded-full shadow-[0_10px_28px_rgba(255,77,109,0.35)]" />
+                  {/* Aura: il bagliore radiale magenta-oro dietro il mic,
+                      il dispositivo di marca ripetuto in tutta la famiglia. */}
+                  <span
+                    className="absolute inset-[-55%] rounded-full pointer-events-none"
+                    style={{ background: "radial-gradient(closest-side, rgba(255,61,127,0.4), rgba(255,178,77,0.14) 55%, transparent)", filter: "blur(18px)" }}
+                  />
+                  <span className="absolute inset-0 rounded-full hero-mic-pulse-ring bg-[#FF3D7F]" />
+                  <span className="surface-coral-tactile absolute inset-0 rounded-full shadow-[0_10px_28px_rgba(255,61,127,0.45)]" />
                   <Mic className="relative w-8 h-8 sm:w-9 sm:h-9 text-white stroke-[2.2]" />
                 </button>
-                <span className="text-xs font-bold text-[#E63354]">
+                <span className="text-xs font-bold text-[#FF6B9C]">
                   {language === "it" ? "Tocca e parla" : "Tap to speak"}
                 </span>
               </div>
@@ -325,11 +331,11 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       onClick={() => handleSelectRecipient(opt.label)}
                       className={`h-[95px] sm:h-[110px] p-3 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
-                          ? "surface-coral-tactile text-white border-transparent shadow-[0_8px_24px_rgba(255,77,109,0.3)]"
-                          : "card-tactile text-[#000000] hover:border-[#C5A059]"
+                          ? "surface-coral-tactile text-white border-transparent shadow-[0_8px_24px_rgba(255,61,127,0.3)]"
+                          : "card-tactile text-[#F7F0F2] hover:border-[#FFB24D]"
                       }`}
                     >
-                      <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-white/20 text-white" : "icon-engraved text-[#FF4D6D]"}`}>
+                      <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-white/20 text-white" : "icon-engraved text-[#FF3D7F]"}`}>
                         <IconComp className="w-5 h-5 sm:w-5 sm:h-5 stroke-[2.2]" />
                       </div>
                       <span className="font-semibold text-xs sm:text-sm tracking-tight">{opt.label}</span>
@@ -352,10 +358,10 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               className="w-full flex-1 flex flex-col justify-center space-y-3 py-1"
             >
               <div className="text-center space-y-0.5">
-                <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
+                <h1 className="text-clamp-title font-bold tracking-tight text-[#F7F0F2]">
                   {language === "it" ? "Che vibe ha?" : "What vibe does it have?"}
                 </h1>
-                <p className="text-xs text-[#8E8E93] font-normal">
+                <p className="text-xs text-[#9B8A93] font-normal">
                   {language === "it" ? "Scegli lo stile o l'interesse principale" : "Choose the main style or interest"}
                 </p>
               </div>
@@ -371,11 +377,11 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       onClick={() => handleSelectVibe(opt.label)}
                       className={`h-[95px] sm:h-[110px] p-2.5 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
-                          ? "surface-coral-tactile text-white border-transparent shadow-[0_6px_20px_rgba(255,77,109,0.28)]"
-                          : "card-tactile text-[#000000] hover:border-[#C5A059]"
+                          ? "surface-coral-tactile text-white border-transparent shadow-[0_6px_20px_rgba(255,61,127,0.28)]"
+                          : "card-tactile text-[#F7F0F2] hover:border-[#FFB24D]"
                       }`}
                     >
-                      <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-white/20 text-white" : "icon-engraved text-[#FF4D6D]"}`}>
+                      <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-white/20 text-white" : "icon-engraved text-[#FF3D7F]"}`}>
                         <IconComp className="w-5 h-5 sm:w-5 sm:h-5 stroke-[2.2]" />
                       </div>
                       <span className="font-semibold text-xs sm:text-sm tracking-tight">{opt.label}</span>
@@ -398,10 +404,10 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               className="w-full flex flex-col justify-center space-y-3 sm:space-y-3.5 my-auto"
             >
               <div className="text-center space-y-1">
-                <h1 className="text-clamp-title font-bold tracking-tight text-[#000000]">
+                <h1 className="text-clamp-title font-bold tracking-tight text-[#F7F0F2]">
                   {language === "it" ? "Budget e Stile" : "Budget & Style"}
                 </h1>
-                <p className="text-xs text-[#8E8E93] font-normal">
+                <p className="text-xs text-[#9B8A93] font-normal">
                   {language === "it" ? "Imposta la fascia di prezzo desiderata" : "Set your preferred price range"}
                 </p>
               </div>
@@ -420,8 +426,8 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       }}
                       className={`py-3.5 px-4 sm:py-4 rounded-[22px] border flex flex-col items-center justify-center text-center cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
-                          ? "surface-coral-tactile text-white border-transparent shadow-[0_8px_24px_rgba(255,77,109,0.3)]"
-                          : "card-tactile text-[#000000] hover:border-[#C5A059]"
+                          ? "surface-coral-tactile text-white border-transparent shadow-[0_8px_24px_rgba(255,61,127,0.3)]"
+                          : "card-tactile text-[#F7F0F2] hover:border-[#FFB24D]"
                       }`}
                     >
                       <span className="font-semibold text-sm sm:text-base tracking-tight">{b}</span>
@@ -432,18 +438,18 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
               {/* Card 2: Custom Budget Card */}
               <div
-                className={`p-3.5 rounded-[22px] bg-white shadow-[0_4px_14px_-3px_rgba(60,50,30,0.04),0_2px_6px_-1px_rgba(0,0,0,0.02)] space-y-1.5 transition-colors border ${
+                className={`p-3.5 rounded-[22px] bg-[#17111A] shadow-[0_4px_14px_-3px_rgba(60,50,30,0.04),0_2px_6px_-1px_rgba(0,0,0,0.02)] space-y-1.5 transition-colors border ${
                   isCustomBudgetFocused || customBudgetInput
-                    ? "border-2 border-[#FF4D6D]"
-                    : "border-[#EBE6DC]"
+                    ? "border-2 border-[#FF3D7F]"
+                    : "border-[#2B2130]"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-[#8E8E93] block">
+                  <span className="text-xs font-medium text-[#9B8A93] block">
                     {language === "it" ? "Oppure cifra esatta:" : "Or exact amount:"}
                   </span>
                   {customBudgetInput && (
-                    <span className="text-xs font-bold text-[#FF4D6D]">
+                    <span className="text-xs font-bold text-[#FF3D7F]">
                       {language === "it" ? "Personalizzato" : "Custom"}
                     </span>
                   )}
@@ -452,7 +458,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <div className="relative flex items-center">
                   <span
                     className={`absolute left-3.5 text-sm font-bold transition-colors ${
-                      isCustomBudgetFocused || customBudgetInput ? "text-[#FF4D6D]" : "text-[#8E8E93]"
+                      isCustomBudgetFocused || customBudgetInput ? "text-[#FF3D7F]" : "text-[#9B8A93]"
                     }`}
                   >
                     {country.symbol}
@@ -473,7 +479,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       }
                     }}
                     placeholder={language === "it" ? "Cifra esatta (es. 18)" : "Exact amount (e.g. 18)"}
-                    className="w-full py-2.5 pl-8 pr-9 rounded-xl bg-[#F5F1EA] text-[#000000] placeholder-[#8E8E93] text-sm font-semibold focus:outline-none transition-colors"
+                    className="w-full py-2.5 pl-8 pr-9 rounded-xl bg-[#1C1520] text-[#F7F0F2] placeholder-[#9B8A93] text-sm font-semibold focus:outline-none transition-colors"
                   />
                   {customBudgetInput && (
                     <button
@@ -483,7 +489,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                         setCustomBudgetInput("");
                         setBudget(getDefaultBudget(country.currency, country.symbol));
                       }}
-                      className="absolute right-2.5 p-1 rounded-full bg-[#EBE6DC] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
+                      className="absolute right-2.5 p-1 rounded-full bg-[#2B2130] text-[#9B8A93] hover:text-[#F7F0F2] transition-colors cursor-pointer"
                       title={language === "it" ? "Cancella" : "Clear"}
                     >
                       <X className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -494,7 +500,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
               {/* Card 3: Opzioni Extra */}
               <div className="card-tactile p-3.5 rounded-[22px] space-y-2">
-                <span className="text-[10px] font-extrabold text-[#8E8E93] uppercase tracking-wider block">
+                <span className="text-[10px] font-extrabold text-[#9B8A93] uppercase tracking-wider block">
                   {language === "it" ? "OPZIONI EXTRA" : "EXTRA OPTIONS"}
                 </span>
                 <label className="flex items-center gap-2.5 cursor-pointer select-none">
@@ -505,9 +511,9 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       triggerHaptic();
                       setHasAlreadyEverything(e.target.checked);
                     }}
-                    className="w-4 h-4 rounded border-[#EBE6DC] text-[#FF4D6D] focus:ring-0 accent-[#FF4D6D] cursor-pointer"
+                    className="w-4 h-4 rounded border-[#2B2130] text-[#FF3D7F] focus:ring-0 accent-[#FF3D7F] cursor-pointer"
                   />
-                  <span className="text-xs sm:text-sm text-[#000000] font-normal leading-tight">
+                  <span className="text-xs sm:text-sm text-[#F7F0F2] font-normal leading-tight">
                     {language === "it"
                       ? "Ha già tutto (idee uniche o consumabili)"
                       : "Has everything already (unique/consumables)"}
@@ -523,7 +529,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       ? "Dettaglio extra (opzionale)"
                       : "Extra details (optional)"
                   }
-                  className="w-full py-2 px-3 rounded-xl bg-[#F5F1EA] border border-[#EBE6DC] text-[#000000] placeholder-[#8E8E93] text-xs sm:text-sm font-normal focus:outline-none focus:border-[#FF4D6D]"
+                  className="w-full py-2 px-3 rounded-xl bg-[#1C1520] border border-[#2B2130] text-[#F7F0F2] placeholder-[#9B8A93] text-xs sm:text-sm font-normal focus:outline-none focus:border-[#FF3D7F]"
                 />
               </div>
             </motion.div>
@@ -537,7 +543,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
         <div className="shrink-0 pb-3 pt-2 w-full">
           <button
             onClick={handleFinalSubmit}
-            className="surface-coral-tactile w-full py-4 rounded-[22px] hover:brightness-105 active:scale-[0.97] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_24px_rgba(255,77,109,0.3)] transition-transform uppercase tracking-wide border border-transparent"
+            className="surface-coral-tactile w-full py-4 rounded-[22px] hover:brightness-105 active:scale-[0.97] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_24px_rgba(255,61,127,0.3)] transition-transform uppercase tracking-wide border border-transparent"
           >
             <Sparkles className="w-5 h-5 fill-current text-current" />
             <span>

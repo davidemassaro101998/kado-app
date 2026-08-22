@@ -54,12 +54,12 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
 
         <div className="space-y-1">
           <h1
-            className="text-4xl tracking-tight text-[#000000]"
+            className="text-4xl tracking-tight text-[#F7F0F2]"
             style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}
           >
             Kado <span style={{ color: "var(--brand-coral)" }}>AI</span>
           </h1>
-          <p className="text-xs font-semibold text-[#8E8E93] tracking-wide uppercase">
+          <p className="text-xs font-semibold text-[#9B8A93] tracking-wide uppercase">
             Smart Gift Curator
           </p>
         </div>
@@ -78,7 +78,7 @@ export const SplashScreenApple: React.FC<SplashScreenAppleProps> = ({ onComplete
             <div className="absolute inset-0 rounded-full blur-md animate-pulse" style={{ backgroundColor: "color-mix(in srgb, var(--brand-coral) 20%, transparent)" }} />
 
             {/* Cinematic spinning gradient ring */}
-            <div className="w-7 h-7 rounded-full border-[2.5px] border-[#EBE6DC] animate-spin" style={{ borderTopColor: "var(--brand-coral)", borderRightColor: "color-mix(in srgb, var(--brand-coral) 60%, transparent)" }} />
+            <div className="w-7 h-7 rounded-full border-[2.5px] border-[#2B2130] animate-spin" style={{ borderTopColor: "var(--brand-coral)", borderRightColor: "color-mix(in srgb, var(--brand-coral) 60%, transparent)" }} />
 
             {/* Core dot */}
             <div className="absolute w-2 h-2 rounded-full shadow-xs" style={{ backgroundColor: "var(--brand-coral)" }} />

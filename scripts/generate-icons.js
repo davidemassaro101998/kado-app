@@ -50,7 +50,7 @@ async function generateIcons() {
       width: 1200,
       height: 630,
       channels: 4,
-      background: { r: 230, g: 51, b: 84, alpha: 1 } // brand-coral-dark #E63354
+      background: { r: 14, g: 9, b: 16, alpha: 1 } // base scura aura #0E0910
     }
   })
     .composite([

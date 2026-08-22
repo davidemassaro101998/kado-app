@@ -145,6 +145,9 @@ export default function App() {
   const [gifts, setGifts] = useState<GiftItem[]>(() => savedSession?.gifts || []);
   const [shownTitles, setShownTitles] = useState<string[]>(() => savedSession?.shownTitles || []);
   const [activeCardIndex, setActiveCardIndex] = useState<number>(() => savedSession?.activeCardIndex || 0);
+  // Secondi reali dell'ultima generazione: finiscono nel badge "TROVATO
+  // IN N SECONDI" della card condivisibile — la prova della promessa.
+  const [foundInSeconds, setFoundInSeconds] = useState<number | null>(null);
 
   // Save session state to localStorage whenever screen, quizState, gifts, or activeCardIndex change
   useEffect(() => {
@@ -197,6 +200,7 @@ export default function App() {
 
   // Main Gift Generator Handler (Optimistic Instant 0ms Transition)
   const handleGenerateGifts = useCallback(async (quizData: QuizState, forceRegenerate = false) => {
+    const genStart = Date.now();
     // Trigger instant transition to loading screen without UI thread stall
     startTransition(() => {
       setScreen("loading");
@@ -210,6 +214,7 @@ export default function App() {
     // Session Memory Cache check (if user returns back without changing data)
     if (!forceRegenerate && cacheRef.current[cacheKey] && cacheRef.current[cacheKey].length > 0) {
       setGifts(cacheRef.current[cacheKey]);
+      setFoundInSeconds(Math.max(1, Math.round((Date.now() - genStart) / 1000)));
       startTransition(() => {
         setScreen("results");
       });
@@ -263,6 +268,7 @@ export default function App() {
     setShownTitles((prev) => [...prev, ...newTitles]);
 
     setGifts(fetchedGifts);
+    setFoundInSeconds(Math.max(1, Math.round((Date.now() - genStart) / 1000)));
     startTransition(() => {
       setScreen("results");
     });
@@ -307,7 +313,7 @@ export default function App() {
   }, []);
 
   return (
-    <div id="app-root" className="app-container fixed inset-0 h-[var(--app-height,100dvh)] w-[100vw] overflow-hidden bg-[#FAF7F2] text-[#000000] select-none flex flex-col font-sans">
+    <div id="app-root" className="app-container fixed inset-0 h-[var(--app-height,100dvh)] w-[100vw] overflow-hidden bg-[#0E0910] text-[#F7F0F2] select-none flex flex-col font-sans">
       <AnimatePresence>
         {showSplash && (
           <SplashScreenApple onComplete={handleHideSplash} />
@@ -388,6 +394,7 @@ export default function App() {
                 quizState={quizState}
                 country={currentCountry}
                 language={language}
+                foundInSeconds={foundInSeconds}
                 initialActiveIndex={activeCardIndex}
                 onActiveIndexChange={setActiveCardIndex}
                 onStartOver={handleGoHome}

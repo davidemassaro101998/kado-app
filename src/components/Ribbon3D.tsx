@@ -60,14 +60,14 @@ export const Ribbon3D: React.FC<Ribbon3DProps> = ({ size = "sm", animateFloating
               {/* Box Top Gradient */}
               <linearGradient id="boxLidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#FF8FA3" />
-                <stop offset="50%" stopColor="#FF4D6D" />
-                <stop offset="100%" stopColor="#E63354" />
+                <stop offset="50%" stopColor="#FF3D7F" />
+                <stop offset="100%" stopColor="#E02968" />
               </linearGradient>
 
               {/* Box Base Gradient */}
               <linearGradient id="boxBaseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#E63354" />
-                <stop offset="100%" stopColor="#A81030" />
+                <stop offset="0%" stopColor="#E02968" />
+                <stop offset="100%" stopColor="#8A1038" />
               </linearGradient>
 
               {/* Polished Gold Ribbon Gradient */}
@@ -97,7 +97,7 @@ export const Ribbon3D: React.FC<Ribbon3DProps> = ({ size = "sm", animateFloating
               height="52"
               rx="12"
               fill="url(#boxBaseGrad)"
-              stroke="#A81030"
+              stroke="#8A1038"
               strokeWidth="2"
             />
 
@@ -163,8 +163,8 @@ export const Ribbon3D: React.FC<Ribbon3DProps> = ({ size = "sm", animateFloating
       >
         <defs>
           <linearGradient id="lidGradSm" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FF4D6D" />
-            <stop offset="100%" stopColor="#E63354" />
+            <stop offset="0%" stopColor="#FF3D7F" />
+            <stop offset="100%" stopColor="#E02968" />
           </linearGradient>
           <linearGradient id="goldGradSm" x1="0%" y1="100%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#B38A36" />

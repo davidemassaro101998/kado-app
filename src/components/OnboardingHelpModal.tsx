@@ -48,24 +48,24 @@ export const OnboardingHelpModal: React.FC<OnboardingHelpModalProps> = ({
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className="w-full max-w-lg mx-auto bg-white rounded-t-[32px] p-6 pb-[max(24px,env(safe-area-inset-bottom,0px))] shadow-[0_-12px_40px_rgba(0,0,0,0.15)] flex flex-col items-center gap-4 select-none font-sans"
+            className="w-full max-w-lg mx-auto bg-[#17111A] rounded-t-[32px] p-6 pb-[max(24px,env(safe-area-inset-bottom,0px))] shadow-[0_-12px_40px_rgba(0,0,0,0.15)] flex flex-col items-center gap-4 select-none font-sans"
           >
-            <div className="w-12 h-1.5 rounded-full bg-[#E5E5EA] shrink-0 -mt-1" />
+            <div className="w-12 h-1.5 rounded-full bg-[#2B2130] shrink-0 -mt-1" />
 
-            <div className="w-16 h-16 rounded-full bg-[#FF4D6D]/10 flex items-center justify-center shrink-0">
-              <Mic className="w-7 h-7 text-[#FF4D6D] stroke-[2.2]" />
+            <div className="w-16 h-16 rounded-full bg-[#FF3D7F]/10 flex items-center justify-center shrink-0">
+              <Mic className="w-7 h-7 text-[#FF3D7F] stroke-[2.2]" />
             </div>
 
             <div className="text-center space-y-1.5">
-              <h2 className="text-lg font-bold text-[#000000]">
+              <h2 className="text-lg font-bold text-[#F7F0F2]">
                 {language === "it" ? "Benvenuto su Kado AI" : "Welcome to Kado AI"}
               </h2>
-              <p className="text-sm text-[#000000] leading-relaxed font-medium">
+              <p className="text-sm text-[#F7F0F2] leading-relaxed font-medium">
                 {language === "it"
                   ? "L'AI ti trova il regalo perfetto su Amazon in 3 tap: dì o scegli per chi è, che stile ha e il budget."
                   : "AI finds the perfect gift on Amazon in 3 taps: say or pick who it's for, their style, and your budget."}
               </p>
-              <p className="text-sm text-[#8E8E93] leading-relaxed">
+              <p className="text-sm text-[#9B8A93] leading-relaxed">
                 {language === "it"
                   ? "Tocca il microfono e descrivi a voce chi è il destinatario: se al primo utilizzo il telefono chiede il permesso al microfono, tocca \"Consenti\" per usare la ricerca vocale."
                   : "Tap the mic and describe the recipient out loud: if your phone asks for microphone permission the first time, tap \"Allow\" to use voice search."}
@@ -73,15 +73,15 @@ export const OnboardingHelpModal: React.FC<OnboardingHelpModalProps> = ({
             </div>
 
             {showInstallTip && (
-              <div className="w-full rounded-[18px] bg-[#F2F2F7] p-3.5 flex items-start gap-3">
-                <div className="w-8 h-8 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-full rounded-[18px] bg-[#1C1520] p-3.5 flex items-start gap-3">
+                <div className="w-8 h-8 rounded-xl bg-[#17111A] shadow-sm flex items-center justify-center shrink-0 mt-0.5">
                   {platform === "ios" ? (
-                    <Share className="w-4 h-4 text-[#FF4D6D]" />
+                    <Share className="w-4 h-4 text-[#FF3D7F]" />
                   ) : (
-                    <MoreVertical className="w-4 h-4 text-[#FF4D6D]" />
+                    <MoreVertical className="w-4 h-4 text-[#FF3D7F]" />
                   )}
                 </div>
-                <p className="text-xs text-[#000000] leading-relaxed pt-1">
+                <p className="text-xs text-[#F7F0F2] leading-relaxed pt-1">
                   {platform === "ios" ? (
                     language === "it" ? (
                       <>Consiglio: tocca <b>Condividi</b> <Share className="w-3 h-3 inline-block align-[-1px]" /> in basso, poi <b>"Aggiungi a Home"</b> <PlusSquare className="w-3 h-3 inline-block align-[-1px]" /> per usarla come un'app vera.</>
@@ -100,7 +100,7 @@ export const OnboardingHelpModal: React.FC<OnboardingHelpModalProps> = ({
             <button
               type="button"
               onClick={onDismiss}
-              className="w-full py-3.5 px-6 rounded-[20px] bg-[#FF4D6D] hover:bg-[#E63354] text-white font-black text-sm uppercase tracking-wider active:scale-[0.98] transition-all cursor-pointer mt-1"
+              className="w-full py-3.5 px-6 rounded-[20px] bg-[#FF3D7F] hover:bg-[#E02968] text-white font-black text-sm uppercase tracking-wider active:scale-[0.98] transition-all cursor-pointer mt-1"
             >
               {language === "it" ? "Capito" : "Got it"}
             </button>
