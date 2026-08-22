@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kado-app-production-d2c1.up.railway.app/sitemap.xml

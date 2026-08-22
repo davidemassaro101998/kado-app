@@ -105,6 +105,31 @@ export default function App() {
     }
   });
 
+  // Keep <html lang> and the meta description in sync with the selected
+  // language -- both were previously hardcoded to Italian in index.html
+  // and never updated, which told search engines and screen readers the
+  // page was Italian even while it rendered in English.
+  useEffect(() => {
+    document.documentElement.lang = language;
+    const desc = document.querySelector('meta[name="description"]');
+    const metaDesc = language === "it"
+      ? "Trova l'idea regalo ideale su Amazon con l'intelligenza artificiale. Veloce, preciso e senza stress."
+      : "Find the perfect gift idea on Amazon with AI. Fast, accurate, and stress-free.";
+    if (desc) desc.setAttribute("content", metaDesc);
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute("content", metaDesc);
+    const twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute("content", metaDesc);
+    const title = language === "it"
+      ? "Kado AI • Il Regalo Perfetto in 3 Tap"
+      : "Kado AI • The Perfect Gift in 3 Taps";
+    document.title = title;
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", title);
+    const twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute("content", title);
+  }, [language]);
+
   // Quiz State
   const [quizState, setQuizState] = useState<QuizState>(() => savedSession?.quizState || {
     recipient: "Partner",

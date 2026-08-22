@@ -11,6 +11,7 @@
 // bloccato su una pagina bianca senza spiegazioni.
 
 import React from "react";
+import { reportError } from "../lib/monitoring";
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -30,7 +31,7 @@ export class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
-    console.error("Kado AI — errore intercettato dall'ErrorBoundary:", error, info);
+    reportError(error, { componentStack: info.componentStack, app: "Kado AI" });
   }
 
   handleReset = () => {

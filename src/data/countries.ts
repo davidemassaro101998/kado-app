@@ -74,6 +74,105 @@ export const COUNTRIES: CountryConfig[] = [
     symbol: "¥",
     tag: "giftaijp-22",
   },
+  // --- Added for wider global coverage. IMPORTANT: every "tag" below is a
+  // PLACEHOLDER, not a working Amazon Associates ID -- Amazon will still
+  // resolve these links (no error for the visitor), but no commission is
+  // credited on a tag that was never actually created in the Associates
+  // panel for that marketplace. Create a real Tracking ID for each country
+  // in https://affiliate-program.amazon.<domain>/ before relying on it.
+  // (Also worth fixing at the same time: the 8 tags above are literally
+  // identical across Kado/Bricolo/Forma, so Amazon can't currently tell
+  // which app is driving which sale -- each app should get its own set.)
+  {
+    code: "AU",
+    name: "Australia",
+    flag: "🇦🇺",
+    amazonDomain: "amazon.com.au",
+    currency: "AUD",
+    symbol: "A$",
+    tag: "TODO-kado-au-21",
+  },
+  {
+    code: "NL",
+    name: "Nederland",
+    flag: "🇳🇱",
+    amazonDomain: "amazon.nl",
+    currency: "EUR",
+    symbol: "€",
+    tag: "TODO-kado-nl-21",
+  },
+  {
+    code: "MX",
+    name: "México",
+    flag: "🇲🇽",
+    amazonDomain: "amazon.com.mx",
+    currency: "MXN",
+    symbol: "$",
+    tag: "TODO-kado-mx-21",
+  },
+  {
+    code: "BR",
+    name: "Brasil",
+    flag: "🇧🇷",
+    amazonDomain: "amazon.com.br",
+    currency: "BRL",
+    symbol: "R$",
+    tag: "TODO-kado-br-21",
+  },
+  {
+    code: "IN",
+    name: "India",
+    flag: "🇮🇳",
+    amazonDomain: "amazon.in",
+    currency: "INR",
+    symbol: "₹",
+    tag: "TODO-kado-in-21",
+  },
+  {
+    code: "SE",
+    name: "Sverige",
+    flag: "🇸🇪",
+    amazonDomain: "amazon.se",
+    currency: "SEK",
+    symbol: "kr",
+    tag: "TODO-kado-se-21",
+  },
+  {
+    code: "PL",
+    name: "Polska",
+    flag: "🇵🇱",
+    amazonDomain: "amazon.pl",
+    currency: "PLN",
+    symbol: "zł",
+    tag: "TODO-kado-pl-21",
+  },
+  {
+    code: "BE",
+    name: "België",
+    flag: "🇧🇪",
+    amazonDomain: "amazon.com.be",
+    currency: "EUR",
+    symbol: "€",
+    tag: "TODO-kado-be-21",
+  },
+  {
+    code: "SG",
+    name: "Singapore",
+    flag: "🇸🇬",
+    amazonDomain: "amazon.sg",
+    currency: "SGD",
+    symbol: "S$",
+    tag: "TODO-kado-sg-21",
+  },
+  {
+    code: "AE",
+    name: "United Arab Emirates",
+    flag: "🇦🇪",
+    amazonDomain: "amazon.ae",
+    currency: "AED",
+    symbol: "د.إ",
+    tag: "TODO-kado-ae-21",
+  },
 ];
 
 export function detectUserCountry(): CountryConfig {
@@ -101,6 +200,36 @@ export function detectUserCountry(): CountryConfig {
     }
     if (lang.includes("en-CA") || timeZone.includes("Toronto") || timeZone.includes("Vancouver")) {
       return COUNTRIES.find((c) => c.code === "CA") || COUNTRIES[0];
+    }
+    if (lang.includes("en-AU") || timeZone.includes("Australia")) {
+      return COUNTRIES.find((c) => c.code === "AU") || COUNTRIES[0];
+    }
+    if (lang.includes("nl") || timeZone.includes("Amsterdam")) {
+      return COUNTRIES.find((c) => c.code === "NL") || COUNTRIES[0];
+    }
+    if (lang.includes("es-MX") || timeZone.includes("Mexico_City")) {
+      return COUNTRIES.find((c) => c.code === "MX") || COUNTRIES[0];
+    }
+    if (lang.includes("pt-BR") || timeZone.includes("Sao_Paulo")) {
+      return COUNTRIES.find((c) => c.code === "BR") || COUNTRIES[0];
+    }
+    if (lang.includes("hi") || lang.includes("en-IN") || timeZone.includes("Kolkata") || timeZone.includes("Calcutta")) {
+      return COUNTRIES.find((c) => c.code === "IN") || COUNTRIES[0];
+    }
+    if (lang.includes("sv") || timeZone.includes("Stockholm")) {
+      return COUNTRIES.find((c) => c.code === "SE") || COUNTRIES[0];
+    }
+    if (lang.includes("pl") || timeZone.includes("Warsaw")) {
+      return COUNTRIES.find((c) => c.code === "PL") || COUNTRIES[0];
+    }
+    if (lang.includes("nl-BE") || lang.includes("fr-BE") || timeZone.includes("Brussels")) {
+      return COUNTRIES.find((c) => c.code === "BE") || COUNTRIES[0];
+    }
+    if (lang.includes("en-SG") || timeZone.includes("Singapore")) {
+      return COUNTRIES.find((c) => c.code === "SG") || COUNTRIES[0];
+    }
+    if (lang.includes("ar-AE") || timeZone.includes("Dubai")) {
+      return COUNTRIES.find((c) => c.code === "AE") || COUNTRIES[0];
     }
   } catch (e) {
     // default
