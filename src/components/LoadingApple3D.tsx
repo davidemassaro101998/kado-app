@@ -8,21 +8,27 @@ interface LoadingApple3DProps {
   subtitle?: string;
 }
 
-// "Il Rito dei 20 secondi": la promessa del marchio resa teatrale.
-// Conto alla rovescia da 20 dentro un anello che si riempie, l'aura
-// magenta-oro che respira ai bordi dello schermo, un battito aptico a
-// ogni cambio di fase, e la lista delle fasi che avanza. Il rito e
-// IDENTICO a ogni ricerca: e la scena che l'utente ricorda (e registra).
-// La schermata esce appena i risultati sono pronti, quindi nella pratica
-// il countdown quasi mai arriva a zero — la promessa dei 20 secondi
-// viene "battuta", mai mancata.
-const RITO_TOTAL_SECONDS = 20;
+// "Il Rito": cronometro da pit-stop che conta IN SU con i decimi, dentro
+// un arco d'aura che ruota, aura magenta-oro che respira ai bordi e un
+// battito aptico a ogni cambio di fase. Niente conto alla rovescia:
+// mostrare "20" che scende ancorerebbe l'utente a 20 secondi di attesa
+// percepita anche quando la risposta arriva in 4 — il cronometro che
+// sale con i decimi che corrono comunica velocita, il numero resta
+// piccolo, e quando il risultato arriva si ferma: quel tempo fermato e
+// la vittoria, ed e lo stesso numero che finisce nel badge "TROVATO IN
+// N SECONDI" della card condivisibile. La promessa dei 20 secondi vive
+// nel marketing e nella firma della card, mai come attesa sullo schermo.
 const RING_RADIUS = 106;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+// Arco visibile: un quarto di giro, ruota di continuo (energia, nessuna
+// scadenza da riempire).
+const ARC_DASH = `${RING_CIRCUMFERENCE * 0.28} ${RING_CIRCUMFERENCE * 0.72}`;
 
 export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ language = "en", subtitle }) => {
   const t = TRANSLATIONS[language] || TRANSLATIONS.en;
-  const [elapsed, setElapsed] = useState(0);
+  // Decimi di secondo trascorsi: il tick a 100ms fa "correre" la cifra
+  // decimale, che e esattamente cio che fa sembrare veloce un cronometro.
+  const [tenths, setTenths] = useState(0);
 
   const steps = [
     t.loadingStep1,
@@ -32,12 +38,13 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
 
   // Fasi a 0s / 4s / 9s: la prima scatta subito, le altre due mentre
   // l'attesa reale (1.5-12s) e ancora in corso.
-  const activeStep = elapsed >= 9 ? 2 : elapsed >= 4 ? 1 : 0;
+  const elapsedSeconds = tenths / 10;
+  const activeStep = elapsedSeconds >= 9 ? 2 : elapsedSeconds >= 4 ? 1 : 0;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setElapsed((prev) => Math.min(prev + 1, RITO_TOTAL_SECONDS));
-    }, 1000);
+      setTenths((prev) => prev + 1);
+    }, 100);
     return () => clearInterval(interval);
   }, []);
 
@@ -52,9 +59,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
     }
   }, [activeStep]);
 
-  const remaining = Math.max(RITO_TOTAL_SECONDS - elapsed, 0);
-  const progress = elapsed / RITO_TOTAL_SECONDS;
-  const dashOffset = RING_CIRCUMFERENCE * (1 - progress);
+  const stopwatch = (tenths / 10).toFixed(1);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 select-none bg-[#0C070D] relative overflow-hidden">
@@ -82,10 +87,16 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
         </p>
       </div>
 
-      {/* Anello countdown (fluidamente scalato: mai clippato su schermi bassi) */}
+      {/* Cronometro pit-stop dentro l'arco d'aura che ruota (fluidamente
+          scalato: mai clippato su schermi bassi) */}
       <div className="relative z-10 my-[clamp(0.75rem,3.5vh,2rem)] w-[clamp(11rem,32vh,15rem)] h-[clamp(11rem,32vh,15rem)] shrink-0 flex items-center justify-center">
         <div className="absolute inset-[-14%] rounded-full pointer-events-none" style={{ background: "radial-gradient(closest-side, rgba(255,61,127,0.3), rgba(255,178,77,0.1) 60%, transparent)", filter: "blur(26px)" }} />
-        <svg viewBox="0 0 240 240" className="absolute inset-0 w-full h-full -rotate-90">
+        <motion.svg
+          viewBox="0 0 240 240"
+          className="absolute inset-0 w-full h-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
+        >
           <circle cx="120" cy="120" r={RING_RADIUS} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="6" />
           <circle
             cx="120"
@@ -95,9 +106,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
             stroke="url(#ritoRingGrad)"
             strokeWidth="6"
             strokeLinecap="round"
-            strokeDasharray={RING_CIRCUMFERENCE}
-            strokeDashoffset={dashOffset}
-            style={{ transition: "stroke-dashoffset 1s linear" }}
+            strokeDasharray={ARC_DASH}
           />
           <defs>
             <linearGradient id="ritoRingGrad" x1="0" y1="0" x2="1" y2="1">
@@ -105,18 +114,19 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
               <stop offset="1" stopColor="#FFB24D" />
             </linearGradient>
           </defs>
-        </svg>
+        </motion.svg>
         <div className="relative flex flex-col items-center gap-0.5">
           <span
-            className="text-[clamp(3.5rem,11vh,5.5rem)] leading-none bg-clip-text text-transparent"
+            className="text-[clamp(2.8rem,9vh,4.5rem)] leading-none bg-clip-text text-transparent tabular-nums"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 900,
               backgroundImage: "linear-gradient(135deg, #FF3D7F, #FFB24D)",
               WebkitBackgroundClip: "text",
+              fontVariantNumeric: "tabular-nums",
             }}
           >
-            {remaining}
+            {stopwatch}
           </span>
           <span className="text-[10px] font-bold tracking-[0.22em] text-[#9B8A93] uppercase">
             {language === "it" ? "secondi" : "seconds"}
