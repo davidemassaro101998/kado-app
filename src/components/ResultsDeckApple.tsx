@@ -93,7 +93,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           <div className="min-w-0">
             <span className="text-[9px] sm:text-[10px] font-extrabold text-[#FF4D6D] uppercase tracking-wider flex items-center gap-1">
               <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FF4D6D] shrink-0" />
-              KADO AI • 3 SELEZIONI PERFETTE
+              KADO AI • {language === "it" ? "3 SELEZIONI PERFETTE" : "3 PERFECT PICKS"}
             </span>
             <h2 className="text-xs sm:text-sm font-extrabold text-[#000000] truncate">
               {quizState.recipient} • {quizState.vibe} ({quizState.budget})
@@ -245,7 +245,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                       </span>
                     </div>
                     <span className="text-[#8E8E93] font-normal text-[10px] sm:text-[11px]">
-                      ({currentGift.reviewsCount ? currentGift.reviewsCount.toLocaleString() : "1.240"} recensioni)
+                      ({currentGift.reviewsCount ? currentGift.reviewsCount.toLocaleString() : "1.240"} {language === "it" ? "recensioni" : "reviews"})
                     </span>
                   </div>
                 </div>

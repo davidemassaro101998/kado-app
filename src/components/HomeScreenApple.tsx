@@ -142,21 +142,37 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
     });
   }, [triggerHaptic, recipient, vibe, budget, extraDetails, formatPill, hasAlreadyEverything, fastTrackIdea, onGenerateGifts]);
 
-  const recipientOptions = [
-    { label: "Partner", icon: Heart },
-    { label: "Famiglia", icon: Users },
-    { label: "Amico", icon: Smile },
-    { label: "Collega", icon: Briefcase },
-  ];
+  const recipientOptions = language === "it"
+    ? [
+        { label: "Partner", icon: Heart },
+        { label: "Famiglia", icon: Users },
+        { label: "Amico", icon: Smile },
+        { label: "Collega", icon: Briefcase },
+      ]
+    : [
+        { label: "Partner", icon: Heart },
+        { label: "Family", icon: Users },
+        { label: "Friend", icon: Smile },
+        { label: "Colleague", icon: Briefcase },
+      ];
 
-  const vibeOptions = [
-    { label: "Relax", icon: Coffee },
-    { label: "Tech", icon: Laptop },
-    { label: "Casa", icon: HomeIcon },
-    { label: "Viaggi", icon: Compass },
-    { label: "Lusso", icon: Crown },
-    { label: "Fun", icon: PartyPopper },
-  ];
+  const vibeOptions = language === "it"
+    ? [
+        { label: "Relax", icon: Coffee },
+        { label: "Tech", icon: Laptop },
+        { label: "Casa", icon: HomeIcon },
+        { label: "Viaggi", icon: Compass },
+        { label: "Lusso", icon: Crown },
+        { label: "Fun", icon: PartyPopper },
+      ]
+    : [
+        { label: "Relax", icon: Coffee },
+        { label: "Tech", icon: Laptop },
+        { label: "Home", icon: HomeIcon },
+        { label: "Travel", icon: Compass },
+        { label: "Luxury", icon: Crown },
+        { label: "Fun", icon: PartyPopper },
+      ];
 
   const budgetOptions = ["< 25€", "25 - 50€", "50 - 100€", "100€+"];
 
@@ -458,7 +474,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                         setBudget("25 - 50€");
                       }}
                       className="absolute right-2.5 p-1 rounded-full bg-[#EBE6DC] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
-                      title="Cancella"
+                      title={language === "it" ? "Cancella" : "Clear"}
                     >
                       <X className="w-3.5 h-3.5 stroke-[2.5]" />
                     </button>
