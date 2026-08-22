@@ -88,6 +88,7 @@ export const HeaderApple: React.FC<HeaderAppleProps> = React.memo(({
               </div>
               <button
                 onClick={() => setShowGeoModal(false)}
+                aria-label={language === "it" ? "Chiudi" : "Close"}
                 className="p-1.5 rounded-full hover:bg-[#F5F1EA] text-[#8E8E93] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />

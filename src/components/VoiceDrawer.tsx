@@ -183,6 +183,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
               <button
                 type="button"
                 onClick={onClose}
+                aria-label={language === "it" ? "Chiudi" : "Close"}
                 className="p-1.5 rounded-full bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4 stroke-[2.5]" />
@@ -194,6 +195,12 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
               <button
                 type="button"
                 onClick={toggleMic}
+                aria-pressed={isListening}
+                aria-label={
+                  isListening
+                    ? (language === "it" ? "Ferma l'ascolto" : "Stop listening")
+                    : (language === "it" ? "Inizia ad ascoltare" : "Start listening")
+                }
                 className={`relative w-20 h-20 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-95 ${
                   isListening
                     ? "bg-[#FF4D6D] text-white shadow-[0_0_28px_rgba(255,77,109,0.5)]"
@@ -277,8 +284,8 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                   onChange={(e) => setTranscript(e.target.value)}
                   placeholder={
                     language === "it"
-                      ? "Es. Regalo tecnologico per papà appassionato di caffè sotto i 50€..."
-                      : "E.g. Tech gift for dad who loves coffee under 50€..."
+                      ? "Es. Regalo tecnologico per papà appassionato di caffè..."
+                      : "E.g. Tech gift for dad who loves coffee..."
                   }
                   className="w-full p-3.5 rounded-[18px] bg-[#F2F2F7] text-[#000000] placeholder-[#8E8E93] text-base sm:text-lg font-bold leading-snug border border-[#E5E5EA] focus:outline-none focus:border-[#FF4D6D] transition-colors resize-none"
                 />

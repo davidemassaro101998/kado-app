@@ -247,6 +247,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                 triggerHaptic();
                 setShowInAppBanner(false);
               }}
+              aria-label={language === "it" ? "Chiudi" : "Close"}
               className="p-1 rounded-lg hover:bg-white/20 text-white/80 transition-colors"
             >
               <X className="w-4 h-4" />

@@ -116,6 +116,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
               </div>
               <button
                 onClick={onClose}
+                aria-label={isIt ? "Chiudi" : "Close"}
                 className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
@@ -145,6 +146,9 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                         window.navigator.vibrate(20);
                       }
                     }}
+                    role="switch"
+                    aria-checked={hapticEnabled}
+                    aria-label={isIt ? "Feedback Tattile (Vibrazione)" : "Haptic Feedback"}
                     className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer p-0.5 ${
                       hapticEnabled ? "bg-[#FF4D6D]" : "bg-[#E5E5EA]"
                     }`}

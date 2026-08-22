@@ -56,6 +56,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
             </div>
             <button
               onClick={onClose}
+              aria-label={isIt ? "Chiudi" : "Close"}
               className="p-1.5 rounded-full hover:bg-[#F2F2F7] text-[#8E8E93] hover:text-[#000000] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
