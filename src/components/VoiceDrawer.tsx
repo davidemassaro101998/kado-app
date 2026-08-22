@@ -168,7 +168,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className="fixed bottom-0 left-0 right-0 z-[9991] max-w-lg mx-auto bg-white/95 backdrop-blur-[25px] border-t border-[#E5E5EA] rounded-t-[32px] p-6 pb-[max(24px,env(safe-area-inset-bottom,0px))] shadow-[0_-12px_40px_rgba(0,0,0,0.15)] flex flex-col items-center gap-5 select-none font-sans gpu-layer"
+            className="fixed bottom-0 left-0 right-0 z-[9991] max-w-lg mx-auto bg-white/95 backdrop-blur-lg border-t border-[#E5E5EA] rounded-t-[32px] p-6 pb-[max(24px,env(safe-area-inset-bottom,0px))] shadow-[0_-12px_40px_rgba(0,0,0,0.15)] flex flex-col items-center gap-5 select-none font-sans gpu-layer"
           >
             {/* Grab Handle Header */}
             <div className="w-12 h-1.5 rounded-full bg-[#E5E5EA] shrink-0 -mt-1" />

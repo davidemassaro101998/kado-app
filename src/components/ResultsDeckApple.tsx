@@ -218,8 +218,12 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     className="max-h-full max-w-full object-contain pointer-events-none"
                   />
                   
-                  {/* Price Tag Pill */}
-                  <div className="absolute bottom-2 right-2 bg-white/95 backdrop-blur-xs text-[#000000] text-xs sm:text-sm font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#EBE6DC]">
+                  {/* Price Tag Pill. Solid background, not backdrop-blur: this pill
+                      moves every frame with the card's drag/spring transform, and
+                      compositing a backdrop-filter blur under a moving element is
+                      expensive -- at 95% opacity the blur was visually imperceptible
+                      anyway, so a plain solid fill costs nothing to look at. */}
+                  <div className="absolute bottom-2 right-2 bg-white text-[#000000] text-xs sm:text-sm font-extrabold px-2.5 py-1 rounded-full shadow-2xs border border-[#EBE6DC]">
                     {currentGift.price}
                   </div>
                 </div>

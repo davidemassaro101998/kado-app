@@ -70,21 +70,28 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
   const [hasAlreadyEverything, setHasAlreadyEverything] = useState<boolean>(() => savedHomeForm?.hasAlreadyEverything || false);
   const [extraDetails, setExtraDetails] = useState<string>(() => savedHomeForm?.extraDetails || "");
 
-  // Save form choices to localStorage (step is intentionally not persisted — see wizardStep above)
+  // Save form choices to localStorage (step is intentionally not persisted — see wizardStep above).
+  // Debounced: this effect re-fires on every keystroke in the free-text fields
+  // (extraDetails, customBudgetInput), and a synchronous localStorage.setItem
+  // on every character was a measurable source of input lag on mid-range
+  // phones -- localStorage I/O blocks the main thread.
   useEffect(() => {
-    try {
-      localStorage.setItem("kado_home_form_state", JSON.stringify({
-        recipient,
-        vibe,
-        budget,
-        customBudgetInput,
-        formatPill,
-        hasAlreadyEverything,
-        extraDetails,
-      }));
-    } catch (e) {
-      // ignore
-    }
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem("kado_home_form_state", JSON.stringify({
+          recipient,
+          vibe,
+          budget,
+          customBudgetInput,
+          formatPill,
+          hasAlreadyEverything,
+          extraDetails,
+        }));
+      } catch (e) {
+        // ignore
+      }
+    }, 300);
+    return () => clearTimeout(timer);
   }, [recipient, vibe, budget, customBudgetInput, formatPill, hasAlreadyEverything, extraDetails]);
 
   // Fast Track SOS State & Voice Drawer

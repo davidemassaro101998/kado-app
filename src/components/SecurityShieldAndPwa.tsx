@@ -219,7 +219,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
     <>
       {/* Privacy Blur Overlay when App is sent to system background */}
       {isWindowBlurred && (
-        <div className="fixed inset-0 z-[9999] bg-[#000000]/60 backdrop-blur-xl filter blur-[10px] flex flex-col items-center justify-center p-6 text-white text-center pointer-events-none select-none transition-opacity duration-150">
+        <div className="fixed inset-0 z-[9999] bg-[#000000]/60 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-white text-center pointer-events-none select-none transition-opacity duration-150">
           <ShieldCheck className="w-10 h-10 text-[#FF4D6D] mb-2 animate-pulse" />
           <h3 className="text-base font-extrabold tracking-tight">Kado AI</h3>
         </div>
