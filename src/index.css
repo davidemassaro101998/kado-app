@@ -138,7 +138,12 @@
      leggono come un oggetto che emana luce, non un colore piatto. */
   .surface-coral-tactile {
     background: var(--brand-coral-gradient);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -10px 16px -10px rgba(0, 0, 0, 0.25), 0 0 24px rgba(255, 61, 127, 0.35);
+    /* La prima inset (il filo lucido in alto) aveva blur 0: un bordo a
+       spigolo vivo che, incontrando l'angolo arrotondato del bottone,
+       si taglia di netto invece di seguirne la curva -- il "bug nella
+       curva" visibile sul bottone Aggiungi al Carrello. 2px di sfocatura
+       basta a far scorrere la luce morbidamente intorno all'angolo. */
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), inset 0 -10px 16px -10px rgba(0, 0, 0, 0.25), 0 0 24px rgba(255, 61, 127, 0.35);
   }
 
   /* GPU Layer Acceleration & Zero Layout Thrashing Utilities */

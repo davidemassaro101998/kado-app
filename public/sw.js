@@ -1,6 +1,10 @@
 // Kado AI - PWA Service Worker for Smart Web Push Notifications
 
-const CACHE_NAME = 'kado-ai-v3';
+// Bumped past the dark "Aura" reskin (new colors, new icons): returning
+// visitors' browsers were still stale-while-revalidate-serving the old
+// blue icon bytes cached under the previous key. A new key forces a
+// clean cache instead of slowly trickling the new assets in.
+const CACHE_NAME = 'kado-ai-v4';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
