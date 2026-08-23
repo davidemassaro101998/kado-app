@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Search,
   X,
+  Check,
 } from "lucide-react";
 import { QuizState, FormatPillType, CountryConfig } from "../types";
 import { Language } from "../data/translations";
@@ -289,7 +290,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#F7F0F2]">
                   {language === "it" ? "Per chi è il regalo?" : "Who is the gift for?"}
                 </h1>
-                <p className="text-xs text-[#9B8A93] font-normal">
+                <p className="text-sm text-[#9B8A93] font-normal">
                   {language === "it" ? "Seleziona il destinatario per personalizzare" : "Select recipient to customize"}
                 </p>
               </div>
@@ -329,16 +330,21 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                     <button
                       key={opt.label}
                       onClick={() => handleSelectRecipient(opt.label)}
-                      className={`h-[95px] sm:h-[110px] p-3 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
+                      className={`relative h-[95px] sm:h-[110px] p-3 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
-                          ? "surface-coral-tactile text-white border-transparent shadow-[0_8px_24px_rgba(255,61,127,0.3)]"
+                          ? "surface-coral-selected text-white border-transparent"
                           : "card-tactile text-[#F7F0F2] hover:border-[#FFB24D]"
                       }`}
                     >
-                      <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-white/20 text-white" : "icon-engraved text-[#FF3D7F]"}`}>
+                      {isSel && (
+                        <span className="absolute top-2 right-2 w-4 h-4 rounded-full bg-[#FF3D7F] flex items-center justify-center">
+                          <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
+                        </span>
+                      )}
+                      <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-[#FF3D7F]/20 text-[#FF6B9C]" : "icon-engraved text-[#FF3D7F]"}`}>
                         <IconComp className="w-5 h-5 sm:w-5 sm:h-5 stroke-[2.2]" />
                       </div>
-                      <span className="font-semibold text-xs sm:text-sm tracking-tight">{opt.label}</span>
+                      <span className="font-semibold text-sm sm:text-base tracking-tight">{opt.label}</span>
                     </button>
                   );
                 })}
@@ -361,7 +367,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#F7F0F2]">
                   {language === "it" ? "Che vibe ha?" : "What vibe does it have?"}
                 </h1>
-                <p className="text-xs text-[#9B8A93] font-normal">
+                <p className="text-sm text-[#9B8A93] font-normal">
                   {language === "it" ? "Scegli lo stile o l'interesse principale" : "Choose the main style or interest"}
                 </p>
               </div>
@@ -375,16 +381,21 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                     <button
                       key={opt.label}
                       onClick={() => handleSelectVibe(opt.label)}
-                      className={`h-[95px] sm:h-[110px] p-2.5 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
+                      className={`relative h-[95px] sm:h-[110px] p-2.5 sm:p-3.5 rounded-[20px] border flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
-                          ? "surface-coral-tactile text-white border-transparent shadow-[0_6px_20px_rgba(255,61,127,0.28)]"
+                          ? "surface-coral-selected text-white border-transparent"
                           : "card-tactile text-[#F7F0F2] hover:border-[#FFB24D]"
                       }`}
                     >
-                      <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-white/20 text-white" : "icon-engraved text-[#FF3D7F]"}`}>
+                      {isSel && (
+                        <span className="absolute top-2 right-2 w-4 h-4 rounded-full bg-[#FF3D7F] flex items-center justify-center">
+                          <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
+                        </span>
+                      )}
+                      <div className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center transition-colors ${isSel ? "bg-[#FF3D7F]/20 text-[#FF6B9C]" : "icon-engraved text-[#FF3D7F]"}`}>
                         <IconComp className="w-5 h-5 sm:w-5 sm:h-5 stroke-[2.2]" />
                       </div>
-                      <span className="font-semibold text-xs sm:text-sm tracking-tight">{opt.label}</span>
+                      <span className="font-semibold text-sm sm:text-base tracking-tight">{opt.label}</span>
                     </button>
                   );
                 })}
@@ -407,7 +418,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#F7F0F2]">
                   {language === "it" ? "Budget e Stile" : "Budget & Style"}
                 </h1>
-                <p className="text-xs text-[#9B8A93] font-normal">
+                <p className="text-sm text-[#9B8A93] font-normal">
                   {language === "it" ? "Imposta la fascia di prezzo desiderata" : "Set your preferred price range"}
                 </p>
               </div>
@@ -424,13 +435,18 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                         setCustomBudgetInput("");
                         setBudget(b);
                       }}
-                      className={`py-3.5 px-4 sm:py-4 rounded-[22px] border flex flex-col items-center justify-center text-center cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
+                      className={`relative py-3.5 px-4 sm:py-4 rounded-[22px] border flex flex-col items-center justify-center text-center cursor-pointer transition-transform duration-150 active:scale-[0.97] ${
                         isSel
-                          ? "surface-coral-tactile text-white border-transparent shadow-[0_8px_24px_rgba(255,61,127,0.3)]"
+                          ? "surface-coral-selected text-white border-transparent"
                           : "card-tactile text-[#F7F0F2] hover:border-[#FFB24D]"
                       }`}
                     >
-                      <span className="font-semibold text-sm sm:text-base tracking-tight">{b}</span>
+                      {isSel && (
+                        <span className="absolute top-2 right-2 w-4 h-4 rounded-full bg-[#FF3D7F] flex items-center justify-center">
+                          <Check className="w-2.5 h-2.5 text-white stroke-[3]" />
+                        </span>
+                      )}
+                      <span className="font-semibold text-base sm:text-lg tracking-tight">{b}</span>
                     </button>
                   );
                 })}
@@ -445,11 +461,11 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-[#9B8A93] block">
+                  <span className="text-sm font-medium text-[#9B8A93] block">
                     {language === "it" ? "Oppure cifra esatta:" : "Or exact amount:"}
                   </span>
                   {customBudgetInput && (
-                    <span className="text-xs font-bold text-[#FF3D7F]">
+                    <span className="text-sm font-bold text-[#FF3D7F]">
                       {language === "it" ? "Personalizzato" : "Custom"}
                     </span>
                   )}
@@ -513,7 +529,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                     }}
                     className="w-4 h-4 rounded border-[#2B2130] text-[#FF3D7F] focus:ring-0 accent-[#FF3D7F] cursor-pointer"
                   />
-                  <span className="text-xs sm:text-sm text-[#F7F0F2] font-normal leading-tight">
+                  <span className="text-sm sm:text-base text-[#F7F0F2] font-normal leading-tight">
                     {language === "it"
                       ? "Ha già tutto (idee uniche o consumabili)"
                       : "Has everything already (unique/consumables)"}
@@ -529,7 +545,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
                       ? "Dettaglio extra (opzionale)"
                       : "Extra details (optional)"
                   }
-                  className="w-full py-2 px-3 rounded-xl bg-[#1C1520] border border-[#2B2130] text-[#F7F0F2] placeholder-[#9B8A93] text-xs sm:text-sm font-normal focus:outline-none focus:border-[#FF3D7F]"
+                  className="w-full py-2 px-3 rounded-xl bg-[#1C1520] border border-[#2B2130] text-[#F7F0F2] placeholder-[#9B8A93] text-sm sm:text-base font-normal focus:outline-none focus:border-[#FF3D7F]"
                 />
               </div>
             </motion.div>

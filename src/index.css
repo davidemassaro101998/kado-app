@@ -146,6 +146,17 @@
     box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), inset 0 -10px 16px -10px rgba(0, 0, 0, 0.25), 0 0 24px rgba(255, 61, 127, 0.35);
   }
 
+  /* Stato "selezionato" per le card di scelta (destinatario/vibe/budget):
+     stessa famiglia cromatica della CTA ma un tono sotto -- un bordo
+     luminoso e un wash leggero invece del gradiente pieno + bagliore
+     esterno, cosi la card comunica "questa e scelta" senza competere
+     con il testo che porta sopra. Il gradiente pieno resta riservato
+     alla CTA e al mic, i soli due inviti-all'azione della schermata. */
+  .surface-coral-selected {
+    background: linear-gradient(145deg, rgba(255, 61, 127, 0.18), rgba(255, 178, 77, 0.08)), #1C1520;
+    box-shadow: inset 0 0 0 1.5px rgba(255, 107, 156, 0.6), 0 4px 14px -6px rgba(255, 61, 127, 0.28);
+  }
+
   /* GPU Layer Acceleration & Zero Layout Thrashing Utilities */
   .gpu-layer,
   .gpu-accelerated {
