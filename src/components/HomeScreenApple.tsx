@@ -295,7 +295,12 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
       {/* ================= 2. SEQUENTIAL WIZARD CONTENT ================= */}
       <div className="flex-1 my-auto relative overflow-y-auto py-2 compact-short-screen">
-        <div className="min-h-full flex flex-col justify-center">
+        {/* I blocchi del passo si distribuiscono sull'altezza invece di
+            raggrupparsi al centro con spazi fissi. Su uno schermo alto
+            (o senza il banner "installa l'app" in fondo) il vecchio
+            justify-center lasciava un buco sotto grande quanto mezzo
+            telefono. */}
+        <div className="min-h-full flex flex-col">
         <AnimatePresence mode="wait" custom={stepDirection}>
           
           {/* STEP 1: CHI È? */}
@@ -307,7 +312,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="w-full flex flex-col justify-center space-y-3 sm:space-y-4"
+              className="w-full flex-1 flex flex-col justify-evenly gap-3 py-2 sm:gap-4"
             >
               <div className="text-center space-y-1">
                 <h1 className="text-clamp-title font-bold tracking-tight text-[#F7F0F2]">
