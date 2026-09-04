@@ -515,6 +515,69 @@ Context from current selection: Recipient: ${quizState?.recipient || "Not specif
   }
 });
 
+/* Foto -> descrizione da dare al motore dei regali.
+   L'utente inquadra la persona, la sua stanza o una cosa che le piace, e
+   da li si ricava una riga di contesto identica a quella che avrebbe
+   dettato a voce: dal punto di vista del resto dell'app non cambia
+   niente, cambia solo quanto e' facile fornirla. */
+app.post("/api/analyze-photo", async (req, res) => {
+  try {
+    const rawImage = typeof req.body?.image === "string" ? req.body.image : "";
+    const language = sanitizeText(req.body?.language, 5) || "it";
+
+    const match = rawImage.match(/^data:(image\/(?:jpeg|jpg|png|webp));base64,([A-Za-z0-9+/=]+)$/);
+    if (!match) {
+      return res.status(400).json({ success: false, error: "Invalid image payload" });
+    }
+    const mimeType = match[1];
+    const base64 = match[2];
+
+    // Il client ridimensiona gia' a 1024px di lato lungo (~150-400KB in
+    // base64). Il tetto qui non e' una stima di quel valore ma un
+    // margine ampio sopra: serve a fermare un payload costruito a mano,
+    // non a rifiutare una foto vera un po' piu' pesante del previsto.
+    if (base64.length > 4_000_000) {
+      return res.status(413).json({ success: false, error: "Image too large" });
+    }
+
+    if (!process.env.GEMINI_API_KEY || !canCallGeminiToday()) {
+      return res.json({ success: false, error: "Vision temporarily unavailable" });
+    }
+
+    const outputLanguage = language === "it" ? "Italian" : "English";
+    const prompt = `Look at this photo. Someone is choosing a GIFT for a person connected to what is shown.
+
+Write ONE sentence in ${outputLanguage} (max 30 words) describing what the photo suggests about that person's tastes, interests or lifestyle — the kind of note you'd jot down before shopping for them.
+
+Rules:
+- Describe interests and style, never physical appearance, age, ethnicity, health or identity.
+- If the photo shows an object or a room, infer the hobby or taste it points to.
+- If the photo shows nothing useful for choosing a gift, reply exactly: UNCLEAR
+- Output only the sentence, no preamble, no quotes.`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-3.6-flash",
+      contents: [
+        {
+          role: "user",
+          parts: [{ inlineData: { mimeType, data: base64 } }, { text: prompt }],
+        },
+      ],
+    });
+
+    const description = (response.text || "").trim();
+
+    if (!description || /^unclear$/i.test(description)) {
+      return res.json({ success: false, error: "Nothing useful in the photo" });
+    }
+
+    return res.json({ success: true, description: description.slice(0, 300) });
+  } catch (error: any) {
+    console.warn("Notice: photo analysis failed:", error?.message || error);
+    return res.json({ success: false, error: "Analysis failed" });
+  }
+});
+
 // API endpoint for Text-To-Speech (Gemini TTS)
 app.post("/api/tts", async (req, res) => {
   try {

@@ -16,10 +16,10 @@
        dispositivo luminoso ripetuto ovunque — l'aura magenta-oro, il
        bagliore che compare quando l'AI lavora. Magenta per il calore/dono,
        oro per il momento prezioso del regalo trovato. */
-    --brand-coral: #FF3D7F;
-    --brand-coral-dark: #E02968;
-    --brand-coral-gradient: linear-gradient(135deg, #FF3D7F 0%, #FF7A5C 55%, #FFB24D 100%);
-    --brand-gold: #FFB24D;
+    --brand-coral: #FF2E7E;
+    --brand-coral-dark: #E01E68;
+    --brand-coral-gradient: linear-gradient(135deg, #FF2E7E 0%, #FF7A5C 55%, #FFB347 100%);
+    --brand-gold: #FFB347;
 
     --text-primary: var(--text-main);
     --text-secondary: var(--text-sub);
@@ -106,7 +106,7 @@
 
   .btn-tactile-secondary:hover {
     background: #241A28;
-    border-color: #FFB24D;
+    border-color: #FFB347;
     box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.5);
   }
 
@@ -120,11 +120,11 @@
 
   /* Gold Accent Text & Border */
   .text-pale-gold {
-    color: #FFB24D;
+    color: #FFB347;
   }
 
   .border-pale-gold {
-    border-color: #FFB24D;
+    border-color: #FFB347;
   }
 
   /* Tactile Engraved/Embossed Icon Container (dark inset) */
@@ -143,7 +143,7 @@
        si taglia di netto invece di seguirne la curva -- il "bug nella
        curva" visibile sul bottone Aggiungi al Carrello. 2px di sfocatura
        basta a far scorrere la luce morbidamente intorno all'angolo. */
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), inset 0 -10px 16px -10px rgba(0, 0, 0, 0.25), 0 0 24px rgba(255, 61, 127, 0.35);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), inset 0 -10px 16px -10px rgba(0, 0, 0, 0.25), 0 0 24px rgba(255, 46, 126, 0.35);
   }
 
   /* Stato "selezionato" per le card di scelta (destinatario/vibe/budget):
@@ -153,8 +153,8 @@
      con il testo che porta sopra. Il gradiente pieno resta riservato
      alla CTA e al mic, i soli due inviti-all'azione della schermata. */
   .surface-coral-selected {
-    background: linear-gradient(145deg, rgba(255, 61, 127, 0.18), rgba(255, 178, 77, 0.08)), #1C1520;
-    box-shadow: inset 0 0 0 1.5px rgba(255, 107, 156, 0.6), 0 4px 14px -6px rgba(255, 61, 127, 0.28);
+    background: linear-gradient(145deg, rgba(255, 46, 126, 0.18), rgba(255, 179, 71, 0.08)), #1C1520;
+    box-shadow: inset 0 0 0 1.5px rgba(255, 107, 156, 0.6), 0 4px 14px -6px rgba(255, 46, 126, 0.28);
   }
 
   /* GPU Layer Acceleration & Zero Layout Thrashing Utilities */

@@ -221,7 +221,12 @@ export default function App() {
       return;
     }
 
-    const minLoadingPromise = new Promise((resolve) => setTimeout(resolve, 1500));
+    /* Attesa minima perche' il "Rito" non sia un lampo: quando l'API
+       risponde in 300ms, saltare di colpo al risultato legge come un
+       glitch, non come velocita. Ma 1500ms erano piu' del doppio del
+       necessario -- tempo morto aggiunto a OGNI ricerca. 600ms bastano
+       a far leggere il momento e dimezzano abbondantemente l'attesa. */
+    const minLoadingPromise = new Promise((resolve) => setTimeout(resolve, 600));
 
     let fetchedGifts: GiftItem[] = [];
 
@@ -264,8 +269,13 @@ export default function App() {
     cacheRef.current[cacheKey] = fetchedGifts;
 
     // Track shown titles for regenerate exclusion
+    /* La lista di titoli gia' visti serve a non riproporre le stesse
+       idee, ma cresceva senza limite per tutta la sessione: ogni
+       ricerca spediva un payload piu' grande della precedente e il
+       prompt si allungava fino a peggiorare le risposte. Le ultime 24
+       coprono abbondantemente le rigenerazioni che uno fa davvero. */
     const newTitles = fetchedGifts.map((g) => g.title);
-    setShownTitles((prev) => [...prev, ...newTitles]);
+    setShownTitles((prev) => [...prev, ...newTitles].slice(-24));
 
     setGifts(fetchedGifts);
     setFoundInSeconds(Math.max(1, Math.round((Date.now() - genStart) / 1000)));
