@@ -266,7 +266,7 @@ export const CameraDrawer = React.memo(({ isOpen, onClose, onSubmitIdea, languag
                   onClick={capture}
                   disabled={!streamReady}
                   aria-label={t.shoot}
-                  className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-[#FF2E7E] text-white shadow-[0_0_28px_rgba(255,46,126,0.45)] transition-transform active:scale-95 disabled:opacity-40"
+                  className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-[#FF2E7E] text-[#0E0910] shadow-[0_0_28px_rgba(255,46,126,0.45)] transition-transform active:scale-95 disabled:opacity-40"
                 >
                   <Camera className="h-7 w-7 stroke-[2.4]" />
                 </button>
@@ -294,7 +294,7 @@ export const CameraDrawer = React.memo(({ isOpen, onClose, onSubmitIdea, languag
               type="button"
               disabled={!photo || isAnalyzing}
               onClick={analyze}
-              className="mt-1 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border border-[#FF2E7E] bg-[#FF2E7E] px-6 py-4 text-sm font-black uppercase tracking-wider text-white shadow-[0_8px_20px_rgba(255,46,126,0.3)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+              className="mt-1 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border border-[#FF2E7E] bg-[#FF2E7E] px-6 py-4 text-sm font-black uppercase tracking-wider text-[#0E0910] shadow-[0_8px_20px_rgba(255,46,126,0.3)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isAnalyzing ? (
                 <>

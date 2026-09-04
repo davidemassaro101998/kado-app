@@ -56,7 +56,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = React.memo(({
 
       <button
         onClick={handleAccept}
-        className="py-1.5 px-4 rounded-xl bg-[#FF2E7E] text-white font-bold text-xs hover:bg-[#E01E68] active:scale-95 transition-all shrink-0 cursor-pointer shadow-sm"
+        className="py-1.5 px-4 rounded-xl bg-[#FF2E7E] text-[#0E0910] font-bold text-xs hover:bg-[#E01E68] active:scale-95 transition-all shrink-0 cursor-pointer shadow-sm"
       >
         {isIt ? "Accetta" : "Accept"}
       </button>

@@ -290,7 +290,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               {/* Minimal Dismiss "X" Button */}
               <button
                 onClick={handleDismiss}
-                className="p-1.5 rounded-full hover:bg-[#1C1520] text-[#9B8A93] hover:text-[#F7F0F2] transition-colors cursor-pointer shrink-0"
+                className="tocco-44 relative p-1.5 rounded-full hover:bg-[#1C1520] text-[#9B8A93] hover:text-[#F7F0F2] transition-colors cursor-pointer shrink-0"
                 title="Chiudi"
               >
                 <X className="w-4 h-4" />
@@ -336,7 +336,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
             >
               <div className="flex items-center justify-between border-b border-[#2B2130] pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-2xl bg-[#FF2E7E] text-white shadow-2xs">
+                  <div className="p-2 rounded-2xl bg-[#FF2E7E] text-[#0E0910] shadow-2xs">
                     <Smartphone className="w-4 h-4" />
                   </div>
                   <h3 className="font-extrabold text-sm text-[#F7F0F2]">
@@ -345,7 +345,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
                 </div>
                 <button
                   onClick={handleDismiss}
-                  className="p-1.5 rounded-full hover:bg-[#1C1520] text-[#9B8A93] hover:text-[#F7F0F2] transition-colors cursor-pointer"
+                  className="tocco-44 relative p-1.5 rounded-full hover:bg-[#1C1520] text-[#9B8A93] hover:text-[#F7F0F2] transition-colors cursor-pointer"
                   title="Chiudi"
                 >
                   <X className="w-4 h-4" />
@@ -355,7 +355,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               {/* Step 1 & Step 2 Visual Instructions */}
               <div className="space-y-3">
                 <div className="p-3.5 rounded-2xl bg-[#1C1520] border border-[#2B2130] flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-[#FF2E7E] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-2xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#FF2E7E] text-[#0E0910] flex items-center justify-center font-black text-xs shrink-0 shadow-2xs">
                     1
                   </div>
                   <div className="flex-1 text-xs">

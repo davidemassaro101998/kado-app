@@ -340,7 +340,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                 aria-label={isListening ? t.stop : t.start}
                 className={`relative flex h-20 w-20 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all active:scale-95 ${
                   isListening
-                    ? "bg-[#FF2E7E] text-white shadow-[0_0_28px_rgba(255,46,126,0.5)]"
+                    ? "bg-[#FF2E7E] text-[#0E0910] shadow-[0_0_28px_rgba(255,46,126,0.5)]"
                     : "border border-[#2B2130] bg-[#1C1520] text-[#FF2E7E]"
                 }`}
               >
@@ -426,7 +426,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
               type="button"
               disabled={!displayText.trim()}
               onClick={handleSubmit}
-              className="mt-1 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border border-[#FF2E7E] bg-[#FF2E7E] px-6 py-4 text-sm font-black uppercase tracking-wider text-white shadow-[0_8px_20px_rgba(255,46,126,0.3)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+              className="mt-1 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border border-[#FF2E7E] bg-[#FF2E7E] px-6 py-4 text-sm font-black uppercase tracking-wider text-[#0E0910] shadow-[0_8px_20px_rgba(255,46,126,0.3)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <Send className="h-4 w-4 fill-current stroke-[2]" />
               <span>{t.submit}</span>

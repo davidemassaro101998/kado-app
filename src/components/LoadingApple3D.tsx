@@ -154,7 +154,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
               <div
                 className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${
                   isDone
-                    ? "bg-[#FF2E7E] text-white font-black"
+                    ? "bg-[#FF2E7E] text-[#0E0910] font-black"
                     : isCurrent
                     ? "border-2 border-[#FF2E7E] shadow-[0_0_12px_rgba(255,46,126,0.6)]"
                     : "bg-[rgba(255,255,255,0.08)] text-[#8E7F87]"

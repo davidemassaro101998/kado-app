@@ -261,7 +261,7 @@ export const HomeScreenApple: React.FC<HomeScreenAppleProps> = React.memo(({
 
           {wizardStep !== 1 && (
             <div className="flex items-center gap-1.5 pl-2.5 shrink-0 border-l border-[#2B2130]">
-              <div className="p-1.5 rounded-full bg-[#FF2E7E]/10 text-[#FF2E7E] group-hover:bg-[#FF2E7E] group-hover:text-white transition-colors">
+              <div className="p-1.5 rounded-full bg-[#FF2E7E]/10 text-[#FF2E7E] group-hover:bg-[#FF2E7E] group-hover:text-[#0E0910] transition-colors">
                 <Mic className="w-4 h-4 stroke-[2.2]" />
               </div>
             </div>

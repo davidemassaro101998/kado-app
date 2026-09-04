@@ -100,7 +100,7 @@ export const OnboardingHelpModal: React.FC<OnboardingHelpModalProps> = ({
             <button
               type="button"
               onClick={onDismiss}
-              className="w-full py-3.5 px-6 rounded-[20px] bg-[#FF2E7E] hover:bg-[#E01E68] text-white font-black text-sm uppercase tracking-wider active:scale-[0.98] transition-all cursor-pointer mt-1"
+              className="w-full py-3.5 px-6 rounded-[20px] bg-[#FF2E7E] hover:bg-[#E01E68] text-[#0E0910] font-black text-sm uppercase tracking-wider active:scale-[0.98] transition-all cursor-pointer mt-1"
             >
               {language === "it" ? "Capito" : "Got it"}
             </button>

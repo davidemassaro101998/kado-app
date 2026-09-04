@@ -259,3 +259,29 @@
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 30px 100px rgba(0, 0, 0, 0.7);
   }
 }
+
+/* ── Un bersaglio tattile deve essere 44px anche quando il disegno ne
+   chiede 34. La soluzione non e' ingrassare il pulsante — quel disegno e'
+   stato deciso — ma allargare l'AREA CHE RISPONDE AL DITO lasciando fermo
+   il pixel che si vede: uno pseudo-elemento centrato, invisibile, che
+   porta la zona sensibile a 44x44. Il tocco lo riceve comunque il
+   pulsante, perche' lo pseudo-elemento e' suo.
+   Sta fuori da ogni layer come la colonna dell'app: le utility di
+   Tailwind vivono in `@layer utilities` e batterebbero una regola
+   messa in `base`. */
+/* ATTENZIONE, gia' sbagliato una volta: questa regola sta FUORI dai
+   layer, quindi batte le utility di Tailwind. Se qui dentro si scrive
+   `position: relative`, un pulsante che nel markup e' `absolute` smette
+   di esserlo -- e' successo al pulsante «Torna al catalogo», finito a
+   x=-32 cioe' fuori dallo schermo. Quindi la posizione NON si tocca: la
+   decide il markup, e chi usa `tocco-44` deve gia' essere posizionato
+   (`relative` o `absolute`). Qui si aggiunge solo l'area. */
+.tocco-44::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+}

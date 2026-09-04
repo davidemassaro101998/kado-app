@@ -107,7 +107,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
             {/* Drawer Header */}
             <div className="flex items-center justify-between pb-3 border-b border-[#2B2130] mb-3">
               <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-[#FF2E7E] text-white shadow-xs">
+                <div className="p-2 rounded-xl bg-[#FF2E7E] text-[#0E0910] shadow-xs">
                   <Settings className="w-4 h-4" />
                 </div>
                 <h2 className="text-base font-extrabold text-[#F7F0F2]">
@@ -117,7 +117,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
               <button
                 onClick={onClose}
                 aria-label={isIt ? "Chiudi" : "Close"}
-                className="p-1.5 rounded-full hover:bg-[#1C1520] text-[#9B8A93] transition-colors cursor-pointer"
+                className="tocco-44 relative p-1.5 rounded-full hover:bg-[#1C1520] text-[#9B8A93] transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
