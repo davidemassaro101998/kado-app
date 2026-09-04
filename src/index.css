@@ -63,6 +63,7 @@
     transform: translate3d(0, 0, 0);
   }
 
+
   /* Anti-cloning image protection */
   img {
     pointer-events: none;
@@ -231,5 +232,30 @@
   .compact-icon {
     width: 1.1rem !important;
     height: 1.1rem !important;
+  }
+}
+
+/* Su schermo largo l'app non si spalma in orizzontale: resta una colonna
+   da telefono, centrata. Queste interfacce sono disegnate per un pollice
+   -- allargate a 1440px le card diventano lenzuola, il mic resta un
+   bottone minuscolo in mezzo al vuoto e il disegno si sfalda.
+
+   Questa regola sta FUORI da ogni @layer di proposito: #app-root porta
+   le utility Tailwind `inset-0` e `w-[100vw]`, che vivono nel layer
+   utilities e batterebbero qualunque cosa scritta in @layer base. Gli
+   stili senza layer vincono su quelli con layer, quindi e' l'unico
+   punto da cui left/right/width si possono davvero sovrascrivere.
+
+   Il transform gia presente su #app-root ne fa il blocco contenitore
+   anche per i pannelli in position:fixed (drawer voce e fotocamera),
+   che quindi restano dentro la colonna invece di scappare ai bordi. */
+@media (min-width: 640px) {
+  #app-root {
+    width: 100%;
+    max-width: 460px;
+    left: 50%;
+    right: auto;
+    transform: translate3d(-50%, 0, 0);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 30px 100px rgba(0, 0, 0, 0.7);
   }
 }
