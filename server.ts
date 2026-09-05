@@ -258,9 +258,13 @@ STRICT AMAZON QUALITY FILTERS:
       return res.json({ success: false, source: "fallback", message: "Daily cap reached" });
     }
 
-    // 10s Timeout Guard for Gemini Call
+    /* Tetto di attesa: 6 secondi, non 10. Misurato in produzione, la
+       risposta non arrivava MAI e l'utente restava fermo 10,5 secondi
+       davanti a un caricamento per poi ricevere comunque le idee di
+       ripiego. Dieci secondi di nulla sono peggio di sei: il ripiego e'
+       gia' pronto e locale, tanto vale servirlo prima. */
     const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error("Gemini API timeout (>10s)")), 10000)
+      setTimeout(() => reject(new Error("Gemini API timeout (>6s)")), 6000)
     );
 
     const responsePromise = ai.models.generateContent({

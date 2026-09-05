@@ -109,13 +109,27 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
     window.addEventListener("appinstalled", handleAppInstalled);
 
-    // 3. Intro Timing: Appear 2 seconds after opening (IF NOT STANDALONE AND NOT DISMISSED)
+    /* Quando chiedere di installare. PRIMA: due secondi dopo l'apertura,
+       sempre -- cioe' sopra il pannello di benvenuto, sul momento piu'
+       fragile, a uno che non sa ancora cosa fa l'app. Due interruzioni
+       prima del primo tocco utile.
+       ORA: solo dopo che ha visto almeno un risultato. Chiedere di
+       installare ha senso quando l'app ha gia' dimostrato di servire; e
+       chi non arriva mai a un risultato non riceve mai la richiesta. */
     let pwaTimer: any = null;
-    if (!standaloneMode && !isDismissed && !isInstalled) {
-      pwaTimer = setTimeout(() => {
-        setShowPwaBanner(true);
-      }, 2000);
-    }
+    let haVistoRisultati = false;
+    try {
+      haVistoRisultati = localStorage.getItem("kado_visto_risultati") === "1";
+    } catch (e) {}
+
+    const armaBanner = () => {
+      if (standaloneMode || isDismissed || isInstalled) return;
+      clearTimeout(pwaTimer);
+      pwaTimer = setTimeout(() => setShowPwaBanner(true), 2500);
+    };
+    if (haVistoRisultati) armaBanner();
+    // e se il primo risultato arriva adesso, senza ricaricare la pagina
+    window.addEventListener("kado:visto-risultati", armaBanner);
 
     // 4. Anti-Cloning & Security Hardening
     const handleContextMenu = (e: MouseEvent) => {
@@ -166,6 +180,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
+      window.removeEventListener("kado:visto-risultati", armaBanner);
       window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
       window.removeEventListener("appinstalled", handleAppInstalled);
       if (pwaTimer) clearTimeout(pwaTimer);

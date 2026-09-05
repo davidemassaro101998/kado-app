@@ -143,6 +143,7 @@ export default function App() {
 
   // Results State
   const [gifts, setGifts] = useState<GiftItem[]>(() => savedSession?.gifts || []);
+  const [daAI, setDaAI] = useState(false);
   const [shownTitles, setShownTitles] = useState<string[]>(() => savedSession?.shownTitles || []);
   const [activeCardIndex, setActiveCardIndex] = useState<number>(() => savedSession?.activeCardIndex || 0);
   // Secondi reali dell'ultima generazione: finiscono nel badge "TROVATO
@@ -229,6 +230,12 @@ export default function App() {
     const minLoadingPromise = new Promise((resolve) => setTimeout(resolve, 600));
 
     let fetchedGifts: GiftItem[] = [];
+    /* Da dove vengono davvero le idee. Il campo `source` della risposta
+       c'era gia' e veniva buttato via: lo schermo mostrava le idee di
+       ripiego con lo stesso «3 selezioni perfette» delle idee vere. Chi
+       legge non poteva distinguerle -- e sono liste fisse, non scelte per
+       lui. Ora la differenza si vede. */
+    let daAI = false;
 
     // 12-second safety timeout for API call
     const controller = new AbortController();
@@ -254,6 +261,7 @@ export default function App() {
 
       if (data.success && Array.isArray(data.gifts) && data.gifts.length > 0) {
         fetchedGifts = data.gifts.slice(0, 3);
+        daAI = true;
       } else {
         fetchedGifts = generateSmartFallbackGifts(quizData, currentCountry, language);
       }
@@ -277,7 +285,14 @@ export default function App() {
     const newTitles = fetchedGifts.map((g) => g.title);
     setShownTitles((prev) => [...prev, ...newTitles].slice(-24));
 
+    setDaAI(daAI);
     setGifts(fetchedGifts);
+    // Da qui in poi ha senso proporre l'installazione: l'app ha gia' dato
+    // qualcosa. Prima no.
+    try {
+      localStorage.setItem("kado_visto_risultati", "1");
+      window.dispatchEvent(new Event("kado:visto-risultati"));
+    } catch (e) {}
     setFoundInSeconds(Math.max(1, Math.round((Date.now() - genStart) / 1000)));
     startTransition(() => {
       setScreen("results");
@@ -405,6 +420,7 @@ export default function App() {
                 country={currentCountry}
                 language={language}
                 foundInSeconds={foundInSeconds}
+                daAI={daAI}
                 initialActiveIndex={activeCardIndex}
                 onActiveIndexChange={setActiveCardIndex}
                 onStartOver={handleGoHome}

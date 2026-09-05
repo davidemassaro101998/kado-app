@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { GiftItem, QuizState, CountryConfig } from "../types";
+import { ImmagineProdotto } from "./ImmagineProdotto";
 import { buildAmazonUrl, buildAmazonCartUrl } from "../data/countries";
 import {
   ChevronLeft,
@@ -28,6 +29,7 @@ interface ResultsDeckAppleProps {
   /** Secondi reali impiegati dalla generazione — finisce nel badge
    *  "TROVATO IN N SECONDI" della card condivisibile. */
   foundInSeconds?: number | null;
+  daAI?: boolean;
   initialActiveIndex?: number;
   onActiveIndexChange?: (index: number) => void;
   onStartOver: () => void;
@@ -39,6 +41,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
   quizState,
   country,
   language = "it",
+  daAI = false,
   foundInSeconds = null,
   initialActiveIndex = 0,
   onActiveIndexChange,
@@ -120,7 +123,17 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           <div className="min-w-0">
             <span className="text-[9px] sm:text-[10px] font-extrabold text-[#FF2E7E] uppercase tracking-wider flex items-center gap-1">
               <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FF2E7E] shrink-0" />
-              KADO AI • {language === "it" ? "3 SELEZIONI PERFETTE" : "3 PERFECT PICKS"}
+              {/* Non si spaccia una lista fissa per una scelta dell'AI:
+                  quando la risposta non arriva l'utente vede comunque tre
+                  idee, ma sa che vengono dalla nostra selezione. */}
+              KADO AI •{" "}
+              {daAI
+                ? language === "it"
+                  ? "3 SELEZIONI PERFETTE"
+                  : "3 PERFECT PICKS"
+                : language === "it"
+                  ? "3 IDEE DALLA NOSTRA SELEZIONE"
+                  : "3 IDEAS FROM OUR SHORTLIST"}
             </span>
             <h2 className="text-xs sm:text-sm font-extrabold text-[#F7F0F2] truncate">
               {quizState.recipient} • {quizState.vibe} ({quizState.budget})
@@ -137,7 +150,12 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
       </div>
 
       {/* Main Interactive Container */}
-      <div className="relative flex-1 min-h-0 flex flex-col justify-center my-1.5 overflow-y-auto custom-scrollbar px-0.5">
+      <div /* `justify-center` faceva galleggiare la scheda a meta' dello spazio
+         che avanza: su uno schermo alto restavano 81px di vuoto fra la
+         riga degli indicatori e la scheda, e su uno basso il centraggio
+         tagliava sopra e sotto invece di far scorrere. Appoggiata in
+         alto fa tutte e due le cose bene. */
+      className="relative flex-1 min-h-0 flex flex-col justify-start my-1.5 overflow-y-auto custom-scrollbar px-0.5">
         {/* Progress Dots & Navigation Controls Indicator */}
         <div className="flex items-center justify-between gap-2 mb-2 shrink-0 px-1">
           <div className="flex items-center gap-1.5">
@@ -164,10 +182,6 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
             >
               <ChevronLeft className="w-4 h-4 text-[#F7F0F2]" />
             </button>
-
-            <span className="text-[10px] sm:text-[11px] font-extrabold text-[#9B8A93] px-1 min-w-[32px] text-center">
-              {activeIndex + 1} / {gifts.length || 3}
-            </span>
 
             <button
               onClick={handleNext}
@@ -236,13 +250,10 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 </div>
 
                 {/* 2. Amazon Image Stage (Compact & Modern) */}
-                <div className="relative w-full h-[125px] sm:h-[145px] rounded-[16px] sm:rounded-[20px] overflow-hidden bg-[#FAFAFC] border border-[#2B2130] flex items-center justify-center p-2 shrink-0">
-                  <img
-                    src={currentGift.imageUrl}
-                    alt={currentGift.title}
-                    loading="eager"
-                    decoding="async"
-                    className="max-h-full max-w-full object-contain pointer-events-none"
+                <div className="relative w-full h-[125px] sm:h-[145px] rounded-[16px] sm:rounded-[20px] overflow-hidden border border-[#2B2130] shrink-0">
+                  <ImmagineProdotto
+                    titolo={currentGift.title}
+                    categoria={currentGift.category}
                   />
                   
                   {/* Price Tag Pill. Solid background, not backdrop-blur: this pill
