@@ -132,34 +132,38 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                 </span>
 
                 {/* Haptic Switch */}
-                <div className="p-3.5 rounded-[22px] bg-[#1C1520] border border-[#2B2130] flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onToggleHaptic(!hapticEnabled);
+                    if (!hapticEnabled && typeof window !== "undefined" && window.navigator.vibrate) {
+                      window.navigator.vibrate(20);
+                    }
+                  }}
+                  role="switch"
+                  aria-checked={hapticEnabled}
+                  aria-label={isIt ? "Feedback Tattile (Vibrazione)" : "Haptic Feedback"}
+                  className="w-full p-3.5 rounded-[22px] bg-[#1C1520] border border-[#2B2130] flex items-center justify-between text-left cursor-pointer transition-colors active:bg-[#2B2130]"
+                >
+                  <span className="flex items-center gap-2.5">
                     <Vibrate className="w-4 h-4 text-[#FF2E7E]" />
                     <span className="text-xs font-semibold">
                       {isIt ? "Feedback Tattile (Vibrazione)" : "Haptic Feedback"}
                     </span>
-                  </div>
-                  <button
-                    onClick={() => {
-                      onToggleHaptic(!hapticEnabled);
-                      if (!hapticEnabled && typeof window !== "undefined" && window.navigator.vibrate) {
-                        window.navigator.vibrate(20);
-                      }
-                    }}
-                    role="switch"
-                    aria-checked={hapticEnabled}
-                    aria-label={isIt ? "Feedback Tattile (Vibrazione)" : "Haptic Feedback"}
-                    className={`w-11 h-6 rounded-full transition-colors relative cursor-pointer p-0.5 ${
+                  </span>
+                  <span
+                    aria-hidden
+                    className={`w-11 h-6 shrink-0 rounded-full transition-colors relative p-0.5 block ${
                       hapticEnabled ? "bg-[#FF2E7E]" : "bg-[#2B2130]"
                     }`}
                   >
-                    <div
-                      className={`w-5 h-5 rounded-full bg-[#17111A] shadow-md transform transition-transform ${
+                    <span
+                      className={`w-5 h-5 rounded-full bg-[#17111A] shadow-md transform transition-transform block ${
                         hapticEnabled ? "translate-x-5" : "translate-x-0"
                       }`}
                     />
-                  </button>
-                </div>
+                  </span>
+                </button>
               </div>
 
               {/* 2. SEZIONE PERMESSI & PRIVACY */}
@@ -211,7 +215,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                         triggerHaptic();
                         requestMicAccess();
                       }}
-                      className="w-full py-2 px-3 rounded-xl bg-[#17111A] border border-[#2B2130] hover:border-[#FF2E7E] text-xs font-bold text-[#FF2E7E] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
+                      className="w-full min-h-[44px] py-2 px-3 rounded-xl bg-[#17111A] border border-[#2B2130] hover:border-[#FF2E7E] text-xs font-bold text-[#FF2E7E] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
                     >
                       <Mic className="w-3.5 h-3.5 text-[#FF2E7E]" />
                       <span>{isIt ? "Attiva Permesso Microfono" : "Enable Microphone Permission"}</span>
@@ -241,7 +245,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       triggerHaptic();
                       onOpenLegalModal("privacy");
                     }}
-                    className="w-full p-3 rounded-2xl hover:bg-[#241A28] text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+                    className="w-full min-h-[44px] p-3 rounded-2xl hover:bg-[#241A28] text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
                       <ShieldCheck className="w-4 h-4 text-[#FF2E7E]" />
@@ -255,7 +259,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       triggerHaptic();
                       onOpenLegalModal("terms");
                     }}
-                    className="w-full p-3 rounded-2xl hover:bg-[#241A28] text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+                    className="w-full min-h-[44px] p-3 rounded-2xl hover:bg-[#241A28] text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
                       <FileText className="w-4 h-4 text-[#FF2E7E]" />
@@ -269,7 +273,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       triggerHaptic();
                       onOpenLegalModal("affiliate");
                     }}
-                    className="w-full p-3 rounded-2xl hover:bg-[#241A28] text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
+                    className="w-full min-h-[44px] p-3 rounded-2xl hover:bg-[#241A28] text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5">
                       <ShoppingBag className="w-4 h-4 text-[#FF2E7E]" />
@@ -292,7 +296,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = React.memo(({
                       triggerHaptic();
                       onSendFeedback();
                     }}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#17111A] border border-[#2B2130] hover:border-[#FF2E7E] text-xs font-bold text-[#FF2E7E] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
+                    className="w-full min-h-[44px] py-2.5 px-3 rounded-xl bg-[#17111A] border border-[#2B2130] hover:border-[#FF2E7E] text-xs font-bold text-[#FF2E7E] flex items-center justify-center gap-2 transition-all cursor-pointer shadow-2xs active:scale-[0.98]"
                   >
                     <Mail className="w-4 h-4 text-[#FF2E7E]" />
                     <span>{isIt ? "Invia un Feedback" : "Send Feedback"}</span>
