@@ -348,7 +348,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="surface-coral-tactile py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-105 text-white font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-transform uppercase tracking-wider border-2 border-transparent"
+                    className="surface-coral-tactile py-2.5 sm:py-3 px-2 rounded-[16px] active:scale-[0.98] hover:brightness-105 text-[#0E0910] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm transition-transform uppercase tracking-wider border-2 border-transparent"
                   >
                     <ShoppingCart className="w-4 h-4 text-white shrink-0" />
                     <span className="truncate">{language === "it" ? "METTI IN CARRELLO" : "ADD TO CART"}</span>

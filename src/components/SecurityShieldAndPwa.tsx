@@ -315,9 +315,9 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
             {/* 3D Tactile Solid Black Button */}
             <button
               onClick={handleInstallClick}
-              className="w-full py-3.5 px-4 rounded-[18px] surface-coral-tactile hover:brightness-105 active:scale-[0.97] text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all uppercase tracking-wide border border-transparent"
+              className="w-full py-3.5 px-4 rounded-[18px] surface-coral-tactile hover:brightness-105 active:scale-[0.97] text-[#0E0910] font-black text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all uppercase tracking-wide border border-transparent"
             >
-              <Download className="w-4 h-4 text-white" />
+              <Download className="w-4 h-4 text-[#0E0910]" />
               <span>
                 {deferredPrompt
                   ? language === "it"
@@ -415,7 +415,7 @@ export const SecurityShieldAndPwa: React.FC<SecurityShieldAndPwaProps> = ({
               {/* Dismiss Guide Button */}
               <button
                 onClick={handleDismiss}
-                className="w-full py-3.5 rounded-[20px] surface-coral-tactile hover:brightness-105 active:scale-[0.97] text-white font-black text-xs uppercase tracking-wider cursor-pointer shadow-md transition-all border border-transparent"
+                className="w-full py-3.5 rounded-[20px] surface-coral-tactile hover:brightness-105 active:scale-[0.97] text-[#0E0910] font-black text-xs uppercase tracking-wider cursor-pointer shadow-md transition-all border border-transparent"
               >
                 {language === "it" ? "HO CAPITO" : "GOT IT"}
               </button>
