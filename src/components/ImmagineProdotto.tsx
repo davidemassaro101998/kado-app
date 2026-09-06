@@ -43,7 +43,7 @@ export function ImmagineProdotto({
       className="absolute inset-0 flex items-center justify-center overflow-hidden"
       style={{
         background:
-          "radial-gradient(120% 100% at 50% 0%, #FF2E7E1F 0%, #17111A 62%, #17111A 100%)",
+          "radial-gradient(120% 100% at 50% 0%, #F14B811F 0%, #17111A 62%, #17111A 100%)",
       }}
     >
       {usaFoto ? (
@@ -69,7 +69,7 @@ export function ImmagineProdotto({
           />
           <Icona
             className="relative h-11 w-11 sm:h-12 sm:w-12"
-            style={{ color: "#FF2E7E" }}
+            style={{ color: "#F14B81" }}
             strokeWidth={1.5}
             aria-hidden
           />

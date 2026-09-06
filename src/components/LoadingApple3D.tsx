@@ -68,10 +68,10 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
         animate={{ opacity: [0.65, 1, 0.65] }}
         transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
         className="absolute inset-0 pointer-events-none"
-        style={{ boxShadow: "inset 0 0 100px 10px rgba(255,46,126,0.4), inset 0 0 240px 50px rgba(255,179,71,0.15)" }}
+        style={{ boxShadow: "inset 0 0 100px 10px rgba(241,75,129,0.4), inset 0 0 240px 50px rgba(247,182,98,0.15)" }}
       />
-      <div className="absolute -top-28 -left-28 w-80 h-80 rounded-full pointer-events-none" style={{ background: "radial-gradient(closest-side, rgba(255,46,126,0.35), transparent)", filter: "blur(36px)" }} />
-      <div className="absolute -bottom-24 -right-28 w-80 h-80 rounded-full pointer-events-none" style={{ background: "radial-gradient(closest-side, rgba(255,179,71,0.28), transparent)", filter: "blur(36px)" }} />
+      <div className="absolute -top-28 -left-28 w-80 h-80 rounded-full pointer-events-none" style={{ background: "radial-gradient(closest-side, rgba(241,75,129,0.35), transparent)", filter: "blur(36px)" }} />
+      <div className="absolute -bottom-24 -right-28 w-80 h-80 rounded-full pointer-events-none" style={{ background: "radial-gradient(closest-side, rgba(247,182,98,0.28), transparent)", filter: "blur(36px)" }} />
 
       {/* Titolo del rito */}
       <div className="relative z-10 flex flex-col items-center gap-1.5 shrink-0">
@@ -90,7 +90,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
       {/* Cronometro pit-stop dentro l'arco d'aura che ruota (fluidamente
           scalato: mai clippato su schermi bassi) */}
       <div className="relative z-10 my-[clamp(0.75rem,3.5vh,2rem)] w-[clamp(11rem,32vh,15rem)] h-[clamp(11rem,32vh,15rem)] shrink-0 flex items-center justify-center">
-        <div className="absolute inset-[-14%] rounded-full pointer-events-none" style={{ background: "radial-gradient(closest-side, rgba(255,46,126,0.3), rgba(255,179,71,0.1) 60%, transparent)", filter: "blur(26px)" }} />
+        <div className="absolute inset-[-14%] rounded-full pointer-events-none" style={{ background: "radial-gradient(closest-side, rgba(241,75,129,0.3), rgba(247,182,98,0.1) 60%, transparent)", filter: "blur(26px)" }} />
         <motion.svg
           viewBox="0 0 240 240"
           className="absolute inset-0 w-full h-full"
@@ -110,8 +110,8 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
           />
           <defs>
             <linearGradient id="ritoRingGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#FF2E7E" />
-              <stop offset="1" stopColor="#FFB347" />
+              <stop offset="0" stopColor="#F14B81" />
+              <stop offset="1" stopColor="#F7B662" />
             </linearGradient>
           </defs>
         </motion.svg>
@@ -121,7 +121,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 900,
-              backgroundImage: "linear-gradient(135deg, #FF2E7E, #FFB347)",
+              backgroundImage: "linear-gradient(135deg, #F14B81, #F7B662)",
               WebkitBackgroundClip: "text",
               fontVariantNumeric: "tabular-nums",
             }}
@@ -145,7 +145,7 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
               key={idx}
               className={`p-3 rounded-[16px] border text-xs font-semibold flex items-center gap-3 transition-all duration-300 ${
                 isCurrent
-                  ? "bg-[rgba(255,46,126,0.1)] border-[rgba(255,46,126,0.45)] text-[#F7F0F2] shadow-[0_0_24px_rgba(255,46,126,0.18)] font-extrabold"
+                  ? "bg-[rgba(241,75,129,0.1)] border-[rgba(241,75,129,0.45)] text-[#F7F0F2] shadow-[0_0_24px_rgba(241,75,129,0.18)] font-extrabold"
                   : isDone
                   ? "bg-[rgba(255,255,255,0.05)] border-[rgba(255,255,255,0.1)] text-[#F7F0F2]"
                   : "bg-[rgba(255,255,255,0.03)] border-transparent text-[#8E7F87]"
@@ -154,16 +154,16 @@ export const LoadingApple3D: React.FC<LoadingApple3DProps> = React.memo(({ langu
               <div
                 className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-[10px] ${
                   isDone
-                    ? "bg-[#FF2E7E] text-[#0E0910] font-black"
+                    ? "bg-[#F14B81] text-[#0E0910] font-black"
                     : isCurrent
-                    ? "border-2 border-[#FF2E7E] shadow-[0_0_12px_rgba(255,46,126,0.6)]"
+                    ? "border-2 border-[#F14B81] shadow-[0_0_12px_rgba(241,75,129,0.6)]"
                     : "bg-[rgba(255,255,255,0.08)] text-[#8E7F87]"
                 }`}
               >
                 {isDone ? (
                   <Check className="w-3 h-3 text-white stroke-[3]" />
                 ) : isCurrent ? (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF2E7E]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F14B81]" />
                 ) : (
                   idx + 1
                 )}

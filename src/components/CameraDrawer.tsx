@@ -205,8 +205,8 @@ export const CameraDrawer = React.memo(({ isOpen, onClose, onSubmitIdea, languag
             <div className="-mt-1 h-1.5 w-12 shrink-0 rounded-full bg-[#2B2130]" />
 
             <div className="flex w-full items-center justify-between">
-              <div className="flex items-center gap-2 text-[#FF2E7E]">
-                <Sparkles className="h-4 w-4 fill-[#FF2E7E]" />
+              <div className="flex items-center gap-2 text-[#F14B81]">
+                <Sparkles className="h-4 w-4 fill-[#F14B81]" />
                 <span className="text-xs font-bold uppercase tracking-wider">{t.title}</span>
               </div>
               <button
@@ -255,7 +255,7 @@ export const CameraDrawer = React.memo(({ isOpen, onClose, onSubmitIdea, languag
                 <button
                   type="button"
                   onClick={() => setPhoto(null)}
-                  className="flex min-h-[44px] cursor-pointer items-center gap-2 rounded-full border border-[#2B2130] bg-[#1C1520] px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#F7F0F2] transition-colors hover:border-[#FF2E7E]"
+                  className="flex min-h-[44px] cursor-pointer items-center gap-2 rounded-full border border-[#2B2130] bg-[#1C1520] px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#F7F0F2] transition-colors hover:border-[#F14B81]"
                 >
                   <RotateCcw className="h-4 w-4" strokeWidth={2.4} />
                   {t.retake}
@@ -266,7 +266,7 @@ export const CameraDrawer = React.memo(({ isOpen, onClose, onSubmitIdea, languag
                   onClick={capture}
                   disabled={!streamReady}
                   aria-label={t.shoot}
-                  className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-[#FF2E7E] text-[#0E0910] shadow-[0_0_28px_rgba(255,46,126,0.45)] transition-transform active:scale-95 disabled:opacity-40"
+                  className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-[#F14B81] text-[#0E0910] shadow-[0_0_28px_rgba(241,75,129,0.45)] transition-transform active:scale-95 disabled:opacity-40"
                 >
                   <Camera className="h-7 w-7 stroke-[2.4]" />
                 </button>
@@ -275,7 +275,7 @@ export const CameraDrawer = React.memo(({ isOpen, onClose, onSubmitIdea, languag
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex min-h-[44px] cursor-pointer items-center gap-2 rounded-full border border-[#2B2130] bg-[#1C1520] px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#9B8A93] transition-colors hover:border-[#FF2E7E] hover:text-[#F7F0F2]"
+                className="flex min-h-[44px] cursor-pointer items-center gap-2 rounded-full border border-[#2B2130] bg-[#1C1520] px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#9B8A93] transition-colors hover:border-[#F14B81] hover:text-[#F7F0F2]"
               >
                 <ImageIcon className="h-4 w-4" strokeWidth={2.4} />
                 {t.gallery}
@@ -294,7 +294,7 @@ export const CameraDrawer = React.memo(({ isOpen, onClose, onSubmitIdea, languag
               type="button"
               disabled={!photo || isAnalyzing}
               onClick={analyze}
-              className="mt-1 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border border-[#FF2E7E] bg-[#FF2E7E] px-6 py-4 text-sm font-black uppercase tracking-wider text-[#0E0910] shadow-[0_8px_20px_rgba(255,46,126,0.3)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+              className="mt-1 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border border-[#F14B81] bg-[#F14B81] px-6 py-4 text-sm font-black uppercase tracking-wider text-[#0E0910] shadow-[0_8px_20px_rgba(241,75,129,0.3)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isAnalyzing ? (
                 <>

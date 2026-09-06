@@ -29,9 +29,9 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
   };
 
   const getIcon = () => {
-    if (type === "privacy") return <ShieldCheck className="w-5 h-5 text-[#FF2E7E]" />;
-    if (type === "terms") return <FileText className="w-5 h-5 text-[#FF2E7E]" />;
-    return <ShoppingBag className="w-5 h-5 text-[#FF2E7E]" />;
+    if (type === "privacy") return <ShieldCheck className="w-5 h-5 text-[#F14B81]" />;
+    if (type === "terms") return <FileText className="w-5 h-5 text-[#F14B81]" />;
+    return <ShoppingBag className="w-5 h-5 text-[#F14B81]" />;
   };
 
   return (
@@ -67,7 +67,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
           <div className="flex-1 overflow-y-auto space-y-3.5 text-xs leading-relaxed font-normal text-[#F7F0F2] pr-1">
             {type === "privacy" && (
               <>
-                <p className="font-bold text-sm text-[#FF2E7E]">
+                <p className="font-bold text-sm text-[#F14B81]">
                   Informativa sulla Privacy e Trattamento Dati (GDPR EU 2016/679)
                 </p>
                 <p>
@@ -90,7 +90,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
 
             {type === "terms" && (
               <>
-                <p className="font-bold text-sm text-[#FF2E7E]">
+                <p className="font-bold text-sm text-[#F14B81]">
                   {isIt ? "Termini e Condizioni di Utilizzo" : "Terms & Conditions"}
                 </p>
                 <p>
@@ -110,7 +110,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
 
             {type === "affiliate" && (
               <>
-                <p className="font-bold text-sm text-[#FF2E7E]">
+                <p className="font-bold text-sm text-[#F14B81]">
                   Dichiarazione di Affiliazione Amazon & Disclaimers Obbligatori
                 </p>
 
@@ -139,7 +139,7 @@ export const LegalModal: React.FC<LegalModalProps> = React.memo(({
           <div className="pt-3 border-t border-[#2B2130] mt-3 flex justify-end shrink-0">
             <button
               onClick={onClose}
-              className="py-2.5 px-5 rounded-xl bg-[#FF2E7E] text-[#0E0910] font-bold text-xs cursor-pointer hover:bg-[#E01E68] transition-colors"
+              className="py-2.5 px-5 rounded-xl bg-[#F14B81] text-[#0E0910] font-bold text-xs cursor-pointer hover:bg-[#D33C6B] transition-colors"
             >
               {isIt ? "Chiudi" : "Close"}
             </button>

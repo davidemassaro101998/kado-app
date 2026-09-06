@@ -121,8 +121,8 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
             <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F7F0F2]" />
           </button>
           <div className="min-w-0">
-            <span className="text-[9px] sm:text-[10px] font-extrabold text-[#FF2E7E] uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FF2E7E] shrink-0" />
+            <span className="text-[9px] sm:text-[10px] font-extrabold text-[#F14B81] uppercase tracking-wider flex items-center gap-1">
+              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F14B81] shrink-0" />
               {/* Non si spaccia una lista fissa per una scelta dell'AI:
                   quando la risposta non arriva l'utente vede comunque tre
                   idee, ma sa che vengono dalla nostra selezione. */}
@@ -143,7 +143,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
 
         <button
           onClick={onStartOver}
-          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-[#17111A] border border-[#2B2130] text-[#FF2E7E] hover:bg-[#2B2130] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1"
+          className="py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-full bg-[#17111A] border border-[#2B2130] text-[#F14B81] hover:bg-[#2B2130] active:scale-95 transition-transform text-[11px] sm:text-xs font-bold shadow-2xs cursor-pointer shrink-0 ml-1"
         >
           {language === "it" ? "Nuova Ricerca" : "New Search"}
         </button>
@@ -165,7 +165,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 onClick={() => handleSelectIndex(idx)}
                 className={`h-1.5 sm:h-2 rounded-full transition-all duration-200 cursor-pointer ${
                   idx === activeIndex
-                    ? "w-6 sm:w-8 bg-[#FF2E7E]"
+                    ? "w-6 sm:w-8 bg-[#F14B81]"
                     : "w-1.5 sm:w-2 bg-[#2B2130] hover:bg-[#9B8A93]"
                 }`}
                 aria-label={`Option ${idx + 1}`}
@@ -222,7 +222,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                   willChange: "transform, opacity",
                   border: isPrimary ? "2px solid var(--brand-coral)" : "1px solid #2B2130",
                   boxShadow: isPrimary
-                    ? "0 10px 32px rgba(255,46,126,0.18)"
+                    ? "0 10px 32px rgba(241,75,129,0.18)"
                     : "0 6px 24px rgba(0,0,0,0.05)",
                 }}
               >
@@ -235,15 +235,15 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                     <Zap
                       className="w-3.5 h-3.5 shrink-0"
                       style={{
-                        color: isPrimary ? "var(--brand-coral)" : "#FF2E7E",
-                        fill: isPrimary ? "var(--brand-coral)" : "#FF2E7E",
+                        color: isPrimary ? "var(--brand-coral)" : "#F14B81",
+                        fill: isPrimary ? "var(--brand-coral)" : "#F14B81",
                       }}
                     />
                     <span>{isPrimary ? (language === "it" ? "La nostra scelta" : "Our pick") : currentGift.tag}</span>
                   </div>
 
                   {currentGift.isPrime && (
-                    <span className="text-[10px] sm:text-xs font-semibold text-[#FF2E7E] bg-[#FF2E7E]/10 px-2 py-0.5 rounded-full tracking-tight">
+                    <span className="text-[10px] sm:text-xs font-semibold text-[#F14B81] bg-[#F14B81]/10 px-2 py-0.5 rounded-full tracking-tight">
                       ✓ Prime
                     </span>
                   )}
@@ -280,8 +280,8 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                   </h3>
 
                   <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-[#F7F0F2] font-semibold">
-                    <div className="flex items-center text-[#FFB347]">
-                      <Star className="w-3.5 h-3.5 fill-[#FFB347] text-[#FFB347]" />
+                    <div className="flex items-center text-[#F7B662]">
+                      <Star className="w-3.5 h-3.5 fill-[#F7B662] text-[#F7B662]" />
                       <span className="ml-0.5 font-bold text-[#F7F0F2]">
                         {currentGift.rating ? currentGift.rating.toFixed(1) : "4.8"}
                       </span>
@@ -295,7 +295,7 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                 {/* 4. AI Reason Box */}
                 <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-[#1C1520] border border-[#2B2130]">
                   <p className="text-[11px] sm:text-xs text-[#D9CDD2] font-normal leading-relaxed">
-                    <span className="font-bold text-[#FFB347]">{language === "it" ? "Perché è perfetto:" : "Why it's perfect:"}</span> {currentGift.reason}
+                    <span className="font-bold text-[#F7B662]">{language === "it" ? "Perché è perfetto:" : "Why it's perfect:"}</span> {currentGift.reason}
                   </p>
                 </div>
 
@@ -321,11 +321,11 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
                         price: currentGift.price,
                       });
                     }}
-                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-[#17111A] border-2 border-[#FF2E7E] hover:bg-[#1C1520] active:scale-[0.98] text-[#FF2E7E] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-transform uppercase tracking-wider"
+                    className="py-2.5 sm:py-3 px-2 rounded-[16px] bg-[#17111A] border-2 border-[#F14B81] hover:bg-[#1C1520] active:scale-[0.98] text-[#F14B81] font-black text-[11px] sm:text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs transition-transform uppercase tracking-wider"
                   >
-                    <ShoppingBag className="w-4 h-4 text-[#FF2E7E] shrink-0" />
+                    <ShoppingBag className="w-4 h-4 text-[#F14B81] shrink-0" />
                     <span className="truncate">{language === "it" ? "VEDI NELLO STORE" : "SEE IN STORE"}</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#FF2E7E] shrink-0 hidden sm:inline" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#F14B81] shrink-0 hidden sm:inline" />
                   </a>
 
                   <a
@@ -384,12 +384,12 @@ export const ResultsDeckApple: React.FC<ResultsDeckAppleProps> = React.memo(({
           <button
             onClick={handleShareCard}
             disabled={shareState === "building"}
-            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-[#17111A] hover:bg-[#241a12] text-[#F7F0F2] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer active:scale-[0.98] border-2 border-[#FFB347] disabled:opacity-60"
+            className="py-2.5 sm:py-3 px-2 rounded-2xl bg-[#17111A] hover:bg-[#241a12] text-[#F7F0F2] font-bold text-xs flex items-center justify-center gap-1.5 transition-transform cursor-pointer active:scale-[0.98] border-2 border-[#F7B662] disabled:opacity-60"
           >
             {shareState === "done" ? (
-              <Check className="w-4 h-4 shrink-0 text-[#FFB347]" />
+              <Check className="w-4 h-4 shrink-0 text-[#F7B662]" />
             ) : (
-              <Share2 className="w-4 h-4 shrink-0 text-[#FFB347]" />
+              <Share2 className="w-4 h-4 shrink-0 text-[#F7B662]" />
             )}
             <span className="truncate">
               {shareState === "building"

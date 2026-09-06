@@ -318,8 +318,8 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
             <div className="-mt-1 h-1.5 w-12 shrink-0 rounded-full bg-[#2B2130]" />
 
             <div className="flex w-full items-center justify-between">
-              <div className="flex items-center gap-2 text-[#FF2E7E]">
-                <Sparkles className="h-4 w-4 fill-[#FF2E7E]" />
+              <div className="flex items-center gap-2 text-[#F14B81]">
+                <Sparkles className="h-4 w-4 fill-[#F14B81]" />
                 <span className="text-xs font-bold uppercase tracking-wider">{t.title}</span>
               </div>
               <button
@@ -340,21 +340,21 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                 aria-label={isListening ? t.stop : t.start}
                 className={`relative flex h-20 w-20 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all active:scale-95 ${
                   isListening
-                    ? "bg-[#FF2E7E] text-[#0E0910] shadow-[0_0_28px_rgba(255,46,126,0.5)]"
-                    : "border border-[#2B2130] bg-[#1C1520] text-[#FF2E7E]"
+                    ? "bg-[#F14B81] text-[#0E0910] shadow-[0_0_28px_rgba(241,75,129,0.5)]"
+                    : "border border-[#2B2130] bg-[#1C1520] text-[#F14B81]"
                 }`}
               >
                 {isListening && (
                   <motion.span
                     animate={{ scale: [1, 1.35, 1], opacity: [0.6, 0, 0.6] }}
                     transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 rounded-full border-2 border-[#FF2E7E]"
+                    className="absolute inset-0 rounded-full border-2 border-[#F14B81]"
                   />
                 )}
                 {/* Sempre l'icona del microfono acceso: il vecchio MicOff
                     da spento leggeva come "microfono disattivato", cioe'
                     esattamente il contrario dell'invito a premere. */}
-                <Mic className={`h-9 w-9 stroke-[2.5] ${isListening ? "text-white" : "text-[#FF2E7E]"}`} />
+                <Mic className={`h-9 w-9 stroke-[2.5] ${isListening ? "text-white" : "text-[#F14B81]"}`} />
               </button>
 
               {/* Le barre seguono il volume vero: al centro rispondono di
@@ -367,7 +367,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                   return (
                     <div
                       key={idx}
-                      className={`h-[30px] w-1.5 rounded-full gpu-layer ${isListening ? "bg-[#FF2E7E]" : "bg-[#2B2130]"}`}
+                      className={`h-[30px] w-1.5 rounded-full gpu-layer ${isListening ? "bg-[#F14B81]" : "bg-[#2B2130]"}`}
                       style={{
                         transform: `scaleY(${scaleY})`,
                         transition: "transform 70ms linear",
@@ -403,7 +403,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
                     setInterimText("");
                   }}
                   placeholder={t.placeholder}
-                  className="w-full resize-none rounded-[18px] border border-[#2B2130] bg-[#1C1520] p-3.5 text-base font-bold leading-snug text-[#F7F0F2] placeholder-[#9B8A93] transition-colors focus:border-[#FF2E7E] focus:outline-none sm:text-lg"
+                  className="w-full resize-none rounded-[18px] border border-[#2B2130] bg-[#1C1520] p-3.5 text-base font-bold leading-snug text-[#F7F0F2] placeholder-[#9B8A93] transition-colors focus:border-[#F14B81] focus:outline-none sm:text-lg"
                 />
                 {displayText && (
                   <button
@@ -426,7 +426,7 @@ export const VoiceDrawer = React.memo(forwardRef<VoiceDrawerHandle, VoiceDrawerP
               type="button"
               disabled={!displayText.trim()}
               onClick={handleSubmit}
-              className="mt-1 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border border-[#FF2E7E] bg-[#FF2E7E] px-6 py-4 text-sm font-black uppercase tracking-wider text-[#0E0910] shadow-[0_8px_20px_rgba(255,46,126,0.3)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+              className="mt-1 flex w-full shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-[20px] border border-[#F14B81] bg-[#F14B81] px-6 py-4 text-sm font-black uppercase tracking-wider text-[#0E0910] shadow-[0_8px_20px_rgba(241,75,129,0.3)] transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
             >
               <Send className="h-4 w-4 fill-current stroke-[2]" />
               <span>{t.submit}</span>

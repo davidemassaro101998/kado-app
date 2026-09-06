@@ -16,8 +16,8 @@ const W = 1080;
 const H = 1620;
 
 const BG = "#0E0910";
-const MAGENTA = "#FF2E7E";
-const GOLD = "#FFB347";
+const MAGENTA = "#F14B81";
+const GOLD = "#F7B662";
 const TEXT = "#F7F0F2";
 const MUTED = "#B8A9B0";
 
@@ -112,14 +112,14 @@ export async function buildShareCardBlob(
   ctx.fillRect(0, 0, W, H);
 
   let glow = ctx.createRadialGradient(60, 60, 0, 60, 60, 640);
-  glow.addColorStop(0, "rgba(255,46,126,0.4)");
-  glow.addColorStop(1, "rgba(255,46,126,0)");
+  glow.addColorStop(0, "rgba(241,75,129,0.4)");
+  glow.addColorStop(1, "rgba(241,75,129,0)");
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, W, H);
 
   glow = ctx.createRadialGradient(W - 60, H - 60, 0, W - 60, H - 60, 640);
-  glow.addColorStop(0, "rgba(255,179,71,0.32)");
-  glow.addColorStop(1, "rgba(255,179,71,0)");
+  glow.addColorStop(0, "rgba(247,182,98,0.32)");
+  glow.addColorStop(1, "rgba(247,182,98,0)");
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, W, H);
 
@@ -129,14 +129,14 @@ export async function buildShareCardBlob(
   const badgeW = ctx.measureText(badgeText).width + 150;
   const badgeX = (W - badgeW) / 2;
   ctx.save();
-  ctx.shadowColor = "rgba(255,46,126,0.5)";
+  ctx.shadowColor = "rgba(241,75,129,0.5)";
   ctx.shadowBlur = 40;
   roundRect(ctx, badgeX, 90, badgeW, 84, 42);
-  ctx.fillStyle = "rgba(255,46,126,0.16)";
+  ctx.fillStyle = "rgba(241,75,129,0.16)";
   ctx.fill();
   ctx.restore();
   roundRect(ctx, badgeX, 90, badgeW, 84, 42);
-  ctx.strokeStyle = "rgba(255,46,126,0.6)";
+  ctx.strokeStyle = "rgba(241,75,129,0.6)";
   ctx.lineWidth = 2;
   ctx.stroke();
   // fulmine
@@ -164,7 +164,7 @@ export async function buildShareCardBlob(
   roundRect(ctx, plateX, plateY, plateW, plateH, 44);
   const plateGrad = ctx.createLinearGradient(plateX, plateY, plateX + plateW, plateY + plateH);
   plateGrad.addColorStop(0, "rgba(255,255,255,0.08)");
-  plateGrad.addColorStop(1, "rgba(255,46,126,0.07)");
+  plateGrad.addColorStop(1, "rgba(241,75,129,0.07)");
   ctx.fillStyle = plateGrad;
   ctx.fill();
   ctx.strokeStyle = "rgba(255,255,255,0.12)";
@@ -241,10 +241,10 @@ export async function buildShareCardBlob(
 
   // Divisore aura
   const divGrad = ctx.createLinearGradient(100, 0, W - 100, 0);
-  divGrad.addColorStop(0, "rgba(255,46,126,0)");
-  divGrad.addColorStop(0.3, "rgba(255,46,126,0.5)");
-  divGrad.addColorStop(0.7, "rgba(255,179,71,0.5)");
-  divGrad.addColorStop(1, "rgba(255,179,71,0)");
+  divGrad.addColorStop(0, "rgba(241,75,129,0)");
+  divGrad.addColorStop(0.3, "rgba(241,75,129,0.5)");
+  divGrad.addColorStop(0.7, "rgba(247,182,98,0.5)");
+  divGrad.addColorStop(1, "rgba(247,182,98,0)");
   ctx.fillStyle = divGrad;
   ctx.fillRect(100, H - 210, W - 200, 3);
 
@@ -253,7 +253,7 @@ export async function buildShareCardBlob(
   logoGrad.addColorStop(0, MAGENTA);
   logoGrad.addColorStop(1, GOLD);
   ctx.save();
-  ctx.shadowColor = "rgba(255,46,126,0.55)";
+  ctx.shadowColor = "rgba(241,75,129,0.55)";
   ctx.shadowBlur = 36;
   roundRect(ctx, 100, H - 160, 76, 76, 22);
   ctx.fillStyle = logoGrad;

@@ -40,7 +40,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = React.memo(({
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[95] bg-[#000000]/95 backdrop-blur-md text-white border-t border-white/10 px-3.5 pt-2.5 pb-[max(12px,env(safe-area-inset-bottom,0px))] sm:py-3 text-xs flex items-center justify-between gap-3 shadow-2xl">
       <div className="flex items-center gap-2.5 text-[11px] sm:text-xs text-white/90 max-w-2xl">
-        <Cookie className="w-4 h-4 text-[#FF2E7E] shrink-0" />
+        <Cookie className="w-4 h-4 text-[#F14B81] shrink-0" />
         <span className="leading-snug">
           {isIt
             ? "Kado AI utilizza cookie tecnici e servizi di affiliazione per consigliarti i regali perfetti. Continuando ad usare l'app accetti la nostra Privacy Policy."
@@ -48,7 +48,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = React.memo(({
         </span>
         <button
           onClick={onOpenPrivacy}
-          className="underline text-[#FF2E7E] font-bold hover:text-white shrink-0 cursor-pointer ml-1"
+          className="underline text-[#F14B81] font-bold hover:text-white shrink-0 cursor-pointer ml-1"
         >
           {isIt ? "Privacy Policy" : "Privacy Policy"}
         </button>
@@ -56,7 +56,7 @@ export const CookieBanner: React.FC<CookieBannerProps> = React.memo(({
 
       <button
         onClick={handleAccept}
-        className="py-1.5 px-4 rounded-xl bg-[#FF2E7E] text-[#0E0910] font-bold text-xs hover:bg-[#E01E68] active:scale-95 transition-all shrink-0 cursor-pointer shadow-sm"
+        className="py-1.5 px-4 rounded-xl bg-[#F14B81] text-[#0E0910] font-bold text-xs hover:bg-[#D33C6B] active:scale-95 transition-all shrink-0 cursor-pointer shadow-sm"
       >
         {isIt ? "Accetta" : "Accept"}
       </button>

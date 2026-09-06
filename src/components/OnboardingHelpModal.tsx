@@ -52,8 +52,8 @@ export const OnboardingHelpModal: React.FC<OnboardingHelpModalProps> = ({
           >
             <div className="w-12 h-1.5 rounded-full bg-[#2B2130] shrink-0 -mt-1" />
 
-            <div className="w-16 h-16 rounded-full bg-[#FF2E7E]/10 flex items-center justify-center shrink-0">
-              <Mic className="w-7 h-7 text-[#FF2E7E] stroke-[2.2]" />
+            <div className="w-16 h-16 rounded-full bg-[#F14B81]/10 flex items-center justify-center shrink-0">
+              <Mic className="w-7 h-7 text-[#F14B81] stroke-[2.2]" />
             </div>
 
             <div className="text-center space-y-1.5">
@@ -76,9 +76,9 @@ export const OnboardingHelpModal: React.FC<OnboardingHelpModalProps> = ({
               <div className="w-full rounded-[18px] bg-[#1C1520] p-3.5 flex items-start gap-3">
                 <div className="w-8 h-8 rounded-xl bg-[#17111A] shadow-sm flex items-center justify-center shrink-0 mt-0.5">
                   {platform === "ios" ? (
-                    <Share className="w-4 h-4 text-[#FF2E7E]" />
+                    <Share className="w-4 h-4 text-[#F14B81]" />
                   ) : (
-                    <MoreVertical className="w-4 h-4 text-[#FF2E7E]" />
+                    <MoreVertical className="w-4 h-4 text-[#F14B81]" />
                   )}
                 </div>
                 <p className="text-xs text-[#F7F0F2] leading-relaxed pt-1">
@@ -100,7 +100,7 @@ export const OnboardingHelpModal: React.FC<OnboardingHelpModalProps> = ({
             <button
               type="button"
               onClick={onDismiss}
-              className="w-full py-3.5 px-6 rounded-[20px] bg-[#FF2E7E] hover:bg-[#E01E68] text-[#0E0910] font-black text-sm uppercase tracking-wider active:scale-[0.98] transition-all cursor-pointer mt-1"
+              className="w-full py-3.5 px-6 rounded-[20px] bg-[#F14B81] hover:bg-[#D33C6B] text-[#0E0910] font-black text-sm uppercase tracking-wider active:scale-[0.98] transition-all cursor-pointer mt-1"
             >
               {language === "it" ? "Capito" : "Got it"}
             </button>
